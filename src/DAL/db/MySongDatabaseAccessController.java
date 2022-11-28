@@ -15,7 +15,7 @@ public class MySongDatabaseAccessController {
     {
         dataSource = new SQLServerDataSource();
         dataSource.setServerName("10.176.111.31");
-        dataSource.setDatabaseName("MyFirstDataBase");
+        dataSource.setDatabaseName("MyTuunes");
         dataSource.setUser("CSe22A_25");
         dataSource.setPassword("CSe22A_25");
         dataSource.setTrustServerCertificate(true);

@@ -52,7 +52,7 @@ public class SongDAO_DB implements ISongDataAccess {
     public Song createSong(String title, String artist, String cetagory) throws Exception
     {
 
-        String sql = "INSERT INTO Song (Title, ArtistId) VALUES (?,?);";
+        String sql = "INSERT INTO Song (Title, ArtistId,) VALUES (?,?);";
 
         try (Connection coon = databaseConnector.getConnection())
         {
