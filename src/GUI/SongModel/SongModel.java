@@ -39,7 +39,6 @@ public class SongModel {
         songsToBeViewed.addAll(searchResults);
     }
 
-
     public void createNewSong(String title, String artist, String category) throws Exception{
         Song m = songManager.createNewSong(title, artist, category);
 
@@ -48,14 +47,14 @@ public class SongModel {
     public void updateSong(Song updatedSong) throws Exception {
         //Call BLL
         // Update song in DB
-        songManager.updateSongs(updatedSong);
+        songManager.updateSong(updatedSong);
         //UPDATE listView
         songsToBeViewed.clear();
         songsToBeViewed.addAll(songManager.getAllSongs());
     }
 
-    public void deleteSongs(Song deletedSong) throws Exception {
-        songManager.deleteSongs(deletedSong);
+    public void deleteSong(Song deletedSong) throws Exception {
+        songManager.deleteSong(deletedSong);
         songsToBeViewed.clear();
         songsToBeViewed.addAll(songManager.getAllSongs());
     }

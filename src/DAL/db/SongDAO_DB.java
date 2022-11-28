@@ -1,9 +1,7 @@
 package src.DAL.db;
 
-
 import src.BE.Song;
 import src.DAL.ISongDataAccess;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,6 @@ public class SongDAO_DB implements ISongDataAccess {
         try (Connection conn = databaseConnector.getConnection())
         {
             String sql = "SELECT * FROM Song;";
-
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -49,9 +46,8 @@ public class SongDAO_DB implements ISongDataAccess {
         }
     }
 
-    public Song createSong(String title, String artist, String cetagory) throws Exception
+    public Song createSong(String title, String artist, String category) throws Exception
     {
-
         String sql = "INSERT INTO Song (Title, ArtistId,) VALUES (?,?);";
 
         try (Connection coon = databaseConnector.getConnection())
@@ -61,7 +57,7 @@ public class SongDAO_DB implements ISongDataAccess {
             // Bind parameters
             stmt.setString(1,title);
             stmt.setString(2, artist);
-            stmt.setString(3, cetagory);
+            stmt.setString(3, category);
 
             //Run the specified SQL statement
             stmt.executeUpdate();
@@ -76,7 +72,7 @@ public class SongDAO_DB implements ISongDataAccess {
             }
 
             // Create song object and send up the layers
-            Song song = new Song(id, title, artist, cetagory);
+            Song song = new Song(id, title, artist, category);
             return song;
         }
 
@@ -102,5 +98,4 @@ public class SongDAO_DB implements ISongDataAccess {
         //TODO Do this
         throw new UnsupportedOperationException();
     }
-
 }

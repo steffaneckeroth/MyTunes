@@ -4,21 +4,20 @@ import src.BE.Song;
 import src.BLL.unit.SongSearcher;
 import src.DAL.ISongDataAccess;
 import src.DAL.db.SongDAO_DB;
-
 import java.util.List;
 
 public class SongManager {
 
-    private src.BLL.unit.SongSearcher songSearcher = new src.BLL.unit.SongSearcher();
+    private SongSearcher songSearcher = new SongSearcher();
 
-    private ISongDataAccess myTunesDAO;
+    private ISongDataAccess songDAO;
 
     public SongManager() {
-        myTunesDAO = new SongDAO_DB();
+        songDAO = new SongDAO_DB();
     }
 
     public List<Song> getAllSongs() throws Exception {
-        return myTunesDAO.getAllSong();
+        return songDAO.getAllSong();
     }
 
     public List<Song> searchSongs(String query) throws Exception {
@@ -28,12 +27,16 @@ public class SongManager {
     }
 
     public Song createNewSong(String title, String artist, String category) throws Exception {
-        return myTunesDAO.createSong(title, artist, category);
+        return songDAO.createSong(title, artist, category);
     }
 
-    public void updateSongs(Song updatedSong) {
+    public void updateSong(Song updatedSong) throws Exception
+    {
+        songDAO.updateSong(updatedSong);
     }
 
-    public void deleteSongs(Song deletedSong) {
+    public void deleteSong(Song deletedSong) throws Exception
+    {
+        songDAO.deleteSong(deletedSong);
     }
 }

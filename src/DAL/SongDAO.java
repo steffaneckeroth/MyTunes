@@ -154,7 +154,7 @@ public class SongDAO implements ISongDataAccess {
     public Song getSong(int id) throws Exception {
         List<Song> all = getAllSong();
 
-        int index = Collections.binarySearch(all, new Song(id, 0, ""), Comparator.comparingInt(Song::getId));
+        int index = Collections.binarySearch(all, new Song(id, "", "", ""), Comparator.comparingInt(Song::getId));
 
         if (index >= 0) {
             return all.get(index);

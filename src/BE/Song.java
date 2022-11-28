@@ -16,10 +16,6 @@ public class Song {
         this.category = category;
     }
 
-    public Song(int id, int i, String artist) {
-    }
-
-
     public int getId() {
         return id;
     }
@@ -31,9 +27,7 @@ public class Song {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) {this.title = title;}
 
     public String getArtist() {
         return artist;
