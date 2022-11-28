@@ -75,7 +75,7 @@ public class SongDAO_DB implements ISongDataAccess {
                 id = rs.getInt(1);
             }
 
-            // Create movie object and send up the layers
+            // Create song object and send up the layers
             Song song = new Song(id, title, artist, cetagory);
             return song;
         }

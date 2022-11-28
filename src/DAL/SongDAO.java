@@ -19,7 +19,7 @@ public class SongDAO implements ISongDataAccess {
     private Path pathToFile = Path.of(SONG_FILE);
 
     /**
-     * Retrieve all movies from the data source
+     * Retrieve all songs from the data source
      * @return
      * @throws IOException
      */
@@ -34,13 +34,13 @@ public class SongDAO implements ISongDataAccess {
             for (String line : lines) {
                 String[] separatedLine = line.split(",");
 
-                // Map each separated line to Movie object
+                // Map each separated line to song object
                 int id = Integer.parseInt(separatedLine[0]);
                 String title = separatedLine[1];
                 String artist = separatedLine[2];
                 String category = separatedLine[3];
 
-                // Create Movie object
+                // Create song object
 
                 Song newSong = new Song(id, title, artist, category);
                 songs.add(newSong);
@@ -58,7 +58,7 @@ public class SongDAO implements ISongDataAccess {
     }
 
     /**
-     * Create a new movie
+     * Create a new song
      * @param title
      * @param artist
      * @return
@@ -84,7 +84,7 @@ public class SongDAO implements ISongDataAccess {
     }
 
     /**
-     * Update a movie with param movie
+     * Update a song with param song
      * @param song
      * @throws Exception
      */
@@ -96,7 +96,7 @@ public class SongDAO implements ISongDataAccess {
             allSongs.removeIf((Song t) -> t.getId() == song.getId());
             allSongs.add(song);
 
-            //I'll sort the movies by their ID's
+            //I'll sort the songs by their ID's
             allSongs.sort(Comparator.comparingInt(Song::getId));
 
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(tmp))) {
@@ -106,18 +106,18 @@ public class SongDAO implements ISongDataAccess {
                 }
             }
 
-            //Overwrite the movie file wit the tmp one.
+            //Overwrite the song file wit the tmp one.
             Files.copy(tmp.toPath(), new File(SONG_FILE).toPath(), StandardCopyOption.REPLACE_EXISTING);
             //Clean up after the operation is done (Remove tmp)
             Files.delete(tmp.toPath());
 
         } catch (IOException ex) {
-            throw new Exception("Could not update movie.", ex);
+            throw new Exception("Could not update song.", ex);
         }
     }
 
     /**
-     * Delete a movie from the collection
+     * Delete a song from the collection
      * @param song
      * @throws Exception
      */
@@ -159,7 +159,7 @@ public class SongDAO implements ISongDataAccess {
         if (index >= 0) {
             return all.get(index);
         } else {
-            throw new IllegalArgumentException("No movie with ID: " + id + " is found.");
+            throw new IllegalArgumentException("No song with ID: " + id + " is found.");
         }
     }
 
@@ -175,49 +175,4 @@ public class SongDAO implements ISongDataAccess {
         Song lastSong = songs.get(songs.size()- 1);
         return lastSong.getId() + 1;
     }
-
-
-
-
-
-    /*
-    public List<Movie> getAllMovies() {
-        List<Movie> allMovieList = new ArrayList<>();
-
-        File moviesFile = new File(MOVIES_FILE);
-
-
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(moviesFile))) {
-            boolean hasLines = true;
-            while (hasLines) {
-                String line = bufferedReader.readLine();
-                hasLines = (line != null);
-                if (hasLines && !line.isBlank())
-                {
-                    String[] separatedLine = line.split(",");
-
-                    int id = Integer.parseInt(separatedLine[0]);
-                    int year = Integer.parseInt(separatedLine[1]);
-                    String title = separatedLine[2];
-                    if(separatedLine.length > 3)
-                    {
-                        for(int i = 3; i < separatedLine.length; i++)
-                        {
-                            title += "," + separatedLine[i];
-                        }
-                    }
-                    Movie movie = new Movie(id, title, year);
-                    allMovieList.add(movie);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return allMovieList;
-    }
-    */
-
-
 }

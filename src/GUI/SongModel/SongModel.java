@@ -47,7 +47,7 @@ public class SongModel {
     }
     public void updateSong(Song updatedSong) throws Exception {
         //Call BLL
-        // Update movie in DB
+        // Update song in DB
         songManager.updateSongs(updatedSong);
         //UPDATE listView
         songsToBeViewed.clear();
