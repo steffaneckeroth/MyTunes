@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="activesoap.jaxb.api" type="repository">
+    <properties maven-id="activesoap:jaxb-api:20050407" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jaxb-api-20050407.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,5 +1,6 @@
 package src.DAL.db;
 
+
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
@@ -10,7 +11,7 @@ public class MySongDatabaseAccessController {
 
     private SQLServerDataSource dataSource;
 
-    public MyDatabaseConnector()
+    public MySongDatabaseAccessController()
     {
         dataSource = new SQLServerDataSource();
         dataSource.setServerName("10.176.111.31");
@@ -26,7 +27,7 @@ public class MySongDatabaseAccessController {
     }
     public static void main(String[] args) throws SQLException {
 
-        MyDatabaseConnector databaseConnector = new MyDatabaseConnector();
+        MySongDatabaseAccessController databaseConnector = new MySongDatabaseAccessController();
 
         try (Connection connection = databaseConnector.getConnection()) {
 

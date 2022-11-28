@@ -1,23 +1,20 @@
 package src.DAL;
 
+
+
+
 import src.BE.Song;
 
 import java.util.List;
 
-public class ISongDataAccess {
-    public List<Song> getAllSongs() throws Exception {
-        return null;
-    }
+public interface ISongDataAccess {
 
-    public Song createSong(String title, int year) throws Exception {
-        return null;
-    }
+    public List<Song> getAllSong() throws Exception;
 
-    public void updateSong(Song song) throws Exception {
+    Song createSong(String title, String artist, String category) throws Exception;
 
-    }
+    public void updateSong(Song song) throws Exception;
 
-    public Song deleteSong(Song song) throws Exception {
-        return null;
-    }
+    public void deleteSong(Song song) throws Exception;
+
 }
