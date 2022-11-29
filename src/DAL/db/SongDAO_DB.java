@@ -1,5 +1,7 @@
 package src.DAL.db;
 
+import src.BE.Artist;
+import src.BE.Category;
 import src.BE.Song;
 import src.DAL.ISongDataAccess;
 
@@ -49,7 +51,7 @@ public class SongDAO_DB implements ISongDataAccess {
         }
     }
 
-    public Song createSong(String title, String artist, String category, String filepath, int duration) throws Exception
+    public Song createSong(String title, Artist artist, Category category, String filepath, int duration) throws Exception
     {
         String sql = "INSERT INTO Song (Title, ArtistId, CategoryId, FilePath, Duration) VALUES (?,?,?,?,?);";
 
@@ -59,8 +61,8 @@ public class SongDAO_DB implements ISongDataAccess {
 
             // Bind parameters
             stmt.setString(1,title);
-            stmt.setString(2, artist);
-            stmt.setString(3, category);
+            stmt.setString(2, String.valueOf(artist));
+            stmt.setString(3, String.valueOf(category));
             stmt.setString(4, filepath);
             stmt.setInt(5, duration);
 

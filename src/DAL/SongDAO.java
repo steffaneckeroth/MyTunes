@@ -1,5 +1,7 @@
 package src.DAL;
 
+import src.BE.Artist;
+import src.BE.Category;
 import src.BE.Song;
 import java.io.*;
 import java.nio.file.Files;
@@ -66,7 +68,7 @@ public class SongDAO implements ISongDataAccess {
      */
 
     @Override
-    public Song createSong(String title, String artist, String category, String filepath, int duration) throws Exception {
+    public Song createSong(String title, Artist artist, Category category, String filepath, int duration) throws Exception {
 
         int nextId = getNextID();
         String newLine = nextId + "," + title + "," + artist + "," + category + "," + filepath + "," + duration;
@@ -113,7 +115,7 @@ public class SongDAO implements ISongDataAccess {
             Files.delete(tmp.toPath());
 
         } catch (IOException ex) {
-            throw new Exception("Could not update movie.", ex);
+            throw new Exception("Could not update song.", ex);
         }
     }
 

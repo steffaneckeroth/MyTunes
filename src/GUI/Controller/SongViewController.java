@@ -26,9 +26,6 @@ public class SongViewController implements Initializable {
     public Button previousButton;
     @FXML
     private Slider songProgressBar;
-
-
-
     private TextField txtTitle;
     private TextField txtArtist;
     private TextField txtCategory;
@@ -36,10 +33,8 @@ public class SongViewController implements Initializable {
     private TextField txtDuration;
     @FXML
     private javafx.scene.control.Label songLabel;
-
     @FXML
     private Button uploadButton ;
-
     @FXML
     private Slider volumeSlider;
     public ListView<Song> lstSongs;
@@ -47,7 +42,6 @@ public class SongViewController implements Initializable {
     private MediaPlayer mediaPlayer;
     public File directory;
     public  File [] files;
-
     private ArrayList<File> songs;
     @FXML
     private Label lblCurrent, lblEnd;
@@ -86,23 +80,14 @@ public class SongViewController implements Initializable {
             public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
                 if (newValue != null){
                     txtTitle.setText(newValue.getTitle());
-                    txtArtist.setText(newValue.getArtist());
-                    txtCategory.setText(newValue.getCategory());
+                    txtArtist.setText(newValue.getArtist().toString());
+                    txtCategory.setText(newValue.getCategory().toString());
                     txtFilePath.setText(newValue.getFilepath());
                     txtDuration.setText(String.valueOf(newValue.getDuration()));
-
                 }
             }
         });
-
-
-
     }
-
-
-
-
-
     @FXML
     public void playMedia(){
 

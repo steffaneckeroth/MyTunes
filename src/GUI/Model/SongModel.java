@@ -1,6 +1,8 @@
 package src.GUI.Model;
 
 // Java imports
+import src.BE.Artist;
+import src.BE.Category;
 import src.BE.Song;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,7 +41,7 @@ public class SongModel {
     }
 
 
-    public void createNewSong(String title, String artist, String category, String filepath, int duration) throws Exception{
+    public void createNewSong(String title, Artist artist, Category category, String filepath, int duration) throws Exception{
         Song m = songManager.createNewSong(title, artist, category, filepath, duration);
 
         songsToBeViewed.add(m);
