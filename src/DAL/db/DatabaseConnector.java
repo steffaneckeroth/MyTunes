@@ -7,11 +7,11 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class MySongDatabaseAccessController {
+public class DatabaseConnector {
 
     private SQLServerDataSource dataSource;
 
-    public MySongDatabaseAccessController()
+    public DatabaseConnector()
     {
         dataSource = new SQLServerDataSource();
         dataSource.setServerName("10.176.111.31");
@@ -27,7 +27,7 @@ public class MySongDatabaseAccessController {
     }
     public static void main(String[] args) throws SQLException {
 
-        MySongDatabaseAccessController databaseConnector = new MySongDatabaseAccessController();
+        DatabaseConnector databaseConnector = new DatabaseConnector();
 
         try (Connection connection = databaseConnector.getConnection()) {
 

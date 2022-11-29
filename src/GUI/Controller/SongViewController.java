@@ -1,6 +1,10 @@
 package src.GUI.Controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.media.MediaPlayer;
+
+import java.awt.*;
 
 public class SongViewController {
 
@@ -14,6 +18,7 @@ public class SongViewController {
     }
 
     public void playMedia(ActionEvent event) {
+
     }
 
     public void changeSpeed(ActionEvent event) {

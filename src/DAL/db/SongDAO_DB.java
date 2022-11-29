@@ -8,10 +8,10 @@ import java.util.List;
 
 public class SongDAO_DB implements ISongDataAccess {
 
-    private MySongDatabaseAccessController databaseConnector;
+    private DatabaseConnector databaseConnector;
 
     public SongDAO_DB() {
-        databaseConnector = new MySongDatabaseAccessController();
+        databaseConnector = new DatabaseConnector();
     }
 
     public List<Song> getAllSong() throws Exception {
