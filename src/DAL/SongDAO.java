@@ -1,8 +1,6 @@
 package src.DAL;
 
 import src.BE.Song;
-import src.DAL.ISongDataAccess;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,7 +17,7 @@ public class SongDAO implements ISongDataAccess {
     private Path pathToFile = Path.of(SONG_FILE);
 
     /**
-     * Retrieve all songs from the data source
+     * Retrieve all movies from the data source
      * @return
      * @throws IOException
      */
@@ -34,13 +32,13 @@ public class SongDAO implements ISongDataAccess {
             for (String line : lines) {
                 String[] separatedLine = line.split(",");
 
-                // Map each separated line to song object
+                // Map each separated line to Movie object
                 int id = Integer.parseInt(separatedLine[0]);
                 String title = separatedLine[1];
                 String artist = separatedLine[2];
                 String category = separatedLine[3];
 
-                // Create song object
+                // Create Movie object
 
                 Song newSong = new Song(id, title, artist, category);
                 songs.add(newSong);
@@ -58,7 +56,7 @@ public class SongDAO implements ISongDataAccess {
     }
 
     /**
-     * Create a new song
+     * Create a new movie
      * @param title
      * @param artist
      * @return
@@ -84,19 +82,19 @@ public class SongDAO implements ISongDataAccess {
     }
 
     /**
-     * Update a song with param song
+     * Update a movie with param movie
      * @param song
      * @throws Exception
      */
     @Override
-    public void updateSong(Song song) throws Exception {
+    public void updateSongs(Song song) throws Exception {
         try {
             File tmp = new File(song.hashCode() + ".txt"); //Creates a temp file for writing to.
             List<Song> allSongs = getAllSong();
             allSongs.removeIf((Song t) -> t.getId() == song.getId());
             allSongs.add(song);
 
-            //I'll sort the songs by their ID's
+            //I'll sort the movies by their ID's
             allSongs.sort(Comparator.comparingInt(Song::getId));
 
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(tmp))) {
@@ -106,23 +104,23 @@ public class SongDAO implements ISongDataAccess {
                 }
             }
 
-            //Overwrite the song file wit the tmp one.
+            //Overwrite the movie file wit the tmp one.
             Files.copy(tmp.toPath(), new File(SONG_FILE).toPath(), StandardCopyOption.REPLACE_EXISTING);
             //Clean up after the operation is done (Remove tmp)
             Files.delete(tmp.toPath());
 
         } catch (IOException ex) {
-            throw new Exception("Could not update song.", ex);
+            throw new Exception("Could not update movie.", ex);
         }
     }
 
     /**
-     * Delete a song from the collection
+     * Delete a movie from the collection
      * @param song
      * @throws Exception
      */
     @Override
-    public void deleteSong(Song song) throws Exception {
+    public void deleteSongs(Song song) throws Exception {
 
         try {
             File file = new File(SONG_FILE);
@@ -154,12 +152,12 @@ public class SongDAO implements ISongDataAccess {
     public Song getSong(int id) throws Exception {
         List<Song> all = getAllSong();
 
-        int index = Collections.binarySearch(all, new Song(id, "", "", ""), Comparator.comparingInt(Song::getId));
+        int index = Collections.binarySearch(all, new Song(id, "", "",""), Comparator.comparingInt(Song::getId));
 
         if (index >= 0) {
             return all.get(index);
         } else {
-            throw new IllegalArgumentException("No song with ID: " + id + " is found.");
+            throw new IllegalArgumentException("No movie with ID: " + id + " is found.");
         }
     }
 

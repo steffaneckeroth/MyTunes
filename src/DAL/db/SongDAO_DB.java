@@ -83,12 +83,12 @@ public class SongDAO_DB implements ISongDataAccess {
         }
     }
 
-    public void updateSong(Song song) throws Exception {
+    public void updateSongs(Song song) throws Exception {
         //TODO Do this
         throw new UnsupportedOperationException();
     }
 
-    public void deleteSong(Song song) throws Exception {
+    public void deleteSongs(Song song) throws Exception {
         //TODO Do this
         throw new UnsupportedOperationException();
     }

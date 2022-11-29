@@ -1,4 +1,4 @@
-package src.GUI.SongModel;
+package src.GUI.Model;
 
 // Java imports
 import src.BE.Song;
@@ -8,8 +8,7 @@ import java.util.List;
 
 // Project imports
 
-import src.BLL.SongManager;
-import src.BE.Song;
+import BLL.SongManager;
 
 /**
  * @author smsj
@@ -39,22 +38,23 @@ public class SongModel {
         songsToBeViewed.addAll(searchResults);
     }
 
+
     public void createNewSong(String title, String artist, String category) throws Exception{
         Song m = songManager.createNewSong(title, artist, category);
 
         songsToBeViewed.add(m);
     }
-    public void updateSong(Song updatedSong) throws Exception {
+    public void updateSongs(Song updatedSongs) throws Exception {
         //Call BLL
-        // Update song in DB
-        songManager.updateSong(updatedSong);
+        // Update movie in DB
+        songManager.updateSongs(updatedSongs);
         //UPDATE listView
         songsToBeViewed.clear();
         songsToBeViewed.addAll(songManager.getAllSongs());
     }
 
-    public void deleteSong(Song deletedSong) throws Exception {
-        songManager.deleteSong(deletedSong);
+    public void deleteSongs(Song deletedSongs) throws Exception {
+        songManager.deleteSongs(deletedSongs);
         songsToBeViewed.clear();
         songsToBeViewed.addAll(songManager.getAllSongs());
     }

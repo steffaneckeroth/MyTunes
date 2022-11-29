@@ -1,8 +1,5 @@
 package src.DAL;
 
-
-
-
 import src.BE.Song;
 
 import java.util.List;
@@ -13,8 +10,8 @@ public interface ISongDataAccess {
 
     Song createSong(String title, String artist, String category) throws Exception;
 
-    public void updateSong(Song song) throws Exception;
+    public void updateSongs(Song song) throws Exception;
 
-    public void deleteSong(Song song) throws Exception;
+    public void deleteSongs(Song song) throws Exception;
 
 }
