@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
@@ -23,7 +22,6 @@
             <Image url="@../../Images/106.png" />
          </image></ImageView>
       <Button disable="true" layoutX="-1.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="1103.0" />
-      <Button fx:id="pauseButton" layoutX="343.0" layoutY="7.0" mnemonicParsing="false" onAction="#pauseMedia" prefHeight="35.0" prefWidth="70.0" text="PAUSE" />
       <Button fx:id="playButton" blendMode="HARD_LIGHT" layoutX="103.0" layoutY="2.0" minWidth="49.0" mnemonicParsing="false" onAction="#playMedia" prefHeight="35.0" prefWidth="49.0" style="-fx-background-color: gray;">
          <graphic>
             <ImageView fitHeight="39.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
@@ -32,7 +30,6 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="resetButton" layoutX="251.0" layoutY="7.0" mnemonicParsing="false" onAction="#resetMedia" prefHeight="35.0" prefWidth="70.0" text="RESET" />
       <Button fx:id="previousButton" blendMode="HARD_LIGHT" layoutX="31.0" minWidth="42.0" mnemonicParsing="false" onAction="#previousMedia" prefHeight="35.0" prefWidth="42.0" style="-fx-background-color: gray;">
          <graphic>
             <ImageView fitHeight="44.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
@@ -49,9 +46,8 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <ComboBox fx:id="speedBox" blendMode="HARD_LIGHT" layoutX="987.0" layoutY="7.0" onAction="#changeSpeed" opacity="0.75" prefHeight="38.0" prefWidth="88.0" promptText="SPEED" />
       <Slider fx:id="volumeSlider" blendMode="HARD_LIGHT" layoutX="60.0" layoutY="60.0" max="100.0" value="50.0" />
-      <Label fx:id="songLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="235.0" layoutY="619.0" text="MP3 Payer" textFill="WHITE">
+      <Label fx:id="songLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="14.0" text="Playing: " textFill="WHITE">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
@@ -111,7 +107,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <TextField layoutX="863.0" layoutY="66.0" opacity="0.75" style="-fx-background-color: white;" />
+      <TextField layoutX="863.0" layoutY="66.0" opacity="0.75" style="-fx-background-color: white;" text="Search" />
       <ImageView fitHeight="18.0" fitWidth="21.0" layoutX="40.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Images/Audio-PNG.png" />
