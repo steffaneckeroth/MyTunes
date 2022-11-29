@@ -1,5 +1,7 @@
 package src.GUI.Controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,13 +17,23 @@ import java.awt.*;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public class SongViewController implements Initializable {
 
     public javafx.scene.image.ImageView imageView;
     public Button playButton;
+    public Button previousButton;
     @FXML
     private Slider songProgressBar;
+
+
+
+    private TextField txtTitle;
+    private TextField txtArtist;
+    private TextField txtCategory;
+    private TextField txtFilePath;
+    private TextField txtDuration;
     @FXML
     private javafx.scene.control.Label songLabel;
 
@@ -67,7 +79,30 @@ public class SongViewController implements Initializable {
         mediaPlayer = new MediaPlayer(media);
         songLabel.setText(songs.get(songNumber).getName());
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue()* 0.01));
+
+        lstSongs.setItems(songModel.getObservableSongs());
+        lstSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
+            @Override
+            public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
+                if (newValue != null){
+                    txtTitle.setText(newValue.getTitle());
+                    txtArtist.setText(newValue.getArtist());
+                    txtCategory.setText(newValue.getCategory());
+                    txtFilePath.setText(newValue.getFilepath());
+                    txtDuration.setText(String.valueOf(newValue.getDuration()));
+
+                }
+            }
+        });
+
+
+
     }
+
+
+
+
+
     @FXML
     public void playMedia(){
 

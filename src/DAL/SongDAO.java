@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SongDAO implements ISongDataAccess {
 
-    private static final String SONG_FILE = "MyTunes/lib/music";
+    private static final String SONG_FILE = "lib/Songtxtfile/Songs.txt";
     private Path pathToFile = Path.of(SONG_FILE);
 
     /**
@@ -37,10 +37,12 @@ public class SongDAO implements ISongDataAccess {
                 String title = separatedLine[1];
                 String artist = separatedLine[2];
                 String category = separatedLine[3];
+                String filepath = separatedLine[4];
+                int duration = Integer.parseInt(separatedLine[5]);
 
                 // Create Movie object
 
-                Song newSong = new Song(id, title, artist, category);
+                Song newSong = new Song(id, title, artist, category, filepath, duration);
                 songs.add(newSong);
 
                 //System.out.println(separatedLine);
@@ -64,10 +66,10 @@ public class SongDAO implements ISongDataAccess {
      */
 
     @Override
-    public Song createSong(String title, String artist, String category) throws Exception {
+    public Song createSong(String title, String artist, String category, String filepath, int duration) throws Exception {
 
         int nextId = getNextID();
-        String newLine = nextId + "," + title + "," + artist + "," + category;
+        String newLine = nextId + "," + title + "," + artist + "," + category + "," + filepath + "," + duration;
 
         // Append new line using Java NIO
         //Files.write(pathToFile, ("\r\n" + newLine).getBytes(), APPEND);
@@ -75,10 +77,10 @@ public class SongDAO implements ISongDataAccess {
         // Append new line using BufferedWriter
         try (BufferedWriter bw = Files.newBufferedWriter(pathToFile, StandardOpenOption.SYNC, StandardOpenOption.APPEND, StandardOpenOption.WRITE)) {
             bw.newLine();
-            bw.write(nextId + "," + title + "," + "," +artist + "," + category);
+            bw.write(nextId + "," + title + "," + "," +artist + "," + category + "," + filepath + "," + duration);
         }
 
-        return new Song(nextId, title, artist, category);
+        return new Song(nextId, title, artist, category, filepath, duration);
     }
 
     /**
@@ -98,8 +100,9 @@ public class SongDAO implements ISongDataAccess {
             allSongs.sort(Comparator.comparingInt(Song::getId));
 
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(tmp))) {
-                for (Song mov : allSongs) {
-                    bw.write(mov.getId() + "," + mov.getTitle() + "," + mov.getArtist() + "," + mov.getCategory());
+                for (Song son : allSongs) {
+                    bw.write(son.getId() + "," + son.getTitle()
+                 + "," + son.getArtist() + "," + son.getCategory() + "," + son.getFilepath() + "," + son.getDuration());
                     bw.newLine();
                 }
             }
@@ -131,8 +134,9 @@ public class SongDAO implements ISongDataAccess {
             songs.remove(song);
             OutputStream os = Files.newOutputStream(file.toPath());
             try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os))) {
-                for (Song mov : songs) {
-                    String line = mov.getId() + "," + mov.getTitle() + "," + mov.getArtist() + "," + mov.getCategory();
+                for (Song son : songs) {
+                    String line = son.getId() + "," + son.getTitle() + "," + son.getArtist()
+                    + "," + son.getCategory() + "," + son.getFilepath() + "," + son.getDuration();
                     bw.write(line);
                     bw.newLine();
                 }
@@ -152,12 +156,12 @@ public class SongDAO implements ISongDataAccess {
     public Song getSong(int id) throws Exception {
         List<Song> all = getAllSong();
 
-        int index = Collections.binarySearch(all, new Song(id, "", "",""), Comparator.comparingInt(Song::getId));
+        int index = Collections.binarySearch(all, new Song(id, "", "","","", 0), Comparator.comparingInt(Song::getId));
 
         if (index >= 0) {
             return all.get(index);
         } else {
-            throw new IllegalArgumentException("No movie with ID: " + id + " is found.");
+            throw new IllegalArgumentException("No song with ID: " + id + " is found.");
         }
     }
 

@@ -27,8 +27,8 @@ public class SongManager {
         return searchResult;
     }
 
-    public Song createNewSong(String title, String artist, String category) throws Exception {
-        return songDAO.createSong(title, artist, category);
+    public Song createNewSong(String title, String artist, String category, String filepath, int duration) throws Exception {
+        return songDAO.createSong(title, artist, category, filepath, duration);
     }
 
     public void updateSongs(Song updatedSongs) throws Exception {

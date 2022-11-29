@@ -2,6 +2,7 @@ package src.DAL.db;
 
 import src.BE.Song;
 import src.DAL.ISongDataAccess;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +33,10 @@ public class SongDAO_DB implements ISongDataAccess {
                 String title = rs.getString("Title");
                 String artist = rs.getString("Artist");
                 String category = rs.getString("Category");
+                String filepath = rs.getString("Filepath");
+                int duration = rs.getInt("Duration");
 
-                Song song = new Song(id, title, artist, category);
+                Song song = new Song(id, title, artist, category, filepath, duration);
                 allSong.add(song);
             }
             return allSong;
@@ -46,9 +49,9 @@ public class SongDAO_DB implements ISongDataAccess {
         }
     }
 
-    public Song createSong(String title, String artist, String category) throws Exception
+    public Song createSong(String title, String artist, String category, String filepath, int duration) throws Exception
     {
-        String sql = "INSERT INTO Song (Title, ArtistId,) VALUES (?,?);";
+        String sql = "INSERT INTO Song (Title, ArtistId, CategoryId, FilePath, Duration) VALUES (?,?,?,?,?);";
 
         try (Connection coon = databaseConnector.getConnection())
         {
@@ -58,6 +61,9 @@ public class SongDAO_DB implements ISongDataAccess {
             stmt.setString(1,title);
             stmt.setString(2, artist);
             stmt.setString(3, category);
+            stmt.setString(4, filepath);
+            stmt.setInt(5, duration);
+
 
             //Run the specified SQL statement
             stmt.executeUpdate();
@@ -72,7 +78,7 @@ public class SongDAO_DB implements ISongDataAccess {
             }
 
             // Create song object and send up the layers
-            Song song = new Song(id, title, artist, category);
+            Song song = new Song(id, title, artist, category, filepath, duration);
             return song;
         }
 
