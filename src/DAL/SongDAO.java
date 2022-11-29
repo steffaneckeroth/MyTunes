@@ -1,7 +1,6 @@
 package src.DAL;
 
 import src.BE.Song;
-import src.DAL.ISongDataAccess;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class SongDAO implements ISongDataAccess {
 
-    private static final String SONG_FILE = "MyTunes/lib/music";
+    private static final String SONG_FILE = "MyTunes/lib/Song";
     private Path pathToFile = Path.of(SONG_FILE);
 
     /**
@@ -39,10 +38,13 @@ public class SongDAO implements ISongDataAccess {
                 String title = separatedLine[1];
                 String artist = separatedLine[2];
                 String category = separatedLine[3];
+                String filepath = separatedLine[4];
+                int duration = Integer.parseInt(separatedLine[5]);
+
 
                 // Create song object
 
-                Song newSong = new Song(id, title, artist, category);
+                Song newSong = new Song(id, title, artist, category, filepath, duration);
                 songs.add(newSong);
 
                 //System.out.println(separatedLine);
