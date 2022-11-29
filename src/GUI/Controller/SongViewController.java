@@ -14,10 +14,7 @@ import src.GUI.Model.SongModel;
 import java.awt.*;
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.ResourceBundle;
-import java.util.Timer;
+import java.util.*;
 
 public class SongViewController implements Initializable {
 
@@ -69,20 +66,93 @@ public class SongViewController implements Initializable {
         media = new Media(songs.get(songNumber).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         songLabel.setText(songs.get(songNumber).getName());
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue()* 0.01));
     }
     @FXML
     public void playMedia(){
+
+        beginTimer();
         mediaPlayer.play();
+        mediaPlayer.setVolume(volumeSlider.getValue()* 0.01);
+        imageView.setVisible(false);
+        if (running)
+        {
+            mediaPlayer.stop();
+            imageView.setVisible(true);
+        }
+        else
+        {
+            mediaPlayer.play();
+            imageView.setVisible(false);
+        }
     }
+
     public void previousMedia()
     {
+        if (songNumber > 0)
+        {
+            songNumber--;
+        }
+        else {
+            songNumber = songs.size() -1;
+        }
+        mediaPlayer.stop();
+        if (running)
+        {
+            cancelTimer();
+        }
+        media = new Media(songs.get(songNumber).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        songLabel.setText(songs.get(songNumber).getName());
+        playMedia();
+        imageView.setVisible(false);
+    }
 
+    public void nextMedia()
+    {
+        if (songNumber < songs.size()-1)
+        {
+            songNumber++;
+        }
+        else {
+            songNumber = 0;
+        }
+        mediaPlayer.stop();
+        if (running)
+        {
+            cancelTimer();
+        }
+        media = new Media(songs.get(songNumber).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        songLabel.setText(songs.get(songNumber).getName());
+        playMedia();
+        imageView.setVisible(false);
     }
     public void UploadSong()
     {
-    }
-    public void nextMedia()
-    {
 
+    }
+    public void beginTimer()
+    {
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                running = true;
+                double current = mediaPlayer.getCurrentTime().toSeconds();
+                double end = media.getDuration().toSeconds();
+                songProgressBar.setValue(current);
+
+                if (current / end == 1) {
+                    cancelTimer();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task,1000, 1000);
+    }
+    public void cancelTimer()
+    {
+        running = false;
+        timer.cancel();
     }
 }

@@ -1,4 +1,4 @@
-package BLL;
+package src.BLL;
 
 import src.BE.Song;
 import src.BLL.unit.SongSearcher;

@@ -8,7 +8,7 @@ import java.util.List;
 
 // Project imports
 
-import BLL.SongManager;
+import src.BLL.SongManager;
 
 /**
  * @author smsj
