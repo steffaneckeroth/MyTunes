@@ -225,10 +225,9 @@ public class SongViewController implements Initializable {
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setOpacity(1);
         stage.setTitle("My New Stage Title");
-        stage.setScene(new Scene(root, 450, 450));
-        stage.showAndWait();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
 
