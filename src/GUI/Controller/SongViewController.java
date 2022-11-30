@@ -218,7 +218,8 @@ public class SongViewController implements Initializable {
     }
 
 
-    public void UploadSong(ActionEvent actionEvent) throws IOException {
+    public void UploadSong(ActionEvent actionEvent) throws IOException
+    {
         Parent root = FXMLLoader.load(getClass().getResource("src/GUI/View/NewSongView.fxml"));
         Stage primaryStage = new Stage();
         primaryStage.setTitle("New Song");
