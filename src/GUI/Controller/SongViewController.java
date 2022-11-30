@@ -6,23 +6,23 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-<<<<<<< HEAD
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-=======
+
 import javafx.scene.control.*;
->>>>>>> main
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-<<<<<<< HEAD
+
 import javafx.stage.Stage;
-=======
+
 import src.BE.Artist;
 import src.BE.Category;
->>>>>>> main
+
 import src.BE.Song;
 import src.GUI.Model.SongModel;
 import java.awt.*;
@@ -38,14 +38,14 @@ public class SongViewController implements Initializable {
     public javafx.scene.image.ImageView imageView;
     public Button playButton;
     public Button previousButton;
-<<<<<<< HEAD
+
     public Button uploadButton;
-=======
+
     public TableColumn<Song, String> drtCol;
     public TableColumn<Song, Category> catCol;
     public TableColumn<Song, Artist> artCol;
     public TableColumn<Song, String> tltCol;
->>>>>>> main
+
     @FXML
     private Slider songProgressBar;
     //private TextField txtTitle;
