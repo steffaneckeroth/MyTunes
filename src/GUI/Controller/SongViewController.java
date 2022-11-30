@@ -4,17 +4,22 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import src.BE.Song;
 import src.GUI.Model.SongModel;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -24,6 +29,7 @@ public class SongViewController implements Initializable {
     public javafx.scene.image.ImageView imageView;
     public Button playButton;
     public Button previousButton;
+    public Button uploadButton;
     @FXML
     private Slider songProgressBar;
     private TextField txtTitle;
@@ -33,8 +39,7 @@ public class SongViewController implements Initializable {
     private TextField txtDuration;
     @FXML
     private javafx.scene.control.Label songLabel;
-    @FXML
-    private Button uploadButton ;
+
     @FXML
     private Slider volumeSlider;
     public ListView<Song> lstSongs;
@@ -148,10 +153,7 @@ public class SongViewController implements Initializable {
         playMedia();
         imageView.setVisible(false);
     }
-    public void UploadSong()
-    {
 
-    }
     public void beginTimer()
     {
         timer = new Timer();
@@ -175,4 +177,13 @@ public class SongViewController implements Initializable {
         running = false;
         timer.cancel();
     }
+
+    public void UploadSong(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("src/GUI/View/NewSongView.fxml"));
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("New Song");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
+
 }
