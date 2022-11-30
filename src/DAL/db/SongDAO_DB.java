@@ -22,7 +22,8 @@ public class SongDAO_DB implements ISongDataAccess {
 
         try (Connection conn = databaseConnector.getConnection())
         {
-            String sql = "SELECT * FROM Song;";
+            String sql = "SELECT * FROM Song INNER JOIN Category ON Song.CategoryId = Category.Id INNER JOIN Artist ON Song.ArtistId = Artist.Id";
+
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -30,15 +31,16 @@ public class SongDAO_DB implements ISongDataAccess {
             while (rs.next()) {
 
                 //Map DB row to Song object
-                int id = rs.getInt("Id");
-                String title = rs.getString("Title");
-                String artist = rs.getString("ArtistId");
-                String category = rs.getString("CategoryId");
-                String filepath = rs.getString("Filepath");
-                Time duration = rs.getTime("Duration");
-
-                Artist artist1 = new Artist(1,"test");
-                Category category1 = new Category(1, "test");
+                int id = rs.getInt(1);
+                String title = rs.getString(2);
+                int artist = rs.getInt(3);
+                int category = rs.getInt(4);
+                String filepath = rs.getString(5);
+                Time duration = rs.getTime(6);
+                String artistName = rs.getString(10);
+                String categoryName = rs.getString(8);
+                Artist artist1 = new Artist(artist,artistName);
+                Category category1 = new Category(category, categoryName);
 
 
                 Song song = new Song(id, title, artist1, category1, filepath, duration);

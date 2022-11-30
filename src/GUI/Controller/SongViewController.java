@@ -1,5 +1,8 @@
 package src.GUI.Controller;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -11,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import src.BE.Artist;
 import src.BE.Category;
 import src.BE.Song;
@@ -21,9 +25,9 @@ import java.io.File;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class SongViewController implements Initializable {
-
     public javafx.scene.image.ImageView imageView;
     public Button playButton;
     public Button previousButton;
@@ -45,7 +49,6 @@ public class SongViewController implements Initializable {
     @FXML
     private Slider volumeSlider;
     public TableView<Song> tblSongs;
-    
     private Media media;
     private MediaPlayer mediaPlayer;
     public File directory;
@@ -58,26 +61,29 @@ public class SongViewController implements Initializable {
     private boolean running;
     private SongModel songModel;
 
-    public SongViewController()  {
-        try {
+    public SongViewController()
+    {
+        try
+        {
             songModel = new SongModel();
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             displayError(e);
         }
     }
-    private void displayError(Exception e) {
+    private void displayError(Exception e)
+    {
     }
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-
-
+    public void initialize(URL arg0, ResourceBundle arg1)
+    {
         songs = new ArrayList<>();
         directory = new File("lib/music");
         files = directory.listFiles();
         tblSongs.setItems(songModel.getObservableSongs());
         tltCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        artCol.setCellValueFactory(new PropertyValueFactory<>("Artist"));
-        catCol.setCellValueFactory(new PropertyValueFactory<>("Category"));
+        artCol.setCellValueFactory(c-> new SimpleObjectProperty<Artist>(c.getValue().getArtist()));
+        catCol.setCellValueFactory(c-> new SimpleObjectProperty<Category>(c.getValue().getCategory()));
         drtCol.setCellValueFactory(new PropertyValueFactory<>("Duration"));
         if (files != null)
         {
@@ -87,11 +93,12 @@ public class SongViewController implements Initializable {
         mediaPlayer = new MediaPlayer(media);
         songLabel.setText(songs.get(songNumber).getName());
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue()* 0.01));
-
         tblSongs.setItems(songModel.getObservableSongs());
-        tblSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
+        tblSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>()
+        {
             @Override
-            public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
+            public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue)
+            {
                 /*if (newValue != null){
                     txtTitle.setText(newValue.getTitle());
                     txtArtist.setText(newValue.getArtist().toString());
@@ -104,8 +111,8 @@ public class SongViewController implements Initializable {
         });
     }
     @FXML
-    public void playMedia(){
-
+    public void playMedia()
+    {
         beginTimer();
         mediaPlayer.play();
         mediaPlayer.setVolume(volumeSlider.getValue()* 0.01);
@@ -118,6 +125,7 @@ public class SongViewController implements Initializable {
         else
         {
             mediaPlayer.play();
+            viewTime();
             imageView.setVisible(false);
         }
     }
@@ -140,6 +148,7 @@ public class SongViewController implements Initializable {
         mediaPlayer = new MediaPlayer(media);
         songLabel.setText(songs.get(songNumber).getName());
         playMedia();
+        viewTime();
         imageView.setVisible(false);
     }
 
@@ -161,6 +170,7 @@ public class SongViewController implements Initializable {
         mediaPlayer = new MediaPlayer(media);
         songLabel.setText(songs.get(songNumber).getName());
         playMedia();
+        viewTime();
         imageView.setVisible(false);
     }
     public void UploadSong()
@@ -170,9 +180,11 @@ public class SongViewController implements Initializable {
     public void beginTimer()
     {
         timer = new Timer();
-        TimerTask task = new TimerTask() {
+        TimerTask task = new TimerTask()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 running = true;
                 double current = mediaPlayer.getCurrentTime().toSeconds();
                 double end = media.getDuration().toSeconds();
@@ -189,5 +201,47 @@ public class SongViewController implements Initializable {
     {
         running = false;
         timer.cancel();
+    }
+    private void bindCurrentTimeLabel()
+    {
+        lblCurrent.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return getTime(mediaPlayer.getCurrentTime());
+            }
+        }, mediaPlayer.currentTimeProperty()));
+
+
+    }
+
+    private void bindTotalTimeLabel()
+    {
+        lblEnd.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return getTime(mediaPlayer.getTotalDuration());
+            }
+        }, mediaPlayer.currentTimeProperty()));
+    }
+    private String getTime(Duration time)
+    {
+
+        int hours = (int) time.toHours();
+        int minutes = (int) time.toMinutes();
+        int seconds = (int) time.toSeconds();
+        if(seconds > 59)
+            seconds = seconds % 60;
+        if(minutes > 59)
+            minutes = minutes % 60;
+        if(hours > 59)
+            hours = hours % 60;
+        if(hours > 0)
+            return String.format("%d:%02d:%02d", hours, minutes, seconds);
+        else return String.format("%02d:%02d", minutes, seconds);
+    }
+    private void viewTime()
+    {
+        bindTotalTimeLabel();
+        bindCurrentTimeLabel();
     }
 }
