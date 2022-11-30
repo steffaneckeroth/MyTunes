@@ -15,9 +15,9 @@ public class DatabaseConnector {
     {
         dataSource = new SQLServerDataSource();
         dataSource.setServerName("10.176.111.31");
-        dataSource.setDatabaseName("MyTuunes");
-        dataSource.setUser("CSe22A_25");
-        dataSource.setPassword("CSe22A_25");
+        dataSource.setDatabaseName("EASV_MYTUNES_2022");
+        dataSource.setUser("CSe22A_9");
+        dataSource.setPassword("CSe22A_9");
         dataSource.setTrustServerCertificate(true);
         // dataSource.setPortNumber(1433);
     }

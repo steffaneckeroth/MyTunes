@@ -17,10 +17,7 @@ public class Artist {
 
     @Override
     public String toString() {
-        return "Artist{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 
     public String getArtist() {
@@ -36,4 +33,6 @@ public class Artist {
     public Collection<Object> toLowerCase() {
         return null;
     }
+
+
 }
