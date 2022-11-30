@@ -7,7 +7,8 @@
    <children>
       <TextField layoutX="185.0" layoutY="69.0" prefHeight="34.0" prefWidth="255.0" promptText="Title" />
       <TextField layoutX="185.0" layoutY="275.0" prefHeight="34.0" prefWidth="181.0" promptText="File" />
-      <TextField layoutX="189.0" layoutY="166.0" prefHeight="34.0" prefWidth="86.0" promptText="Category" />
+      <TextField layoutX="175.0" layoutY="166.0" prefHeight="34.0" prefWidth="86.0" promptText="Category" />
+      <ComboBox fx:id="cbxDropDown" editable="true" layoutX="276.0" layoutY="171.0" onAction="#handleDropDown" prefHeight="25.0" prefWidth="86.0" promptText="DropdownEdit" />
       <TextField layoutX="189.0" layoutY="222.0" prefHeight="34.0" prefWidth="143.0" promptText="Time" />
       <Button layoutX="385.0" layoutY="280.0" mnemonicParsing="false" text="Choose..." />
       <Button layoutX="436.0" layoutY="342.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Save" />
@@ -20,7 +21,5 @@
       <Label contentDisplay="CENTER" layoutX="121.0" layoutY="166.0" prefHeight="34.0" prefWidth="64.0" text="Category:" textAlignment="CENTER" />
       <Label contentDisplay="CENTER" layoutX="132.0" layoutY="222.0" prefHeight="34.0" prefWidth="43.0" text="Time:" textAlignment="CENTER" />
       <Label contentDisplay="CENTER" layoutX="132.0" layoutY="276.0" prefHeight="34.0" prefWidth="43.0" text="File:" textAlignment="CENTER" />
-      <ComboBox layoutX="289.0" layoutY="171.0" prefHeight="25.0" prefWidth="86.0" />
-      <DialogPane />
    </children>
 </AnchorPane>
