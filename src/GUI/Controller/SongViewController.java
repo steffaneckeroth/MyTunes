@@ -22,6 +22,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -218,13 +219,16 @@ public class SongViewController implements Initializable {
     }
 
 
-    public void UploadSong(ActionEvent actionEvent) throws IOException
-    {
-        Parent root = FXMLLoader.load(getClass().getResource("src/GUI/View/NewSongView.fxml"));
-        Stage primaryStage = new Stage();
-        primaryStage.setTitle("New Song");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+    @FXML
+    private void UploadSong (ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/NewSongView.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setOpacity(1);
+        stage.setTitle("My New Stage Title");
+        stage.setScene(new Scene(root, 450, 450));
+        stage.showAndWait();
     }
 
 
