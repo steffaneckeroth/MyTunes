@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -44,8 +45,9 @@ public class SongDAO implements ISongDataAccess {
 
                 // Create Movie object
 
-                Song newSong = new Song(id, title, artist, category, filepath, duration);
-                songs.add(newSong);
+
+                //Song newSong = new Song(id, title, artist, category, filepath, duration);
+                //songs.add(newSong);
 
                 //System.out.println(separatedLine);
             }
@@ -59,6 +61,8 @@ public class SongDAO implements ISongDataAccess {
         }
     }
 
+
+
     /**
      * Create a new movie
      * @param title
@@ -68,7 +72,7 @@ public class SongDAO implements ISongDataAccess {
      */
 
     @Override
-    public Song createSong(String title, Artist artist, Category category, String filepath, int duration) throws Exception {
+    public Song createSong(String title, Artist artist, Category category, String filepath, Time duration) throws Exception {
 
         int nextId = getNextID();
         String newLine = nextId + "," + title + "," + artist + "," + category + "," + filepath + "," + duration;
@@ -155,7 +159,7 @@ public class SongDAO implements ISongDataAccess {
      * @return
      * @throws Exception
      */
-    public Song getSong(int id) throws Exception {
+    /**public Song getSong(int id) throws Exception {
         List<Song> all = getAllSong();
 
         int index = Collections.binarySearch(all, new Song(id, "", "","","", 0), Comparator.comparingInt(Song::getId));
@@ -166,6 +170,7 @@ public class SongDAO implements ISongDataAccess {
             throw new IllegalArgumentException("No song with ID: " + id + " is found.");
         }
     }
+     **/
 
 
 

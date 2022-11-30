@@ -13,6 +13,14 @@ public class Category {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public String getCategory() {
         return name;
     }

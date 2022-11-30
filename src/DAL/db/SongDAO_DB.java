@@ -1,5 +1,4 @@
 package src.DAL.db;
-
 import src.BE.Artist;
 import src.BE.Category;
 import src.BE.Song;
@@ -33,13 +32,18 @@ public class SongDAO_DB implements ISongDataAccess {
                 //Map DB row to Song object
                 int id = rs.getInt("Id");
                 String title = rs.getString("Title");
-                String artist = rs.getString("Artist");
-                String category = rs.getString("Category");
+                String artist = rs.getString("ArtistId");
+                String category = rs.getString("CategoryId");
                 String filepath = rs.getString("Filepath");
-                int duration = rs.getInt("Duration");
+                Time duration = rs.getTime("Duration");
 
-                Song song = new Song(id, title, artist, category, filepath, duration);
+                Artist artist1 = new Artist(1,"test");
+                Category category1 = new Category(1, "test");
+
+
+                Song song = new Song(id, title, artist1, category1, filepath, duration);
                 allSong.add(song);
+
             }
             return allSong;
 
@@ -51,7 +55,7 @@ public class SongDAO_DB implements ISongDataAccess {
         }
     }
 
-    public Song createSong(String title, Artist artist, Category category, String filepath, int duration) throws Exception
+    public Song createSong(String title, Artist artist, Category category, String filepath, Time duration) throws Exception
     {
         String sql = "INSERT INTO Song (Title, ArtistId, CategoryId, FilePath, Duration) VALUES (?,?,?,?,?);";
 
@@ -64,7 +68,7 @@ public class SongDAO_DB implements ISongDataAccess {
             stmt.setString(2, String.valueOf(artist));
             stmt.setString(3, String.valueOf(category));
             stmt.setString(4, filepath);
-            stmt.setInt(5, duration);
+            stmt.setTime(5, duration);
 
 
             //Run the specified SQL statement

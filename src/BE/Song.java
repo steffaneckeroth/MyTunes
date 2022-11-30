@@ -1,14 +1,16 @@
 package src.BE;
 
+import java.sql.Time;
+
 public class Song {
     private int id;
     private String title;
     private Artist artist;
     private Category category;
     private String filepath;
-    private int duration;
+    private Time duration;
 
-    public Song(int id, String title, Artist artist, Category category, String filepath, int duration) {
+    public Song(int id, String title, Artist artist, Category category, String filepath, Time duration) {
         this.id = id;
         this.title = title;
         this.artist = artist;
@@ -42,10 +44,10 @@ public class Song {
     }
     public void setTitle(String title) {this.title = title;}
 
-    public int getDuration() {
+    public Time getDuration() {
         return duration;
     }
-    public void setDuration(int duration) {
+    public void setDuration(Time duration) {
         this.duration = duration;
     }
     public String getFilepath() {

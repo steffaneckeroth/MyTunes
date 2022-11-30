@@ -9,11 +9,20 @@ public class Artist {
 
     public Artist(int id,  String name) {
         this.id = id;
-        this.name = name.toString();
+        this.name = name;
     }
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Artist{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public String getArtist() {
         return name;
     }
