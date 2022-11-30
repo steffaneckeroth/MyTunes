@@ -20,13 +20,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-<<<<<<< HEAD
+
 
 import javafx.stage.Stage;
 
-=======
+
 import javafx.util.Duration;
->>>>>>> databaseAndTableViewAndJoins
+
 import src.BE.Artist;
 import src.BE.Category;
 
@@ -216,7 +216,7 @@ public class SongViewController implements Initializable {
         running = false;
         timer.cancel();
     }
-<<<<<<< HEAD
+
 
     public void UploadSong(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("src/GUI/View/NewSongView.fxml"));
@@ -226,7 +226,7 @@ public class SongViewController implements Initializable {
         primaryStage.show();
     }
 
-=======
+
     private void bindCurrentTimeLabel()
     {
         lblCurrent.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
@@ -269,5 +269,4 @@ public class SongViewController implements Initializable {
         bindTotalTimeLabel();
         bindCurrentTimeLabel();
     }
->>>>>>> databaseAndTableViewAndJoins
 }
