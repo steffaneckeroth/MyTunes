@@ -6,18 +6,27 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+<<<<<<< HEAD
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+=======
+import javafx.scene.control.*;
+>>>>>>> main
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+<<<<<<< HEAD
 import javafx.stage.Stage;
+=======
+import src.BE.Artist;
+import src.BE.Category;
+>>>>>>> main
 import src.BE.Song;
 import src.GUI.Model.SongModel;
 import java.awt.*;
+import java.awt.TextField;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -29,20 +38,28 @@ public class SongViewController implements Initializable {
     public javafx.scene.image.ImageView imageView;
     public Button playButton;
     public Button previousButton;
+<<<<<<< HEAD
     public Button uploadButton;
+=======
+    public TableColumn<Song, String> drtCol;
+    public TableColumn<Song, Category> catCol;
+    public TableColumn<Song, Artist> artCol;
+    public TableColumn<Song, String> tltCol;
+>>>>>>> main
     @FXML
     private Slider songProgressBar;
-    private TextField txtTitle;
-    private TextField txtArtist;
-    private TextField txtCategory;
-    private TextField txtFilePath;
-    private TextField txtDuration;
+    //private TextField txtTitle;
+    //private TextField txtArtist;
+    //private TextField txtCategory;
+    //private TextField txtFilePath;
+    //private TextField txtDuration;
     @FXML
     private javafx.scene.control.Label songLabel;
 
     @FXML
     private Slider volumeSlider;
-    public ListView<Song> lstSongs;
+    public TableView<Song> tblSongs;
+    
     private Media media;
     private MediaPlayer mediaPlayer;
     public File directory;
@@ -66,10 +83,16 @@ public class SongViewController implements Initializable {
     }
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+
+
         songs = new ArrayList<>();
         directory = new File("lib/music");
         files = directory.listFiles();
-        lstSongs.setItems(songModel.getObservableSongs());
+        tblSongs.setItems(songModel.getObservableSongs());
+        tltCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        artCol.setCellValueFactory(new PropertyValueFactory<>("Artist"));
+        catCol.setCellValueFactory(new PropertyValueFactory<>("Category"));
+        drtCol.setCellValueFactory(new PropertyValueFactory<>("Duration"));
         if (files != null)
         {
             Collections.addAll(songs, files);
@@ -79,17 +102,18 @@ public class SongViewController implements Initializable {
         songLabel.setText(songs.get(songNumber).getName());
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue()* 0.01));
 
-        lstSongs.setItems(songModel.getObservableSongs());
-        lstSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
+        tblSongs.setItems(songModel.getObservableSongs());
+        tblSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
             @Override
             public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
-                if (newValue != null){
+                /*if (newValue != null){
                     txtTitle.setText(newValue.getTitle());
                     txtArtist.setText(newValue.getArtist().toString());
                     txtCategory.setText(newValue.getCategory().toString());
                     txtFilePath.setText(newValue.getFilepath());
                     txtDuration.setText(String.valueOf(newValue.getDuration()));
                 }
+                */
             }
         });
     }
