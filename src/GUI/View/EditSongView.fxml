@@ -5,11 +5,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="100.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.GUI.Controller.EditSongController">
+<AnchorPane prefHeight="188.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.GUI.Controller.EditSongController">
    <children>
       <Text layoutX="274.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Song" />
-      <TextField layoutX="123.0" layoutY="37.0" text="current songs" />
-      <Button fx:id="doneButton" layoutX="373.0" layoutY="38.0" mnemonicParsing="false" onAction="#DoneButton" text="Done" />
+      <TextField layoutX="124.0" layoutY="59.0" text="current songs" />
+      <Button fx:id="doneButton" layoutX="438.0" layoutY="130.0" mnemonicParsing="false" onAction="#DoneButton" text="Save" />
+      <Text layoutX="92.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title:" />
+      <Button fx:id="CancelButton" layoutX="383.0" layoutY="130.0" mnemonicParsing="false" onAction="#CancelButton" text="Cancel" />
    </children>
 </AnchorPane>
