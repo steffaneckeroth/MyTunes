@@ -11,20 +11,18 @@ public class SongSearcher {
     public List<Song> search(List<Song> searchBase, String query) {
         List<Song> searchResult = new ArrayList<>();
 
-        for (Song songe : searchBase) {
-            if(compareToSongTitle(query, songe) || compareToSongArtist(query, songe))
+        for (Song song : searchBase) {
+            if(compareToSongTitle(query, song) || compareToSongArtist(query, song))
             {
-                searchResult.add(songe);
+                searchResult.add(song);
             }
         }
 
         return searchResult;
     }
-
     private boolean compareToSongArtist(String query, Song song) {
         return song.getArtist().toLowerCase().contains(query.toLowerCase());
     }
-
     private boolean compareToSongTitle(String query, Song song) {
         return song.getTitle().toLowerCase().contains(query.toLowerCase());
     }

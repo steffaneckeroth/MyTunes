@@ -2,7 +2,6 @@ package src.GUI.Controller;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -10,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -34,37 +35,28 @@ import src.BE.Category;
 
 import src.BE.Song;
 import src.GUI.Model.SongModel;
-import java.awt.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
 import java.util.*;
-import java.util.List;
 import java.util.concurrent.Callable;
 
 public class SongViewController implements Initializable {
     public javafx.scene.image.ImageView imageView;
     public Button playButton;
     public Button previousButton;
-
     public Button uploadButton;
-
     public TableColumn<Song, String> drtCol;
     public TableColumn<Song, Category> catCol;
     public TableColumn<Song, Artist> artCol;
     public TableColumn<Song, String> tltCol;
-
+    public Button btnEditS;
+    public TextField txtSongSearch;
     @FXML
     private Slider songProgressBar;
-    //private TextField txtTitle;
-    //private TextField txtArtist;
-    //private TextField txtCategory;
-    //private TextField txtFilePath;
-    //private TextField txtDuration;
     @FXML
     private javafx.scene.control.Label songLabel;
-
     @FXML
     private Slider volumeSlider;
     public TableView<Song> tblSongs;
@@ -87,7 +79,8 @@ public class SongViewController implements Initializable {
     private TextField txtCategory;
     @FXML
     private TextField txtTime;
-
+    
+    
     public SongViewController()
     {
         try
@@ -102,45 +95,55 @@ public class SongViewController implements Initializable {
     {
     }
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1)
-    {
+    public void initialize(URL arg0, ResourceBundle arg1) {
         songs = new ArrayList<>();
         directory = new File("lib/music");
         files = directory.listFiles();
         tblSongs.setItems(songModel.getObservableSongs());
         tltCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        artCol.setCellValueFactory(c-> new SimpleObjectProperty<Artist>(c.getValue().getArtist()));
-        catCol.setCellValueFactory(c-> new SimpleObjectProperty<Category>(c.getValue().getCategory()));
+        artCol.setCellValueFactory(c -> new SimpleObjectProperty<Artist>(c.getValue().getArtist()));
+        catCol.setCellValueFactory(c -> new SimpleObjectProperty<Category>(c.getValue().getCategory()));
         drtCol.setCellValueFactory(new PropertyValueFactory<>("Duration"));
-        if (files != null)
-        {
+        if (files != null) {
             Collections.addAll(songs, files);
         }
         media = new Media(songs.get(songNumber).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         songLabel.setText(songs.get(songNumber).getName());
-        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue()* 0.01));
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue() * 0.01));
         tblSongs.setItems(songModel.getObservableSongs());
-        tblSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>()
-        {
+    }
+
+    public void setup() {
+
+
+        btnEditS.setDisable(true);
+
+        tblSongs.setItems(songModel.getObservableSongs());
+
+        tblSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
             @Override
-            public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue)
-            {
-                txtTitle.setText(newValue.getTitle());
-                txtArtist.setText(String.valueOf(newValue.getArtist()));
-                txtCategory.setText(String.valueOf(newValue.getCategory()));
-                txtTime.setText(String.valueOf(newValue.getDuration()));
-                /*if (newValue != null){
+            public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
+
+                if (newValue != null) {
+                    btnEditS.setDisable(false);
                     txtTitle.setText(newValue.getTitle());
-                    txtArtist.setText(newValue.getArtist().toString());
-                    txtCategory.setText(newValue.getCategory().toString());
-                    txtFilePath.setText(newValue.getFilepath());
-                    txtDuration.setText(String.valueOf(newValue.getDuration()));
+                    txtArtist.setText(String.valueOf(newValue.getArtist()));
                 }
-                */
+                else
+                    btnEditS.setDisable(true);
+            }
+        });
+
+        txtSongSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            try {
+                songModel.searchSong(newValue);
+            } catch (Exception e) {
+                displayError(e);
             }
         });
     }
+
     @FXML
     public void playMedia()
     {
@@ -243,18 +246,6 @@ public class SongViewController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
     }
-    @FXML
-    private void EditSong (ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/EditSongView.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("My New Stage Title");
-        stage.setOpacity(1);
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-
 
     private void bindCurrentTimeLabel()
     {
@@ -264,8 +255,6 @@ public class SongViewController implements Initializable {
                 return getTime(mediaPlayer.getCurrentTime());
             }
         }, mediaPlayer.currentTimeProperty()));
-
-
     }
 
     private void bindTotalTimeLabel()
@@ -277,6 +266,7 @@ public class SongViewController implements Initializable {
             }
         }, mediaPlayer.currentTimeProperty()));
     }
+
     private String getTime(Duration time)
     {
 
@@ -298,19 +288,28 @@ public class SongViewController implements Initializable {
         bindTotalTimeLabel();
         bindCurrentTimeLabel();
     }
-    public void updateSongs(ActionEvent event) {
-        try
-        {
-            Song updatedSongs = tblSongs.getSelectionModel().getSelectedItem();
 
-            updatedSongs.setTitle(txtTitle.getText());
-            //updatedSongs.setArtist(txtTitle.getText());
-            //updatedSongs.setCategory(txtCategory.getText());
-            updatedSongs.setDuration(Time.valueOf(txtTime.getText()));
+    public void EditSong(ActionEvent actionEvent) throws IOException {
 
-            songModel.updateSongs(updatedSongs);
-        } catch (Exception e) {
-            displayError(e);
-        }
+        Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
+        songModel.setSelectedSong(selectedSong);
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/src/GUI/View/EditSongView.fxml"));
+        AnchorPane pane = (AnchorPane) loader.load();
+
+        EditSongController controller = loader.getController();
+        controller.setSelectedSong(selectedSong);
+        controller.setup();
+
+        // Create the dialog Stage.
+        Stage dialogWindow = new Stage();
+        dialogWindow.setTitle("Edit Song");
+        dialogWindow.initModality(Modality.WINDOW_MODAL);
+        dialogWindow.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+        Scene scene = new Scene(pane);
+        dialogWindow.setScene(scene);
+        dialogWindow.showAndWait();
     }
+
 }

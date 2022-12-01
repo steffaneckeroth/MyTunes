@@ -107,7 +107,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <TextField layoutX="863.0" layoutY="66.0" opacity="0.75" style="-fx-background-color: white;" text="Search" />
+      <TextField fx:id="txtSongSearch" layoutX="863.0" layoutY="66.0" opacity="0.75" style="-fx-background-color: white;" text="Search" />
       <ImageView fitHeight="18.0" fitWidth="21.0" layoutX="41.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Images/Audio-PNG.png" />

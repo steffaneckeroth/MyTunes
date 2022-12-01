@@ -22,6 +22,8 @@ public class SongModel {
     private ObservableList<Song> songsToBeViewed;
     private SongManager songManager;
 
+    private Song selectedSong;
+
     /**
      * Constructor
      * @throws Exception
@@ -61,5 +63,11 @@ public class SongModel {
         songManager.deleteSongs(deletedSongs);
         songsToBeViewed.clear();
         songsToBeViewed.addAll(songManager.getAllSongs());
+    }
+    public Song getSelectedSong() {
+        return selectedSong;
+    }
+    public void setSelectedSong(Song selectedSong) {
+        this.selectedSong = selectedSong;
     }
 }
