@@ -53,6 +53,7 @@ public class SongViewController implements Initializable {
     public TableColumn<Song, String> tltCol;
     public Button btnEditS;
     public TextField txtSongSearch;
+    public Button btnDeleteSong;
     @FXML
     private Slider songProgressBar;
     @FXML
@@ -317,4 +318,27 @@ public class SongViewController implements Initializable {
         dialogWindow.showAndWait();
     }
 
+
+    public void handleButtonDeleteSong(ActionEvent event)throws IOException
+    {
+        Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
+        songModel.setSelectedSong(selectedSong);
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/src/GUI/View/DeleteSongView.fxml"));
+        AnchorPane pane = (AnchorPane) loader.load();
+
+        DeleteSongView controller = loader.getController();
+        controller.setSelectedSong(selectedSong);
+        controller.setup();
+
+        // Create the dialog Stage.
+        Stage dialogWindow = new Stage();
+        dialogWindow.setTitle("Edit Song");
+        dialogWindow.initModality(Modality.WINDOW_MODAL);
+        dialogWindow.initOwner(((Node)event.getSource()).getScene().getWindow());
+        Scene scene = new Scene(pane);
+        dialogWindow.setScene(scene);
+        dialogWindow.showAndWait();
+    }
 }
