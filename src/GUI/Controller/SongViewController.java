@@ -239,9 +239,15 @@ public class SongViewController implements Initializable {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("My New Stage Title");
-        stage.setOpacity(1);
         stage.setScene(new Scene(root));
-        stage.show();
+        stage.showAndWait();
+        TestWait();
+
+    }
+
+    private void TestWait(){
+
+        System.out.println("hihi");
     }
     @FXML
     private void EditSong (ActionEvent event) throws IOException {
