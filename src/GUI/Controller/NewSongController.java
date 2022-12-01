@@ -34,6 +34,11 @@ public class NewSongController {
     public TextField txtfTitle, txtfFile, txtfTime, txtfArtist;
     public Button btnChoose, btnSave, btbCancle;
     public Label lblTitle, lblArtist, lblTime, lblFile, lblCategory;
+    public TextField txtTitle;
+    public TextField txtArtist;
+    public Button btnSaveCancle;
+    public Button btnSaveEdit;
+    public Button btnSaveCancel;
 
 
     public void handleTxtTtl(ActionEvent actionEvent) {
@@ -69,5 +74,11 @@ public class NewSongController {
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
 
+    }
+
+    public void handleCancleEdit(ActionEvent event) {
+    }
+
+    public void handleSaveEdit(ActionEvent event) {
     }
 }
