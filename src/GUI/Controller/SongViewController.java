@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import javafx.scene.media.Media;
+
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -246,12 +248,9 @@ public class SongViewController implements Initializable {
         stage.setTitle("My New Stage Title");
         stage.setScene(new Scene(root));
         stage.showAndWait();
-        TestWait();
+
     }
-    private void TestWait()
-    {
-        System.out.println("hihi");
-    }
+
 
     private void bindCurrentTimeLabel()
     {
