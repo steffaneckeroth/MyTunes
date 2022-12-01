@@ -103,8 +103,24 @@ public class SongDAO_DB implements ISongDataAccess {
     }
 
     public void deleteSongs(Song song) throws Exception {
-        //TODO Do this
-        throw new UnsupportedOperationException();
+        try(Connection coon = databaseConnector.getConnection())
+        {
+            String sql = "UPDATE Song SET Title = ?, Year = ? WHERE Id = ?";
+            PreparedStatement stmt = coon.prepareStatement(sql);
+            // Bind parameters
+            stmt.setString(1,song.getTitle());
+            stmt.setString(2, String.valueOf(song.getArtist()));
+            stmt.setString(2, String.valueOf(song.getCategory()));
+            stmt.setString(2, String.valueOf(song.getDuration()));
+            stmt.setInt(3,song.getId());
+
+            stmt.executeUpdate();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            throw new Exception("Could not update songs from database", ex);
+        }
     }
 
     public List<Song> searchSong(String query) throws Exception {

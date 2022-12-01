@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -34,10 +35,10 @@ import src.BE.Category;
 import src.BE.Song;
 import src.GUI.Model.SongModel;
 import java.awt.*;
-import java.awt.TextField;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -78,6 +79,14 @@ public class SongViewController implements Initializable {
     private Timer timer;
     private boolean running;
     private SongModel songModel;
+    @FXML
+    private TextField txtTitle;
+    @FXML
+    private TextField txtArtist;
+    @FXML
+    private TextField txtCategory;
+    @FXML
+    private TextField txtTime;
 
     public SongViewController()
     {
@@ -117,6 +126,10 @@ public class SongViewController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue)
             {
+                txtTitle.setText(newValue.getTitle());
+                txtArtist.setText(String.valueOf(newValue.getArtist()));
+                txtCategory.setText(String.valueOf(newValue.getCategory()));
+                txtTime.setText(String.valueOf(newValue.getDuration()));
                 /*if (newValue != null){
                     txtTitle.setText(newValue.getTitle());
                     txtArtist.setText(newValue.getArtist().toString());
@@ -230,6 +243,17 @@ public class SongViewController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
     }
+    @FXML
+    private void EditSong (ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/EditSongView.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("My New Stage Title");
+        stage.setOpacity(1);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
 
     private void bindCurrentTimeLabel()
@@ -273,5 +297,20 @@ public class SongViewController implements Initializable {
     {
         bindTotalTimeLabel();
         bindCurrentTimeLabel();
+    }
+    public void updateSongs(ActionEvent event) {
+        try
+        {
+            Song updatedSongs = tblSongs.getSelectionModel().getSelectedItem();
+
+            updatedSongs.setTitle(txtTitle.getText());
+            //updatedSongs.setArtist(txtTitle.getText());
+            //updatedSongs.setCategory(txtCategory.getText());
+            updatedSongs.setDuration(Time.valueOf(txtTime.getText()));
+
+            songModel.updateSongs(updatedSongs);
+        } catch (Exception e) {
+            displayError(e);
+        }
     }
 }
