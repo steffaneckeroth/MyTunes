@@ -13,6 +13,7 @@ public class DeleteSongView {
     private Node label;
     private Song selectedSong;
     public void handleOK(ActionEvent actionEvent) {
+
     }
 
     public void handleCancel(ActionEvent actionEvent) {
@@ -25,12 +26,14 @@ public class DeleteSongView {
     {
         selectedSong = s;
     }
+
     public void setup() {
         fillSongsIN();
     }
 
     private void fillSongsIN() {
     }
+
 }
 
 

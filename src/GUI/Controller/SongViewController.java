@@ -320,6 +320,34 @@ public class SongViewController implements Initializable {
 
     public void handleButtonDeleteSong(ActionEvent event)throws IOException
     {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Current project is modified");
+        alert.setContentText("Save?");
+        ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(okButton, noButton, cancelButton);
+        alert.showAndWait().ifPresent( type -> {
+
+            if (type ==(okButton)) {
+                try {
+                    Song deletedSong = tblSongs.getSelectionModel().getSelectedItem();
+                    songModel.deleteSong(deletedSong);
+                }
+
+                catch (Exception e)
+                {
+                    displayError(e);
+                }
+            } else if (type == ButtonType.NO) {
+                Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                stage.close();
+            } else {
+
+            }
+        });
+
+        /*
         Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
         songModel.setSelectedSong(selectedSong);
 
@@ -333,11 +361,12 @@ public class SongViewController implements Initializable {
 
         // Create the dialog Stage.
         Stage dialogWindow = new Stage();
-        dialogWindow.setTitle("Edit Song");
+        dialogWindow.setTitle("Delete Song");
         dialogWindow.initModality(Modality.WINDOW_MODAL);
         dialogWindow.initOwner(((Node)event.getSource()).getScene().getWindow());
         Scene scene = new Scene(pane);
         dialogWindow.setScene(scene);
         dialogWindow.showAndWait();
+        */
     }
 }

@@ -5,7 +5,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import src.BE.Artist;
 import src.BE.Song;
 import src.GUI.Model.SongModel;
 

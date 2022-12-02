@@ -1,18 +1,16 @@
 package src.GUI.Model;
 
 // Java imports
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import src.BE.Artist;
 import src.BE.Category;
 import src.BE.Song;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import src.BLL.SongManager;
 
 import java.sql.Time;
 import java.util.List;
-
-// Project imports
-
-import src.BLL.SongManager;
 
 /**
  * @author smsj
@@ -59,7 +57,7 @@ public class SongModel {
         songsToBeViewed.addAll(songManager.getAllSongs());
     }
 
-    public void deleteSongs(Song deletedSongs) throws Exception {
+    public void deleteSong(Song deletedSongs) throws Exception {
         songManager.deleteSongs(deletedSongs);
         songsToBeViewed.clear();
         songsToBeViewed.addAll(songManager.getAllSongs());
