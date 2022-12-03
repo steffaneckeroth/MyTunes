@@ -13,11 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import src.BE.Artist;
-import src.BE.Category;
 import src.BE.Song;
 import src.DAL.db.DatabaseConnector;
-import src.DAL.db.SongDAO_DB;
 import src.GUI.Model.SongModel;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -29,7 +26,7 @@ public class NewSongController {
 
     private SongModel songModel;
 
-    public ComboBox cbxDropDown;
+    public ComboBox<String> cbxDropDown;
     public TextField txtfTitle, txtfFile, txtfTime, txtfArtist;
     public Button btnChoose, btnSave, btbCancle, getBtnSaveEdit;
     public Label lblTitle, lblArtist, lblTime, lblFile, lblCategory;
@@ -40,6 +37,12 @@ public class NewSongController {
     public Button btnSaveCancel;
     private DatabaseConnector databaseConnector;
 
+    public void initialize() {
+        //cbxDropDown.getItems().removeAll(cbxDropDown.getItems());
+        cbxDropDown.getItems().addAll("Pop", "Hiphop", "Rock");
+        cbxDropDown.getSelectionModel().select("---");
+
+    }
 
     public void handleTxtTtl(ActionEvent actionEvent) {
         this.txtfTitle.getText();
@@ -49,14 +52,16 @@ public class NewSongController {
 
     }
 
-    public void handleButtonChoose(ActionEvent actionEvent) throws UnsupportedAudioFileException, IOException {
-        if (actionEvent.getSource() == btnChoose) {
-            FileChooser file_upload = new FileChooser();
-            File add_2 = file_upload.showOpenDialog(null);
-            txtfTime.setText(String.valueOf(add_2.length()));
-            System.out.println("Selected file " + add_2);
-            txtfTitle.setText(add_2.getName());
-            System.out.println(getSongLength(add_2).toString());
+    public void handleButtonChoose(ActionEvent actionEvent)
+    {
+        if (actionEvent.getSource() == btnChoose)
+        {
+            FileChooser mFileChooser = new FileChooser();
+            File mFile = mFileChooser.showOpenDialog(null);
+            //txtfTime.setText(String.valueOf(mFile.length()));
+            System.out.println("Selected file " + mFile);
+            txtfFile.setText(mFile.getName());
+            //System.out.println(getSongLength(mFile).toString());
 
         }
     }
@@ -68,9 +73,14 @@ public class NewSongController {
 
     }
 
-    public Song handleButtonSave(ActionEvent actionEvent) throws Exception {
+    public Song handleButtonSave(ActionEvent actionEvent) {
 
+        Node source = (Node) actionEvent.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+        System.out.println("Song couldn't be saved");
 
+/*
         String sql = "INSERT INTO Song (Title) VALUES (txtfTitle);";
 
         try(Connection conn = databaseConnector.getConnection())
@@ -101,13 +111,7 @@ public class NewSongController {
 
 
 
-      /*  String title = txtfTitle.getText();
-
-        Node source = (Node) actionEvent.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-
-
+        String title = txtfTitle.getText();
         String artist = txtfArtist.getText();
         String category = cbxDropDown.getId();
         String filepath = txtfFile.getText();
@@ -122,11 +126,11 @@ public class NewSongController {
             throw new RuntimeException(e);
         }
             */
-
+        return null;
     }
 
-
-        public void handleButtonCancle (ActionEvent actionEvent){
+        public void handleButtonCancle (ActionEvent actionEvent)
+        {
 
             Node source = (Node) actionEvent.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
@@ -143,3 +147,6 @@ public class NewSongController {
         }
 
     }
+
+
+
