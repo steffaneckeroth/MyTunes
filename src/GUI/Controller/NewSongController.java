@@ -20,7 +20,9 @@ public class NewSongController {
     public TextField txtfTitle, txtfFile, txtfTime, txtfArtist;
     public Button btnChoose, btnSave, btbCancle;
     public Label lblTitle, lblArtist, lblTime, lblFile, lblCategory;
+
     private SongViewController songViewController;
+    
     public NewSongController()
     {
         try {
@@ -74,8 +76,6 @@ public class NewSongController {
             e.printStackTrace();
             System.out.println("Could not add song");
         }
-
-        
     }
 
     public void handleButtonCancle (ActionEvent actionEvent)
@@ -102,21 +102,17 @@ public class NewSongController {
         return mMedia.getDuration();
     }
 
-
-
-
-
-
-
-        public void handleCancleEdit (ActionEvent event){
-        }
-
-        public void handleSaveEdit (ActionEvent event){
-
+        public void handleCancleEdit (ActionEvent event)
+        {
 
         }
 
-    }
+        public void handleSaveEdit (ActionEvent event)
+        {
+
+        }
+
+}
 
 
 
