@@ -1,7 +1,5 @@
 package src.BLL;
 
-import src.BE.Artist;
-import src.BE.Category;
 import src.BE.Song;
 import src.BLL.unit.SongSearcher;
 import src.DAL.ISongDataAccess;
@@ -30,7 +28,7 @@ public class SongManager {
         return searchResult;
     }
 
-    public Song createNewSong(String title, Artist artist, Category category, String filepath, Time duration) throws Exception {
+    public Song createNewSong(String title, String artist, String category, String filepath, Time duration) throws Exception {
         return songDAO.createSong(title, artist, category, filepath, duration);
     }
 

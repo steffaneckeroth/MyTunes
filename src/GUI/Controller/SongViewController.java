@@ -22,7 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 
@@ -31,9 +30,6 @@ import javafx.stage.Stage;
 
 
 import javafx.util.Duration;
-
-import src.BE.Artist;
-import src.BE.Category;
 
 import src.BE.Song;
 import src.GUI.Model.SongModel;
@@ -50,8 +46,8 @@ public class SongViewController implements Initializable {
     public Button previousButton;
     public Button uploadButton;
     public TableColumn<Song, String> drtCol;
-    public TableColumn<Song, Category> catCol;
-    public TableColumn<Song, Artist> artCol;
+    public TableColumn<Song, String> catCol;
+    public TableColumn<Song, String> artCol;
     public TableColumn<Song, String> tltCol;
     public Button btnEditS;
     public TextField txtSongSearch;
@@ -105,8 +101,8 @@ public class SongViewController implements Initializable {
         files = directory.listFiles();
         tblSongs.setItems(songModel.getObservableSongs());
         tltCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        artCol.setCellValueFactory(c -> new SimpleObjectProperty<Artist>(c.getValue().getArtist()));
-        catCol.setCellValueFactory(c -> new SimpleObjectProperty<Category>(c.getValue().getCategory()));
+        artCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getArtist()));
+        catCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getCategory()));
         drtCol.setCellValueFactory(new PropertyValueFactory<>("Duration"));
         if (files != null) {
             Collections.addAll(songs, files);

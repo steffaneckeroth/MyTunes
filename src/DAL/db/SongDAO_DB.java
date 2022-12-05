@@ -1,6 +1,4 @@
 package src.DAL.db;
-import src.BE.Artist;
-import src.BE.Category;
 import src.BE.Song;
 import src.DAL.ISongDataAccess;
 
@@ -22,7 +20,7 @@ public class SongDAO_DB implements ISongDataAccess {
 
         try (Connection conn = databaseConnector.getConnection())
         {
-            String sql = "SELECT * FROM Song INNER JOIN Category ON Song.CategoryId = Category.Id INNER JOIN Artist ON Song.ArtistId = Artist.Id";
+            String sql = "SELECT * FROM Song;";
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -31,19 +29,19 @@ public class SongDAO_DB implements ISongDataAccess {
             while (rs.next()) {
 
                 //Map DB row to Song object
-                int id = rs.getInt(1);
-                String title = rs.getString(2);
-                int artist = rs.getInt(3);
-                int category = rs.getInt(4);
-                String filepath = rs.getString(5);
-                Time duration = rs.getTime(6);
-                String artistName = rs.getString(10);
-                String categoryName = rs.getString(8);
-                Artist artist1 = new Artist(artist,artistName);
-                Category category1 = new Category(category, categoryName);
+                int id = rs.getInt("Id");
+                String title = rs.getString("Title");
+                String artist = rs.getString("Artist");
+                String category = rs.getString("Category");
+                String filepath = rs.getString("FilePath");
+                Time duration = rs.getTime("Duration");
+                //String artistName = rs.getString(10);
+               // String categoryName = rs.getString(8);
+                //String artist1 = (artist,artistName);
+                //String category1 = (category, categoryName);
 
 
-                Song song = new Song(id, title, artist1, category1, filepath, duration);
+                Song song = new Song(id, title, artist, category, filepath, duration);
                 allSong.add(song);
 
             }
@@ -57,7 +55,7 @@ public class SongDAO_DB implements ISongDataAccess {
         }
     }
 
-    public Song createSong(String title, Artist artist, Category category, String filepath, Time duration) throws Exception
+    public Song createSong(String title, String artist, String category, String filepath, Time duration) throws Exception
     {
         String sql = "INSERT INTO Song (Title, ArtistId, CategoryId, FilePath, Duration) VALUES (?,?,?,?,?);";
 
@@ -67,8 +65,8 @@ public class SongDAO_DB implements ISongDataAccess {
 
             // Bind parameters
             stmt.setString(1,title);
-            stmt.setString(2, String.valueOf(artist));
-            stmt.setString(3, String.valueOf(category));
+            stmt.setString(2, artist);
+            stmt.setString(3, category);
             stmt.setString(4, filepath);
             stmt.setTime(5, duration);
 
@@ -98,8 +96,23 @@ public class SongDAO_DB implements ISongDataAccess {
     }
 
     public void updateSongs(Song song) throws Exception {
-        //TODO Do this
-        throw new UnsupportedOperationException();
+        try (Connection conn = databaseConnector.getConnection()) {
+
+            String sql = "UPDATE Song SET Title = ?, ArtistId = ? WHERE Id = ?";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            // Bind parameters
+            stmt.setString(1, song.getTitle());
+            stmt.setString(2, song.getArtist());
+            stmt.setInt(3, song.getId());
+
+            stmt.executeUpdate();
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Exception("Could not update song", ex);
+        }
     }
 
     public Song deleteSongs(Song song) throws Exception {
@@ -116,7 +129,7 @@ public class SongDAO_DB implements ISongDataAccess {
 
         } catch (SQLException ex){
             ex.printStackTrace();
-            throw new Exception("could not delete movie", ex);
+            throw new Exception("could not delete song", ex);
         }
         return song;
     }

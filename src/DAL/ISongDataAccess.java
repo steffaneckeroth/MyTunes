@@ -1,7 +1,5 @@
 package src.DAL;
 
-import src.BE.Artist;
-import src.BE.Category;
 import src.BE.Song;
 
 import java.sql.Time;
@@ -12,7 +10,7 @@ public interface ISongDataAccess {
 
     public List<Song> getAllSong() throws Exception;
 
-    public Song createSong(String title, Artist artist, Category category, String filepath, Time duration) throws Exception;
+    public Song createSong(String title, String artist, String category, String filepath, Time duration) throws Exception;
 
     public void updateSongs(Song song) throws Exception;
 

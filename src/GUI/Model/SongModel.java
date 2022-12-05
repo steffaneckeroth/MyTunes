@@ -4,8 +4,6 @@ package src.GUI.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import src.BE.Artist;
-import src.BE.Category;
 import src.BE.Song;
 import src.BLL.SongManager;
 
@@ -43,16 +41,13 @@ public class SongModel {
     }
 
 
-    public void createNewSong(String title, Artist artist, Category category, String filepath, Time duration) throws Exception{
+    public void createNewSong(String title, String artist, String category, String filepath, Time duration) throws Exception{
         Song m = songManager.createNewSong(title, artist, category, filepath, duration);
 
         songsToBeViewed.add(m);
     }
     public void updateSongs(Song updatedSongs) throws Exception {
-        //Call BLL
-        // Update movie in DB
         songManager.updateSongs(updatedSongs);
-        //UPDATE listView
         songsToBeViewed.clear();
         songsToBeViewed.addAll(songManager.getAllSongs());
     }

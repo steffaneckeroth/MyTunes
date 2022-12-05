@@ -15,10 +15,15 @@ public class EditSongController
     public Button btnCancleE;
     private SongModel model;
     private Song selectedSong;
-
+    
     public void handleSaveEdit(ActionEvent actionEvent) throws Exception {
-
         String updatedTitle = txtTitle.getText();
+        String updatedArtist = txtArtist.getText();
+
+        //Song updatedSongs = new Song(model.getSelectedSong().getId(), updatedTitle, updatedArtist);
+
+        //model.updateSongs(updatedSongs);
+
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }

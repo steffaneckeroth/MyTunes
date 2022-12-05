@@ -5,35 +5,42 @@ import java.sql.Time;
 public class Song {
     private int id;
     private String title;
-    private Artist artist;
-    private Category category;
+    private String artist;
+    private String category;
     private String filepath;
     private Time duration;
 
-    public Song(int id, String title, Artist artist, Category category, String filepath, Time duration) {
+    public Song(int id, String title, String artist, String category, String filepath, Time duration) {
         this.id = id;
         this.title = title;
         this.artist = artist;
         this.category = category;
         this.filepath = filepath;
         this.duration = duration;
-
     }
 
-    public Artist getArtist() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+
+    public String getArtist() {
         return artist;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setArtist(Artist artist) {
+    public String setArtist(String artist) {
         this.artist = artist;
+        return artist;
     }
 
-    public void setCategory(Category category) {
+    public String setCategory(String category) {
         this.category = category;
+        return category;
     }
 
     public int getId() {
@@ -52,6 +59,9 @@ public class Song {
     }
     public String getFilepath() {
         return filepath;
+    }
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
     }
     @Override
     public String toString()
