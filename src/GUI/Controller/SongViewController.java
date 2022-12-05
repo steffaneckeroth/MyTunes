@@ -40,7 +40,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Callable;
 
-public class SongViewController implements Initializable {
+public class SongViewController extends BaseController implements Initializable {
     public javafx.scene.image.ImageView imageView;
     public Button playButton;
     public Button previousButton;
@@ -289,7 +289,7 @@ public class SongViewController implements Initializable {
         bindCurrentTimeLabel();
     }
 
-    public void EditSong(ActionEvent actionEvent) throws IOException {
+    public void EditSong(ActionEvent actionEvent) throws Exception {
 
         Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
         songModel.setSelectedSong(selectedSong);
@@ -299,16 +299,22 @@ public class SongViewController implements Initializable {
         AnchorPane pane = (AnchorPane) loader.load();
 
         EditSongController controller = loader.getController();
+        //controller.setModel(super.getModel());
+        controller.fillSongsIN(selectedSong);
         controller.setSelectedSong(selectedSong);
         controller.setup();
+        controller.setController(this);
 
         // Create the dialog Stage.
         Stage dialogWindow = new Stage();
-        dialogWindow.setTitle("Edit Song");
+        dialogWindow.setTitle("Edit Movie");
         dialogWindow.initModality(Modality.WINDOW_MODAL);
         dialogWindow.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
         Scene scene = new Scene(pane);
         dialogWindow.setScene(scene);
+
+
+        // Show the dialog and wait until the user closes it
         dialogWindow.showAndWait();
     }
 
