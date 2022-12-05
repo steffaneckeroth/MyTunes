@@ -1,17 +1,17 @@
 package src.GUI.Controller;
 
-import src.GUI.Model.MRSModel;
+import src.GUI.Model.MyTunesModel;
 
 public abstract class BaseController {
 
-    private MRSModel model;
+    private MyTunesModel model;
 
-    public void setModel(MRSModel model) {
+    public void setModel(MyTunesModel model) {
         this.model = model;
     }
 
-    public MRSModel getModel() throws Exception {
-        return new MRSModel();
+    public MyTunesModel getModel() throws Exception {
+        return new MyTunesModel();
     }
 
     public abstract void setup() throws Exception;

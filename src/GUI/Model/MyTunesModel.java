@@ -1,10 +1,10 @@
 package src.GUI.Model;
 
-public class MRSModel {
+public class MyTunesModel {
 
     private SongModel songModel;
 
-    public MRSModel() throws Exception {
+    public MyTunesModel() throws Exception {
         songModel = new SongModel();
     }
 

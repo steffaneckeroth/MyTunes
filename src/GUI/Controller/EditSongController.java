@@ -13,7 +13,7 @@ public class EditSongController  extends BaseController
 {
     @FXML
     private TextField txtTitle, txtArtist;
-private     SongViewController songViewController;
+    private SongViewController songViewController;
     private SongModel model;
     private Song selectedSong;
 
