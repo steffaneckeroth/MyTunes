@@ -112,6 +112,13 @@ public class SongViewController implements Initializable {
         songLabel.setText(songs.get(songNumber).getName());
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue() * 0.01));
         tblSongs.setItems(songModel.getObservableSongs());
+        txtSongSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            try {
+                songModel.searchSong(newValue);
+            } catch (Exception e) {
+                displayError(e);
+            }
+        });
     }
 
     public void setup() {
@@ -135,13 +142,6 @@ public class SongViewController implements Initializable {
             }
         });
 
-        txtSongSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            try {
-                songModel.searchSong(newValue);
-            } catch (Exception e) {
-                displayError(e);
-            }
-        });
     }
 
     @FXML
