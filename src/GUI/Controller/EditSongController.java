@@ -19,7 +19,6 @@ public class EditSongController
     public void handleSaveEdit(ActionEvent actionEvent) throws Exception {
         String updatedTitle = txtTitle.getText();
         String updatedArtist = txtArtist.getText();
-
         //Song updatedSongs = new Song(model.getSelectedSong().getId(), updatedTitle, updatedArtist);
 
         //model.updateSongs(updatedSongs);
@@ -34,8 +33,9 @@ public class EditSongController
     }
     private void fillSongsIN()
     {
-        txtTitle.setText(selectedSong.getTitle());
-        txtArtist.setText(selectedSong.getArtist().toString());
+        //model = getModel().getMovieModel();
+        txtTitle.setText(model.getSelectedSong().getTitle());
+        txtArtist.setText(model.getSelectedSong().getArtist());
     }
     public void setSelectedSong(Song s)
     {

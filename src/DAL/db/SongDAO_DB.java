@@ -98,7 +98,7 @@ public class SongDAO_DB implements ISongDataAccess {
     public void updateSongs(Song song) throws Exception {
         try (Connection conn = databaseConnector.getConnection()) {
 
-            String sql = "UPDATE Song SET Title = ?, ArtistId = ? WHERE Id = ?";
+            String sql = "UPDATE Song SET Title = ?, Artist = ? WHERE Id = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
 
