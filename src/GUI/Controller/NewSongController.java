@@ -11,22 +11,26 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import src.BE.Song;
 import src.GUI.Model.SongModel;
 
 public class NewSongController {
 
     private SongModel songModel;
+    private SongViewController songViewController;
     public ComboBox<String> cbxDropDown;
     public TextField txtfTitle, txtfFile, txtfTime, txtfArtist;
     public Button btnChoose, btnSave, btbCancle;
     public Label lblTitle, lblArtist, lblTime, lblFile, lblCategory;
 
-    private SongViewController songViewController;
-    
+
+
+
     public NewSongController()
     {
         try {
             songModel = new SongModel();
+            songViewController = new SongViewController();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,10 +76,14 @@ public class NewSongController {
             Stage mStage = (Stage) source.getScene().getWindow();
             mStage.close();
 
+
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Could not add song");
         }
+
+
     }
 
     public void handleButtonCancle (ActionEvent actionEvent)
