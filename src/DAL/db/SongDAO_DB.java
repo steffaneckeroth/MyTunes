@@ -1,7 +1,7 @@
 package src.DAL.db;
+
 import src.BE.Song;
 import src.DAL.ISongDataAccess;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,8 @@ public class SongDAO_DB implements ISongDataAccess {
 
     private DatabaseConnector databaseConnector;
 
-    public SongDAO_DB() {
+    public SongDAO_DB()
+    {
         databaseConnector = new DatabaseConnector();
     }
 
@@ -70,7 +71,6 @@ public class SongDAO_DB implements ISongDataAccess {
             stmt.setString(4, filepath);
             stmt.setTime(5, duration);
 
-
             //Run the specified SQL statement
             stmt.executeUpdate();
 
@@ -82,12 +82,10 @@ public class SongDAO_DB implements ISongDataAccess {
             {
                 id = rs.getInt(1);
             }
-
             // Create song object and send up the layers
             Song song = new Song(id, title, artist, category, filepath, duration);
             return song;
         }
-
         catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -95,7 +93,8 @@ public class SongDAO_DB implements ISongDataAccess {
         }
     }
 
-    public void updateSongs(Song song) throws Exception {
+    public void updateSongs(Song song) throws Exception
+    {
         try (Connection conn = databaseConnector.getConnection()) {
 
             String sql = "UPDATE Song SET Title = ?, Artist = ? WHERE Id = ?";
@@ -122,10 +121,10 @@ public class SongDAO_DB implements ISongDataAccess {
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, song.getId());
                 int rowsDeleted = statement.executeUpdate();
-                if (rowsDeleted > 0) {
-                    System.out.println("A user was deleted successfully!");
+                if (rowsDeleted > 0)
+                {
+                    System.out.println("Song was successfully deleted");
                 }
-
 
         } catch (SQLException ex){
             ex.printStackTrace();
