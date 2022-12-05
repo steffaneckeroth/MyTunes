@@ -5,7 +5,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.*;
 
 
@@ -13,13 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import src.BE.Song;
 import src.DAL.db.DatabaseConnector;
 import src.GUI.Model.SongModel;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
-
-
 
 
 public class NewSongController {
@@ -37,6 +31,14 @@ public class NewSongController {
     public Button btnSaveCancel;
     private DatabaseConnector databaseConnector;
 
+    public NewSongController() {
+        try {
+            songModel = new SongModel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void initialize() {
         //cbxDropDown.getItems().removeAll(cbxDropDown.getItems());
         cbxDropDown.getItems().addAll("Pop", "Hiphop", "Rock");
@@ -52,10 +54,8 @@ public class NewSongController {
 
     }
 
-    public void handleButtonChoose(ActionEvent actionEvent)
-    {
-        if (actionEvent.getSource() == btnChoose)
-        {
+    public void handleButtonChoose(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == btnChoose) {
             FileChooser mFileChooser = new FileChooser();
             File mFile = mFileChooser.showOpenDialog(null);
             //txtfTime.setText(String.valueOf(mFile.length()));
@@ -73,61 +73,29 @@ public class NewSongController {
 
     }
 
-    public Song handleButtonSave(ActionEvent actionEvent) {
-
-        Node source = (Node) actionEvent.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-        System.out.println("Song couldn't be saved");
-
-/*
-        String sql = "INSERT INTO Song (Title) VALUES (txtfTitle);";
-
-        try(Connection conn = databaseConnector.getConnection())
-        {
-            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-            String title = String.valueOf(txtfTitle);
-            stmt.setString(1, title);
-
-            stmt.executeUpdate();
-
-            ResultSet rs = stmt.getGeneratedKeys();
-            int id = 0;
-
-            if (rs.next())
-            {
-                id = rs.getInt(1);
-            }
-
-            Song mSong = new Song(1, title, null, null, null, null);
-            return mSong;
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-            throw new Exception("Could not create song", ex);
-        }
-
-
-
-        String title = txtfTitle.getText();
-        String artist = txtfArtist.getText();
-        String category = cbxDropDown.getId();
-        String filepath = txtfFile.getText();
-        String duration = txtfTime.getText();
-
-        Artist mArtist = new Artist(0, artist);
-        Category mCategory = new Category(1, category);
-
+    public void handleButtonSave(ActionEvent actionEvent)
+    {
         try {
-            songModel.createNewSong(title, mArtist, mCategory, filepath, Time.valueOf(duration));
+            String title = txtfTitle.getText();
+            String artist = txtfArtist.getText();
+            String category = cbxDropDown.getId();
+            String filepath = txtfFile.getText();
+            Time duration = Time.valueOf(txtfTime.getText());
+
+            System.out.println("Creating:  " + "title" + " ; " + "artist" + ";" + "category" + ";" + "filepath" + ";" + "duration");
+
+            this.songModel.createNewSong(title, artist, category, filepath, Time.valueOf(duration.toLocalTime()));
+
+            System.out.println("Song " + title + " Created");
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+
+            System.out.println("Song couldn't be saved");
         }
-            */
-        return null;
     }
+
+
 
         public void handleButtonCancle (ActionEvent actionEvent)
         {
