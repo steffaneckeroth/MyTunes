@@ -3,13 +3,12 @@ package src.GUI.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import src.BE.Song;
 import src.GUI.Model.SongModel;
 
-public class EditSongController  extends BaseController
+public class EditSongController extends BaseController
 {
     @FXML
     private TextField txtTitle, txtArtist;
@@ -24,7 +23,7 @@ public class EditSongController  extends BaseController
             e.printStackTrace();
         }
     }
-    
+
     public void handleSaveEdit(ActionEvent actionEvent) throws Exception {
         String updatedTitle = txtTitle.getText();
         String updatedArtist = txtArtist.getText();
@@ -36,8 +35,8 @@ public class EditSongController  extends BaseController
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
-    public void handleCancleEdit(ActionEvent actionEvent) throws Exception {
 
+    public void handleCancleEdit(ActionEvent actionEvent) throws Exception {
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
@@ -50,12 +49,11 @@ public class EditSongController  extends BaseController
     {
         selectedSong = s;
     }
-
-    @Override
-    public void setup() throws Exception {
-        //fillSongsIN();
-    }
     public void setController(SongViewController songViewController) {
         this.songViewController=songViewController;
+    }
+    @Override
+    public void setup() throws Exception {
+
     }
 }

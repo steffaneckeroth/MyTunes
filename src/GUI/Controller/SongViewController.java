@@ -211,13 +211,15 @@ public class SongViewController extends BaseController implements Initializable 
     public void beginTimer()
     {
         timer = new Timer();
+
         TimerTask task = new TimerTask()
         {
+
             @Override
             public void run()
             {
                 running = true;
-                double current = mediaPlayer.getCurrentTime().toSeconds();
+                double current = mediaPlayer.getCurrentTime().toSeconds() / media.getDuration().toSeconds()*100;
                 double end = media.getDuration().toSeconds();
                 songProgressBar.setValue(current);
 
@@ -226,7 +228,11 @@ public class SongViewController extends BaseController implements Initializable 
                 }
             }
         };
-        timer.scheduleAtFixedRate(task,1000, 1000);
+        timer.scheduleAtFixedRate(task,10, 10);
+    }
+    public void songSliderMovement()
+    {
+
     }
     public void cancelTimer()
     {
