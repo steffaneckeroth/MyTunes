@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #5A5A5A;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.GUI.Controller.SongViewController">
+<AnchorPane cache="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #5A5A5A;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.GUI.Controller.SongViewController">
    <children>
       <ImageView disable="true" fitHeight="840.0" fitWidth="1153.0" layoutX="-16.0" layoutY="-68.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -67,7 +74,7 @@
          </font>
       </Label>
       <ListView layoutX="322.0" layoutY="122.0" opacity="0.9" prefHeight="434.0" prefWidth="260.0" />
-      <Button layoutX="30.0" layoutY="570.0" minWidth="53.0" mnemonicParsing="false" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="New..." />
+      <Button fx:id="btnNewPlayList" layoutX="30.0" layoutY="570.0" minWidth="53.0" mnemonicParsing="false" onAction="#handleButtonNewPlayList" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="New..." />
       <Button layoutX="100.0" layoutY="570.0" minWidth="51.0" mnemonicParsing="false" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="Edit..." />
       <Button layoutX="170.0" layoutY="570.0" minWidth="53.0" mnemonicParsing="false" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="Delete" />
       <Button fx:id="btnEditS" layoutX="730.0" layoutY="569.0" minWidth="53.0" mnemonicParsing="false" onAction="#EditSong" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="Edit..." />
@@ -90,7 +97,7 @@
          </graphic>
       </Button>
       <Button layoutX="493.0" layoutY="570.0" mnemonicParsing="false" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="Delete" />
-      <Button layoutX="590.0" layoutY="122.0" minHeight="18.0" minWidth="45.0" mnemonicParsing="false" opacity="0.75" prefHeight="30.0" prefWidth="60.0">
+      <Button fx:id="btnSongToPlayList" layoutX="590.0" layoutY="122.0" minHeight="18.0" minWidth="45.0" mnemonicParsing="false" onAction="#handleButtonSongToPlayList" opacity="0.75" prefHeight="30.0" prefWidth="60.0">
          <graphic>
             <ImageView fitHeight="39.0" fitWidth="212.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -122,11 +129,11 @@
             <TableColumn fx:id="drtCol" prefWidth="60.0" text="Time" />
         </columns>
       </TableView>
-      <TableView layoutX="28.0" layoutY="122.0" prefHeight="434.0" prefWidth="260.0">
+      <TableView fx:id="tblPlayList" layoutX="28.0" layoutY="122.0" prefHeight="434.0" prefWidth="260.0">
         <columns>
-          <TableColumn prefWidth="92.0" text="Name" />
-          <TableColumn prefWidth="89.60000610351562" text="Songs" />
-            <TableColumn prefWidth="77.60000610351562" text="Time" />
+          <TableColumn fx:id="namCol" prefWidth="92.0" text="Name" />
+          <TableColumn fx:id="sngCol" prefWidth="89.60000610351562" text="Songs" />
+            <TableColumn fx:id="timCol" prefWidth="77.60000610351562" text="Time" />
         </columns>
       </TableView>
       <Button fx:id="btnDeleteSong" layoutX="795.0" layoutY="570.0" minWidth="53.0" mnemonicParsing="false" onAction="#handleButtonDeleteSong" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="Delete" />

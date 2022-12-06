@@ -78,8 +78,7 @@ public class SongViewController extends BaseController implements Initializable 
 
     }
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1)
-    {
+    public void initialize(URL arg0, ResourceBundle arg1) {
         songs = new ArrayList<>();
         directory = new File("lib/music");
         files = directory.listFiles();
@@ -88,18 +87,15 @@ public class SongViewController extends BaseController implements Initializable 
         artCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getArtist()));
         catCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getCategory()));
         drtCol.setCellValueFactory(new PropertyValueFactory<>("Duration"));
-
         if (files != null) {
             Collections.addAll(songs, files);
         }
-
         media = new Media(songs.get(songNumber).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         songLabel.setText(songs.get(songNumber).getName());
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue() * 0.01));
         tblSongs.setItems(songModel.getObservableSongs());
-        txtSongSearch.textProperty().addListener((observableValue, oldValue, newValue) ->
-        {
+        txtSongSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 songModel.searchSong(newValue);
             } catch (Exception e) {
@@ -108,8 +104,9 @@ public class SongViewController extends BaseController implements Initializable 
         });
     }
 
-    public void setup()
-    {
+    public void setup() {
+
+
         btnEditS.setDisable(true);
         tblSongs.setItems(songModel.getObservableSongs());
         tblSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
@@ -194,10 +191,8 @@ public class SongViewController extends BaseController implements Initializable 
     public void beginTimer()
     {
         timer = new Timer();
-
         TimerTask task = new TimerTask()
         {
-
             @Override
             public void run()
             {
@@ -300,7 +295,7 @@ public class SongViewController extends BaseController implements Initializable 
         // Show the dialog and wait until the user closes it
         dialogWindow.showAndWait();
     }
-    
+
     public void handleButtonDeleteSong(ActionEvent event)throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/DeleteSongView.fxml"));
@@ -311,6 +306,20 @@ public class SongViewController extends BaseController implements Initializable 
         stage.setScene(new Scene(root));
         DeleteSongController controller = fxmlLoader.getController();
         controller.setController(this);
+        stage.showAndWait();
+    }
+
+    public void handleButtonSongToPlayList(ActionEvent event) {
+
+    }
+
+    public void handleButtonNewPlayList(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/NewPlayListView.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Add new song");
+        stage.setScene(new Scene(root));
         stage.showAndWait();
     }
 }

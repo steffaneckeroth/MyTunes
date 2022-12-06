@@ -4,7 +4,6 @@ package src.GUI.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 import src.BE.Song;
 import src.BLL.SongManager;
 
@@ -44,9 +43,9 @@ public class SongModel {
 
     public void createNewSong(String title, String artist, String category, String filepath, Time duration) throws Exception
     {
-        Song m = songManager.createNewSong(title, artist, category, filepath, duration);
+        Song mSong = songManager.createNewSong(title, artist, category, filepath, duration);
 
-        songsToBeViewed.add(m);
+        songsToBeViewed.add(mSong);
     }
     public void updateSongs(Song updatedSongs) throws Exception {
         songManager.updateSongs(updatedSongs);

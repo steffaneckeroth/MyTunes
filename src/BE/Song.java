@@ -68,5 +68,9 @@ public class Song {
     {
         return id + ": " + title + "(" +artist+ ")" + "(" +category+ ")" + "(" +filepath+ ")" + "(" +duration+")";
     }
+
+    public int getLength() {
+        return 0;
+    }
 }
 
