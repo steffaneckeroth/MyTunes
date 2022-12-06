@@ -11,7 +11,7 @@ public class Song {
     private Time duration;
 
     public Song(int id, String title, String artist, String category, String filepath, Time duration) {
-        this.id = id;
+        this.id= id;
         this.title = title;
         this.artist = artist;
         this.category = category;

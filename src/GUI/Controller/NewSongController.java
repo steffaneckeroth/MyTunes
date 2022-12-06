@@ -14,7 +14,7 @@ import javafx.util.Duration;
 import src.BE.Song;
 import src.GUI.Model.SongModel;
 
-public class NewSongController {
+public class NewSongController extends BaseController{
 
     private SongModel songModel;
     private SongViewController songViewController;
@@ -70,7 +70,7 @@ public class NewSongController {
             //Calls createNewSong method from SongModel
             this.songModel.createNewSong(title, artist, category, filepath, Time.valueOf(duration.toLocalTime()));
             System.out.println("Song added: " + title + ", " + artist + ", " + category + ", " + "'"+filepath+"'" + ", " + duration);
-
+            songViewController.tblSongs.setItems(songModel.getObservableSongs());
             //Close stage if Save button is clicked
             Node source = (Node) actionEvent.getSource();
             Stage mStage = (Stage) source.getScene().getWindow();
@@ -121,6 +121,15 @@ public class NewSongController {
 
         }
 
+    @Override
+    public void setup() throws Exception {
+
+    }
+
+    public void setController(SongViewController songViewController)
+    {
+        this.songViewController=songViewController;
+    }
 }
 
 

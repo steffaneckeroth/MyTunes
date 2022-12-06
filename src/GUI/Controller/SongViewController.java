@@ -249,6 +249,8 @@ public class SongViewController extends BaseController implements Initializable 
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Add new song");
         stage.setScene(new Scene(root));
+        NewSongController controller = fxmlLoader.getController();
+        controller.setController(this);
         stage.showAndWait();
     }
 
@@ -327,15 +329,19 @@ public class SongViewController extends BaseController implements Initializable 
 
     public void handleButtonDeleteSong(ActionEvent event)throws IOException
     {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Current project is modified");
-        alert.setContentText("Save?");
-        ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
-        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(okButton, noButton, cancelButton);
-        alert.showAndWait().ifPresent( type -> {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/DeleteSongView.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Add new song");
+        stage.setScene(new Scene(root));
+        DeleteSongController controller = fxmlLoader.getController();
+        controller.setController(this);
+        stage.showAndWait();
 
+
+
+            /*
             if (type ==(okButton)) {
                 try {
                     Song deletedSong = tblSongs.getSelectionModel().getSelectedItem();
@@ -352,28 +358,6 @@ public class SongViewController extends BaseController implements Initializable 
             } else {
 
             }
-        });
-
-        /*
-        Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
-        songModel.setSelectedSong(selectedSong);
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/src/GUI/View/DeleteSongView.fxml"));
-        AnchorPane pane = (AnchorPane) loader.load();
-
-        DeleteSongView controller = loader.getController();
-        controller.setSelectedSong(selectedSong);
-        controller.setup();
-
-        // Create the dialog Stage.
-        Stage dialogWindow = new Stage();
-        dialogWindow.setTitle("Delete Song");
-        dialogWindow.initModality(Modality.WINDOW_MODAL);
-        dialogWindow.initOwner(((Node)event.getSource()).getScene().getWindow());
-        Scene scene = new Scene(pane);
-        dialogWindow.setScene(scene);
-        dialogWindow.showAndWait();
-        */
+            */
     }
 }
