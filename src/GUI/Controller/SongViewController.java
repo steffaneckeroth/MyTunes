@@ -44,6 +44,7 @@ public class SongViewController extends BaseController implements Initializable 
     public javafx.scene.image.ImageView imageView;
     public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton;
     public TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
+    public TableView tblPlaylist;
     @FXML
     private Slider songProgressBar, volumeSlider;
     @FXML
@@ -309,17 +310,19 @@ public class SongViewController extends BaseController implements Initializable 
         stage.showAndWait();
     }
 
-    public void handleButtonSongToPlayList(ActionEvent event) {
+    public void handleButtonSongToPlaylist(ActionEvent event) {
 
     }
 
-    public void handleButtonNewPlayList(ActionEvent event) throws IOException {
+    public void handleButtonNewPlaylist(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/NewPlayListView.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Add new song");
         stage.setScene(new Scene(root));
+        NewPlaylistController controller = fxmlLoader.getController();
+        controller.setController(this);
         stage.showAndWait();
     }
 }

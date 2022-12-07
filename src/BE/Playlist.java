@@ -3,10 +3,10 @@ package src.BE;
 
 import java.util.ArrayList;
 
-public class PlayList {
+public class Playlist {
     private int playlistid;
     private String playlistname;
-    private ArrayList <Song> playlist = new ArrayList<>();
+    private ArrayList<Song> playlist = new ArrayList<>();
 
     public ArrayList<Song> getPlaylist() {
         return playlist;
@@ -16,12 +16,12 @@ public class PlayList {
         this.playlist = playlist;
     }
 
-    public PlayList(int id, String name) {
+    public Playlist(int id, String playlistname) {
         this.playlistid = id;
-        this.playlistname = name;
+        this.playlistname = playlistname;
     }
 
-        public void setPlayListId ( int playlistid){
+        public void setPlaylistId ( int playlistid){
             this.playlistid = playlistid;
         }
         public void setPlayListName (String playlistname){

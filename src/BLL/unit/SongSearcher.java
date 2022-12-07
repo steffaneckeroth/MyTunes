@@ -8,6 +8,7 @@ import java.util.List;
 public class SongSearcher {
 
 
+
     public List<Song> search(List<Song> searchBase, String query) {
         List<Song> searchResult = new ArrayList<>();
 

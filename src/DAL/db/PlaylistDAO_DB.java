@@ -1,13 +1,14 @@
 package src.DAL.db;
 
-import src.BE.PlayList;
+import src.BE.Playlist;
 
 import java.sql.*;
+import java.util.List;
 
-public class PlayListDAO_DB implements IPlayListDataAccess{
+public class PlaylistDAO_DB implements IPlaylistDataAccess {
     private DatabaseConnector databaseConnector;
 
-    public PlayList createPlayList(String name) throws Exception
+    public Playlist createPlaylist(String playlistname) throws Exception
     {
         String sql = "INSERT INTO PlayList (Name) VALUES (?);";
 
@@ -16,7 +17,7 @@ public class PlayListDAO_DB implements IPlayListDataAccess{
             PreparedStatement stmt = coon.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             // Bind parameters
-            stmt.setString(1,name);
+            stmt.setString(1,playlistname);
 
 
             //Run the specified SQL statement
@@ -31,16 +32,32 @@ public class PlayListDAO_DB implements IPlayListDataAccess{
                 id = rs.getInt(1);
             }
             // Create song object and send up the layers
-            PlayList playlist = new PlayList(id, name);
+            Playlist playlist = new Playlist(id, playlistname);
             return playlist;
         }
         catch (SQLException ex)
         {
             ex.printStackTrace();
-            throw new Exception("Could not get PlayList from database", ex);
+            throw new Exception("Could not get Playlist from database", ex);
         }
     }
 
+    @Override
+    public List<Playlist> getAllPlaylists() throws Exception {
+        return null;
+    }
+
+
+
+    @Override
+    public Playlist updatePlaylist(Playlist playlist) throws Exception {
+        return null;
+    }
+
+    @Override
+    public Playlist deletePlaylist(Playlist playlist) throws Exception {
+        return null;
+    }
 
 
 }
