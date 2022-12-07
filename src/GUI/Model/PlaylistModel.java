@@ -3,12 +3,14 @@ package src.GUI.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import src.BE.Playlist;
-import src.BE.Song;
 import src.BLL.PlaylistManager;
 
 public class PlaylistModel {
 
     private PlaylistManager playlistManager;
+    private Playlist selectedPlaylist;
+
+
     private ObservableList<Playlist> playlistsToBeViewed;
 
     public PlaylistModel() throws Exception {
@@ -26,4 +28,23 @@ public class PlaylistModel {
 
     }
 
+    public void updatePlaylist(Playlist updatedPlaylist) throws Exception {
+        playlistManager.updatePlaylist(updatedPlaylist);
+        playlistsToBeViewed.clear();
+        playlistsToBeViewed.addAll(playlistManager.getAllPlaylists());
+    }
+
+    public void deletePlaylist(Playlist deletedPlaylist) throws Exception {
+        playlistManager.deletePlaylist(deletedPlaylist);
+        playlistsToBeViewed.clear();
+        playlistsToBeViewed.addAll(playlistManager.getAllPlaylists());
+    }
+    public Playlist getSelectedPlaylist() {
+        return selectedPlaylist;
+    }
+    public void setSelectedPlaylist(Playlist selectedPlaylist) {
+        this.selectedPlaylist = selectedPlaylist;
+    }
 }
+
+

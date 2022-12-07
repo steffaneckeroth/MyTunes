@@ -21,5 +21,5 @@ public class MyTunesModel {
         return playlistModel;
     }
 
-    public void setPlaylistModel(PlaylistModel playlistModel){this.playlistModel = playlistModel; }
+    public void setPlaylistModel(PlaylistModel playlistModel) throws Exception {this.playlistModel = new PlaylistModel(); }
 }

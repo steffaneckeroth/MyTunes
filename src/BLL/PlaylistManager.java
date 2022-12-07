@@ -2,9 +2,11 @@
 package src.BLL;
 
 import src.BE.Playlist;
+import src.BE.Song;
 import src.DAL.db.IPlaylistDataAccess;
 import src.DAL.db.PlaylistDAO_DB;
 
+import java.sql.Time;
 import java.util.List;
 
 public class PlaylistManager {
@@ -18,5 +20,12 @@ public class PlaylistManager {
     }
     public List<Playlist> getAllPlaylists() throws Exception {
         return playlistDAO.getAllPlaylists();
+    }
+    public void updatePlaylist(Playlist updatedPlaylist) throws Exception {
+        playlistDAO.updatePlaylist(updatedPlaylist);
+    }
+
+    public void deletePlaylist(Playlist deletedPlaylist) throws Exception{
+        playlistDAO.deletePlaylist(deletedPlaylist);
     }
 }

@@ -4,7 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import src.BE.Playlist;
 import src.BE.Song;
+import src.GUI.Model.PlaylistModel;
 import src.GUI.Model.SongModel;
 
 public class DeleteSongController extends BaseController {
@@ -40,6 +42,7 @@ public class DeleteSongController extends BaseController {
     {
         selectedSong = s;
     }
+
     private void fillSongsIN() throws Exception {
         model = getModel().getSongModel();
     }

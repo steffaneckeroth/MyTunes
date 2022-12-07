@@ -17,7 +17,6 @@ public class SongModel {
 
     private ObservableList<Song> songsToBeViewed;
     private SongManager songManager;
-
     private Song selectedSong;
 
     /**

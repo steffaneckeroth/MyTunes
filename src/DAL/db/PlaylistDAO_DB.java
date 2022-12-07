@@ -3,6 +3,7 @@ package src.DAL.db;
 import src.BE.Playlist;
 import src.BE.Song;
 
+
 import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class PlaylistDAO_DB implements IPlaylistDataAccess {
             {
                 id = rs.getInt(1);
             }
-            // Create song object and send up the layers
+            // Create playlist object and send up the layers
             Playlist playlist = new Playlist(id, playlistname);
             return playlist;
         }
@@ -76,16 +77,41 @@ public class PlaylistDAO_DB implements IPlaylistDataAccess {
         }
     }
 
-
-    @Override
-    public Playlist updatePlaylist(Playlist playlist) throws Exception {
-        return null;
-    }
-
-    @Override
     public Playlist deletePlaylist(Playlist playlist) throws Exception {
-        return null;
+        String sql = "DELETE FROM PlayList WHERE Id=?";
+
+        try(Connection conn = databaseConnector.getConnection();){
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, playlist.getPlaylistId());
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0)
+            {
+                System.out.println("Song was successfully deleted");
+            }
+
+        } catch (SQLException ex){
+            ex.printStackTrace();
+            throw new Exception("could not delete playlist", ex);
+        }
+        return playlist;
     }
 
+    @Override
+    public void updatePlaylist(Playlist playlist) throws Exception {
+        try (Connection conn = databaseConnector.getConnection()) {
 
+            String sql = "UPDATE PlayList SET Name = ? WHERE Id = ?";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            // Bind parameters
+            stmt.setString(1,playlist.getPlaylistName() );
+            stmt.setInt(2,playlist.getPlaylistId() );
+
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Exception("Could not update playlist", ex);
+        }
+    }
 }

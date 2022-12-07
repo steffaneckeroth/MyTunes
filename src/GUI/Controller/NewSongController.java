@@ -22,7 +22,7 @@ public class NewSongController extends BaseController{
     public TextField txtfTitle, txtfFile, txtfTime, txtfArtist;
     public Button btnChoose, btnSave, btbCancle;
     public Label lblTitle, lblArtist, lblTime, lblFile, lblCategory;
-
+    
 
 
 

@@ -52,8 +52,6 @@ public class NewPlaylistController extends BaseController {
             e.printStackTrace();
             System.out.println("Could not add song");
         }
-
-
     }
 
     public void handleButtonCanclePlaylist(ActionEvent actionEvent) {

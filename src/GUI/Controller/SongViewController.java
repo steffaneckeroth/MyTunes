@@ -26,6 +26,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaPlayer;
 
 
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -40,16 +41,17 @@ import src.GUI.Model.SongModel;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.Callable;
 
 public class SongViewController extends BaseController implements Initializable {
     public javafx.scene.image.ImageView imageView;
-    public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton;
+    public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton, btnEditP, btnNewPlaylist;
     public TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
     public TableColumn<Playlist, String> namCol;
     public TableView <Playlist>tblPlaylist;
-    public Button btnNewPlaylist;
     @FXML
     private Slider songProgressBar, volumeSlider;
     @FXML
@@ -69,7 +71,7 @@ public class SongViewController extends BaseController implements Initializable 
     private SongModel songModel;
     private PlaylistModel playlistModel;
     @FXML
-    private TextField txtTitle, txtArtist, txtCategory, txtTime, txtSongSearch;
+    private TextField txtTitle, txtArtist, txtCategory, txtTime, txtSongSearch, txtEditPlaylist;
 
     public SongViewController()
     {
@@ -92,6 +94,11 @@ public class SongViewController extends BaseController implements Initializable 
             songs = new ArrayList<>();
             directory = new File("lib/music");
             files = directory.listFiles();
+
+
+
+
+
             tblSongs.setItems(songModel.getObservableSongs());
             tblPlaylist.setItems(playlistModel.getObservablePlaylists());
             tltCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
@@ -100,10 +107,10 @@ public class SongViewController extends BaseController implements Initializable 
             drtCol.setCellValueFactory(new PropertyValueFactory<>("Duration"));
             namCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getPlaylistName()));
 
-
             if (files != null) {
                 Collections.addAll(songs, files);
             }
+
             media = new Media(songs.get(songNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
             songLabel.setText(songs.get(songNumber).getName());
@@ -116,12 +123,42 @@ public class SongViewController extends BaseController implements Initializable 
                     displayError(e);
                 }
             });
-            songProgressBar.valueProperty().addListener((observableValue, oldValue, newValue) -> songProgressBar.setValue((Double) newValue));
-        }
+        songProgressBar.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(!newValue)
+                {
+                    songProgressBar.setMax(mediaPlayer.getTotalDuration().toSeconds());
+
+                    mediaPlayer.seek(Duration.seconds(songProgressBar.getValue()));
+                }
+            }
+        });
+        songProgressBar.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                double currentTime = mediaPlayer.getCurrentTime().toSeconds();
+                if(Math.abs(currentTime - newValue.doubleValue()) > 0.5)
+                {
+                    mediaPlayer.seek(Duration.seconds(newValue.doubleValue()));
+                }
+            }
+        });
+    }
 
         public void setup () {
-
-
+            btnEditP.setDisable(true);
+            tblPlaylist.setItems(playlistModel.getObservablePlaylists());
+            tblPlaylist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Playlist>() {
+                @Override
+                public void changed(ObservableValue<? extends Playlist> observable, Playlist oldValue, Playlist newValue) {
+                    if (newValue != null) {
+                        btnEditP.setDisable(false);
+                        txtEditPlaylist.setText(newValue.getPlaylistName());
+                    } else
+                        btnEditP.setDisable(true);
+                }
+            });
             btnEditS.setDisable(true);
             tblSongs.setItems(songModel.getObservableSongs());
             tblSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
@@ -137,7 +174,6 @@ public class SongViewController extends BaseController implements Initializable 
                 }
             });
         }
-
         @FXML
         public void playMedia ()
         {
@@ -154,7 +190,6 @@ public class SongViewController extends BaseController implements Initializable 
                 imageView.setVisible(false);
             }
         }
-
         public void previousMedia ()
         {
             if (songNumber > 0) {
@@ -199,28 +234,18 @@ public class SongViewController extends BaseController implements Initializable 
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
-                    running = true;
-                    double current = mediaPlayer.getCurrentTime().toSeconds() / media.getDuration().toSeconds() * 100;
-                    double end = media.getDuration().toSeconds();
+                    songProgressBar.setMax(mediaPlayer.getTotalDuration().toSeconds());
+                    double current = mediaPlayer.getCurrentTime().toSeconds();
                     songProgressBar.setValue(current);
-
-                    if (current / end == 1) {
-                        cancelTimer();
-                    }
                 }
             };
             timer.scheduleAtFixedRate(task, 10, 10);
-        }
-        public void songSliderMovement ()
-        {
-
         }
         public void cancelTimer ()
         {
             running = false;
             timer.cancel();
         }
-
         private void bindCurrentTimeLabel ()
         {
             lblCurrent.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
@@ -262,8 +287,6 @@ public class SongViewController extends BaseController implements Initializable 
         }
 
 
-
-
         public void handleButtonDeleteSong (ActionEvent event)throws IOException
         {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/DeleteSongView.fxml"));
@@ -277,9 +300,6 @@ public class SongViewController extends BaseController implements Initializable 
             stage.showAndWait();
         }
 
-
-
-
         public void handleButtonNewPlaylist (ActionEvent event) throws IOException {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/NewPlayListView.fxml"));
             Parent root = fxmlLoader.load();
@@ -291,14 +311,6 @@ public class SongViewController extends BaseController implements Initializable 
             controller.setController(this);
             stage.showAndWait();
         }
-    public void mouseDragEvent(MouseEvent mouseEvent)
-    {
-
-        songProgressBar.setValue(mouseEvent.getClickCount());
-
-
-    }
-
     @FXML
     private void handleButtonNewSong (ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/NewSongView.fxml"));
@@ -342,5 +354,39 @@ public class SongViewController extends BaseController implements Initializable 
 
     }
 
+    public void EditPlaylist(ActionEvent event) throws Exception {
+        Playlist selectedPlaylist = tblPlaylist.getSelectionModel().getSelectedItem();
+        playlistModel.setSelectedPlaylist(selectedPlaylist);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/src/GUI/View/EditPlaylistView.fxml"));
+        AnchorPane pane = (AnchorPane) loader.load();
+        EditPlaylistController controller = loader.getController();
+        //controller.setModel(super.getModel());
+        controller.fillPlaylistIN(selectedPlaylist);
+        controller.setSelectedPlaylist(selectedPlaylist);
+        controller.setup();
+        controller.setController(this);
 
+        // Create the dialog Stage.
+        Stage dialogWindow = new Stage();
+        dialogWindow.setTitle("Edit Movie");
+        dialogWindow.initModality(Modality.WINDOW_MODAL);
+        dialogWindow.initOwner(((Node)event.getSource()).getScene().getWindow());
+        Scene scene = new Scene(pane);
+        dialogWindow.setScene(scene);
+        // Show the dialog and wait until the user closes it
+        dialogWindow.showAndWait();
+    }
+
+    public void deletePlaylist(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/DeletePlaylistView.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Delete the Playlist");
+        stage.setScene(new Scene(root));
+        DeletePlaylistController controller = fxmlLoader.getController();
+        controller.setController(this);
+        stage.showAndWait();
+    }
 }
