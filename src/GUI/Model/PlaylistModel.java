@@ -8,22 +8,22 @@ import src.BLL.PlaylistManager;
 public class PlaylistModel {
 
     private PlaylistManager playlistManager;
-    private ObservableList<Playlist> playlistToBeViewed;
+    private ObservableList<Playlist> playlistsToBeViewed;
 
     public PlaylistModel() throws Exception {
         playlistManager = new PlaylistManager();
-        ObservableList<Playlist> playlistsToBeViewed = FXCollections.observableArrayList();
+        playlistsToBeViewed = FXCollections.observableArrayList();
         playlistsToBeViewed.addAll(playlistManager.getAllPlaylists());
     }
 
     public ObservableList<Playlist> getObservablePlaylists() {
-        return playlistToBeViewed;
+        return playlistsToBeViewed;
     }
 
     public void createNewPlaylist(String playlistname) throws Exception {
 
         Playlist mPlaylist = playlistManager.createNewPlaylist(playlistname);
-        playlistToBeViewed.add(mPlaylist);
+        playlistsToBeViewed.add(mPlaylist);
 
     }
 

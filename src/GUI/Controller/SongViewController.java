@@ -45,6 +45,7 @@ public class SongViewController extends BaseController implements Initializable 
     public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton;
     public TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
     public TableView tblPlaylist;
+    public Button btnNewPlaylist;
     @FXML
     private Slider songProgressBar, volumeSlider;
     @FXML
@@ -319,7 +320,7 @@ public class SongViewController extends BaseController implements Initializable 
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Add new song");
+        stage.setTitle("Add new playlist");
         stage.setScene(new Scene(root));
         NewPlaylistController controller = fxmlLoader.getController();
         controller.setController(this);

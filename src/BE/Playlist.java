@@ -24,13 +24,13 @@ public class Playlist {
         public void setPlaylistId ( int playlistid){
             this.playlistid = playlistid;
         }
-        public void setPlayListName (String playlistname){
+        public void setPlaylistName (String playlistname){
             this.playlistname = playlistname;
         }
-        public int getPlayListId () {
+        public int getPlaylistId () {
             return playlistid;
         }
-        public String getPlayListName () {
+        public String getPlaylistName () {
             return playlistname;
         }
 
