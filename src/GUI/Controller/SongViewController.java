@@ -46,8 +46,9 @@ import java.util.concurrent.Callable;
 public class SongViewController extends BaseController implements Initializable {
     public javafx.scene.image.ImageView imageView;
     public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton;
-    public TableColumn<Song, String> drtCol, catCol, artCol, tltCol, namCol;
-    public TableView tblPlaylist;
+    public TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
+    public TableColumn<Playlist, String> namCol;
+    public TableView <Playlist>tblPlaylist;
     public Button btnNewPlaylist;
     @FXML
     private Slider songProgressBar, volumeSlider;
@@ -85,13 +86,6 @@ public class SongViewController extends BaseController implements Initializable 
     {
 
     }
-
-    public void initialize() {
-
-        tblPlaylist.setItems(playlistModel.getObservablePlaylists());
-        //namCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getP));
-    }
-
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -99,10 +93,12 @@ public class SongViewController extends BaseController implements Initializable 
             directory = new File("lib/music");
             files = directory.listFiles();
             tblSongs.setItems(songModel.getObservableSongs());
+            tblPlaylist.setItems(playlistModel.getObservablePlaylists());
             tltCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
             artCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getArtist()));
             catCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getCategory()));
             drtCol.setCellValueFactory(new PropertyValueFactory<>("Duration"));
+            namCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getPlaylistName()));
 
 
             if (files != null) {

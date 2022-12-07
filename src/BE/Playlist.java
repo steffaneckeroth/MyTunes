@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Playlist {
     private int playlistid;
-    private String playlistname;
+    public String playlistname;
     private ArrayList<Song> playlist = new ArrayList<>();
 
     public ArrayList<Song> getPlaylist() {
