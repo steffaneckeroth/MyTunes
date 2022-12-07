@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 
 import javafx.scene.Node;
@@ -77,7 +78,6 @@ public class SongViewController extends BaseController implements Initializable 
     {
 
     }
-    @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
         songs = new ArrayList<>();
@@ -106,6 +106,7 @@ public class SongViewController extends BaseController implements Initializable 
                 displayError(e);
             }
         });
+             songProgressBar.valueProperty().addListener((observableValue,oldValue, newValue)->songProgressBar.setValue((Double) newValue));
     }
 
     public void setup()
@@ -312,5 +313,10 @@ public class SongViewController extends BaseController implements Initializable 
         DeleteSongController controller = fxmlLoader.getController();
         controller.setController(this);
         stage.showAndWait();
+    }
+
+    public void changeValue(MouseEvent mouseDragEvent)
+    {
+        songProgressBar.setValue(mouseDragEvent.getClickCount());
     }
 }
