@@ -57,7 +57,7 @@
       <Button fx:id="btnNewSong" layoutX="660.0" layoutY="569.0" mnemonicParsing="false" onAction="#handleButtonNewSong" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="New..." />
       <Label fx:id="lblCurrent" layoutX="17.0" layoutY="642.0" text="00:00" textFill="WHITE" />
       <Label fx:id="lblEnd" layoutX="1053.0" layoutY="643.0" text="00:00" textFill="WHITE" />
-      <Slider fx:id="songProgressBar" layoutX="58.0" layoutY="640.0" prefHeight="24.0" prefWidth="985.0" />
+      <Slider fx:id="songProgressBar" layoutX="58.0" layoutY="640.0" onMouseClicked="#mouseDragEvent" prefHeight="24.0" prefWidth="985.0" />
       <Label layoutX="33.0" layoutY="88.0" text="Playlists" textFill="#fffffffa">
          <font>
             <Font name="System Bold" size="18.0" />
