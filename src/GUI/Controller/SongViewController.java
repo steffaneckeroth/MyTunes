@@ -33,6 +33,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import src.BE.Song;
+import src.BE.Playlist;
+import src.GUI.Model.PlaylistModel;
 import src.GUI.Model.SongModel;
 
 import java.io.File;
@@ -44,7 +46,7 @@ import java.util.concurrent.Callable;
 public class SongViewController extends BaseController implements Initializable {
     public javafx.scene.image.ImageView imageView;
     public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton;
-    public TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
+    public TableColumn<Song, String> drtCol, catCol, artCol, tltCol, namCol;
     public TableView tblPlaylist;
     public Button btnNewPlaylist;
     @FXML
@@ -57,12 +59,14 @@ public class SongViewController extends BaseController implements Initializable 
     public File directory;
     public  File [] files;
     private ArrayList<File> songs;
+
     @FXML
     private Label lblCurrent, lblEnd;
     private int songNumber;
     private Timer timer;
     private boolean running;
     private SongModel songModel;
+    private PlaylistModel playlistModel;
     @FXML
     private TextField txtTitle, txtArtist, txtCategory, txtTime, txtSongSearch;
 
@@ -71,6 +75,7 @@ public class SongViewController extends BaseController implements Initializable 
         try
         {
             songModel = new SongModel();
+            playlistModel = new PlaylistModel();
         } catch (Exception e)
         {
             displayError(e);
@@ -81,10 +86,14 @@ public class SongViewController extends BaseController implements Initializable 
 
     }
 
+    public void initialize() {
+
+        tblPlaylist.setItems(playlistModel.getObservablePlaylists());
+        //namCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getP));
+    }
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-
-
 
             songs = new ArrayList<>();
             directory = new File("lib/music");
@@ -94,6 +103,8 @@ public class SongViewController extends BaseController implements Initializable 
             artCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getArtist()));
             catCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getCategory()));
             drtCol.setCellValueFactory(new PropertyValueFactory<>("Duration"));
+
+
             if (files != null) {
                 Collections.addAll(songs, files);
             }
