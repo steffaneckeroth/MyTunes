@@ -36,18 +36,11 @@ public class SongDAO_DB implements ISongDataAccess {
                 String category = rs.getString("Category");
                 String filepath = rs.getString("FilePath");
                 Time duration = rs.getTime("Duration");
-                //String artistName = rs.getString(10);
-               // String categoryName = rs.getString(8);
-                //String artist1 = (artist,artistName);
-                //String category1 = (category, categoryName);
-
 
                 Song song = new Song(id, title, artist, category, filepath, duration);
                 allSong.add(song);
-
             }
             return allSong;
-
         }
         catch (SQLException ex)
         {

@@ -1,6 +1,7 @@
 package src.DAL.db;
 
 import src.BE.Playlist;
+import src.BE.Song;
 
 import javax.xml.crypto.Data;
 import java.sql.*;
@@ -15,6 +16,32 @@ public class PlaylistDAO_DB implements IPlaylistDataAccess {
         databaseConnector = new DatabaseConnector();
     }
 
+
+    public List<Playlist> getAllPlaylists() throws Exception {
+
+        ArrayList<Playlist> allPlaylist = new ArrayList<>();
+
+        try (Connection conn = databaseConnector.getConnection())
+        {
+            String sql = "SELECT * FROM PlayList;";
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int id = rs.getInt("Id");
+                String playlistname = rs.getString("Name");
+                Playlist playlist = new Playlist(id, playlistname);
+                allPlaylist.add(playlist);
+            }
+            return allPlaylist;
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            throw new Exception("Could not get playlists from database", ex);
+        }
+    }
     public Playlist createPlaylist(String playlistname) throws Exception
     {
         String sql = "INSERT INTO PlayList (Name) VALUES (?);";
@@ -48,14 +75,6 @@ public class PlaylistDAO_DB implements IPlaylistDataAccess {
             throw new Exception("Could not get Playlist from database", ex);
         }
     }
-
-    @Override
-    public List<Playlist> getAllPlaylists() throws Exception {
-        ArrayList<Playlist> a =  new ArrayList<>();
-        a.add(new Playlist(1,"party mix"));
-        return a;
-    }
-
 
 
     @Override
