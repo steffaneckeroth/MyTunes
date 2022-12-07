@@ -2,11 +2,18 @@ package src.DAL.db;
 
 import src.BE.Playlist;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistDAO_DB implements IPlaylistDataAccess {
     private DatabaseConnector databaseConnector;
+
+
+    public PlaylistDAO_DB(){
+        databaseConnector = new DatabaseConnector();
+    }
 
     public Playlist createPlaylist(String playlistname) throws Exception
     {
@@ -44,7 +51,9 @@ public class PlaylistDAO_DB implements IPlaylistDataAccess {
 
     @Override
     public List<Playlist> getAllPlaylists() throws Exception {
-        return null;
+        ArrayList<Playlist> a =  new ArrayList<>();
+        a.add(new Playlist(1,"party mix"));
+        return a;
     }
 
 

@@ -46,6 +46,7 @@ public class SongViewController extends BaseController implements Initializable 
     public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton;
     public TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
     public TableView tblPlaylist;
+    public Button btnNewPlaylist;
     @FXML
     private Slider songProgressBar, volumeSlider;
     @FXML
@@ -320,6 +321,91 @@ public class SongViewController extends BaseController implements Initializable 
         }
     public void mouseDragEvent(MouseEvent mouseEvent)
     {
+<<<<<<< HEAD
         songProgressBar.setValue(mouseEvent.getClickCount());
+=======
+        int hours = (int) time.toHours();
+        int minutes = (int) time.toMinutes();
+        int seconds = (int) time.toSeconds();
+        if(seconds > 59)
+            seconds = seconds % 60;
+        if(minutes > 59)
+            minutes = minutes % 60;
+        if(hours > 59)
+            hours = hours % 60;
+        if(hours > 0)
+            return String.format("%d:%02d:%02d", hours, minutes, seconds);
+        else return String.format("%02d:%02d", minutes, seconds);
+    }
+    private void viewTime()
+    {
+        bindTotalTimeLabel();
+        bindCurrentTimeLabel();
+    }
+    @FXML
+    private void handleButtonNewSong (ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/NewSongView.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Add new song");
+        stage.setScene(new Scene(root));
+        NewSongController controller = fxmlLoader.getController();
+        controller.setController(this);
+        stage.showAndWait();
+    }
+
+    public void EditSong(ActionEvent actionEvent) throws Exception {
+        Song selectedSong = tblSongs.getSelectionModel().getSelectedItem();
+        songModel.setSelectedSong(selectedSong);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/src/GUI/View/EditSongView.fxml"));
+        AnchorPane pane = (AnchorPane) loader.load();
+        EditSongController controller = loader.getController();
+        //controller.setModel(super.getModel());
+        controller.fillSongsIN(selectedSong);
+        controller.setSelectedSong(selectedSong);
+        controller.setup();
+        controller.setController(this);
+
+        // Create the dialog Stage.
+        Stage dialogWindow = new Stage();
+        dialogWindow.setTitle("Edit Movie");
+        dialogWindow.initModality(Modality.WINDOW_MODAL);
+        dialogWindow.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+        Scene scene = new Scene(pane);
+        dialogWindow.setScene(scene);
+        // Show the dialog and wait until the user closes it
+        dialogWindow.showAndWait();
+    }
+
+    public void handleButtonDeleteSong(ActionEvent event)throws IOException
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/DeleteSongView.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Delete the song");
+        stage.setScene(new Scene(root));
+        DeleteSongController controller = fxmlLoader.getController();
+        controller.setController(this);
+        stage.showAndWait();
+    }
+
+    public void handleButtonSongToPlaylist(ActionEvent event) {
+
+    }
+
+    public void handleButtonNewPlaylist(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/NewPlayListView.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Add new playlist");
+        stage.setScene(new Scene(root));
+        NewPlaylistController controller = fxmlLoader.getController();
+        controller.setController(this);
+        stage.showAndWait();
+>>>>>>> STE_Playlist_Class_Structure
     }
 }
