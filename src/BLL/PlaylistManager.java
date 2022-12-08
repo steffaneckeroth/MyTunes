@@ -6,7 +6,6 @@ import src.BE.Song;
 import src.DAL.db.IPlaylistDataAccess;
 import src.DAL.db.PlaylistDAO_DB;
 
-import java.sql.Time;
 import java.util.List;
 
 public class PlaylistManager {
@@ -27,5 +26,10 @@ public class PlaylistManager {
 
     public void deletePlaylist(Playlist deletedPlaylist) throws Exception{
         playlistDAO.deletePlaylist(deletedPlaylist);
+    }
+
+    public static void addToPlaylist(Playlist playlist, Song song) throws Exception{
+
+
     }
 }
