@@ -35,7 +35,7 @@ import src.BE.Song;
 import src.BE.Playlist;
 import src.GUI.Model.PlaylistModel;
 import src.GUI.Model.SongModel;
-import src.GUI.Model.SongOnPlaylistModel;
+//import src.GUI.Model.SongOnPlaylistModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -354,7 +354,7 @@ public class SongViewController extends BaseController implements Initializable 
         Playlist mPlaylist = tblPlaylist.getSelectionModel().getSelectedItem();
         Song mSelectedSong = tblSongs.getSelectionModel().getSelectedItem();
         tblSongsOnPlaylist.getItems().add(mSelectedSong);
-        SongOnPlaylistModel.addToPlaylist(mPlaylist, mSelectedSong);
+        //SongOnPlaylistModel.addToPlaylist(mPlaylist, mSelectedSong);
 
 
     }

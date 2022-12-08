@@ -1,6 +1,5 @@
 package src.DAL.db;
 
-import src.BE.Playlist;
 import src.BE.Song;
 
 import java.sql.Connection;
@@ -12,13 +11,12 @@ public class SongOnPlaylistDAO implements ISongOnPlaylistDataAccess {
 
     private DatabaseConnector databaseConnector;
 
-    public SongOnPlaylistDAO(DatabaseConnector databaseConnector) {
+    public SongOnPlaylistDAO() {
         this.databaseConnector = databaseConnector;
     }
 
-    public Song addToPlaylist(Playlist playlist, Song song)
-    {
-
+    @Override
+    public Song addToPlaylist(String name, Song song) throws Exception {
         String sql = "INSERT INTO SongOnPlayList (Titel) VALUES (?);";
         try (Connection con = databaseConnector.getConnection())
         {
@@ -43,7 +41,4 @@ public class SongOnPlaylistDAO implements ISongOnPlaylistDataAccess {
             return null;
         }
     }
-
-
-
 }

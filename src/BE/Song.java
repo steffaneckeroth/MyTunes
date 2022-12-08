@@ -64,7 +64,7 @@ public class Song {
     @Override
     public String toString()
     {
-        return id + ": " + title + "(" +artist+ ")" + "(" +category+ ")" + "(" +filepath+ ")" + "(" +duration+")";
+        return id + ": " + title;
     }
 
     public int getLength() {
