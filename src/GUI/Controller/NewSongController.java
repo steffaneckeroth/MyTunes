@@ -71,31 +71,29 @@ public class NewSongController extends BaseController{
         String category = cbxDropDown.getValue();
         String filepath = txtfFile.getText();
         Time duration = Time.valueOf(txtfTime.getText());
-        try {
-            //Get data from textfields and combobox
+        try
+        {
             Files.copy(mFile.toPath(), target.resolve(mFile.toPath().getFileName()));
-            //Calls createNewSong method from SongModel
-            this.songModel.createNewSong(title, artist, category, filepath, Time.valueOf(duration.toLocalTime()));
             System.out.println("Song added: " + title + ", " + artist + ", " + category + ", " + "'"+filepath+"'" + ", " + duration);
-            songViewController.tblSongs.setItems(songModel.getObservableSongs());
-            //Close stage if Save button is clicked
             Node source = (Node) actionEvent.getSource();
             Stage mStage = (Stage) source.getScene().getWindow();
             mStage.close();
-
-
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             System.out.println("Could not add song");
         }
         mFile = new File (fileMusicPath + "/" + mFile.getName());
-        try {
-            songModel.createNewSong(title,artist,category,filepath,duration);
-        }catch (Exception e)
+        try
+        {
+            this.songModel.createNewSong(title,artist,category,filepath,duration);
+        }
+        catch (Exception e)
         {
             throw new RuntimeException(e);
         }
-
+            songViewController.tblSongs.setItems(songModel.getObservableSongs());
     }
 
     public void handleButtonCancle (ActionEvent actionEvent)
