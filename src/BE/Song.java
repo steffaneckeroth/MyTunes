@@ -23,8 +23,6 @@ public class Song {
         this.id = id;
     }
 
-
-
     public String getArtist() {
         return artist;
     }

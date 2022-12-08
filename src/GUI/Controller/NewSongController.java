@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
@@ -22,8 +25,9 @@ public class NewSongController extends BaseController{
     public TextField txtfTitle, txtfFile, txtfTime, txtfArtist;
     public Button btnChoose, btnSave, btbCancle;
     public Label lblTitle, lblArtist, lblTime, lblFile, lblCategory;
-    
-
+    private String fileMusicPath = "lib/music";
+    private Path target = Paths.get(fileMusicPath);
+    private File mFile;
 
 
     public NewSongController()
@@ -49,9 +53,12 @@ public class NewSongController extends BaseController{
         {
             //Opens file browser to select a file
             FileChooser mFileChooser = new FileChooser();
-            File mFile = mFileChooser.showOpenDialog(null);
+            mFile = mFileChooser.showOpenDialog(null);
 
-            txtfFile.setText(mFile.getName());
+            if (mFile != null)
+            {
+                txtfFile.setText(mFile.toURI().toString());
+            }
             System.out.println("Selected file " + mFile);
             System.out.println(getSongLength(mFile).toString());
         }
@@ -59,14 +66,14 @@ public class NewSongController extends BaseController{
 
     public void handleButtonSave(ActionEvent actionEvent)
     {
+        String title = txtfTitle.getText();
+        String artist = txtfArtist.getText();
+        String category = cbxDropDown.getValue();
+        String filepath = txtfFile.getText();
+        Time duration = Time.valueOf(txtfTime.getText());
         try {
             //Get data from textfields and combobox
-            String title = txtfTitle.getText();
-            String artist = txtfArtist.getText();
-            String category = cbxDropDown.getValue();
-            String filepath = txtfFile.getText();
-            Time duration = Time.valueOf(txtfTime.getText());
-
+            Files.copy(mFile.toPath(), target.resolve(mFile.toPath().getFileName()));
             //Calls createNewSong method from SongModel
             this.songModel.createNewSong(title, artist, category, filepath, Time.valueOf(duration.toLocalTime()));
             System.out.println("Song added: " + title + ", " + artist + ", " + category + ", " + "'"+filepath+"'" + ", " + duration);
@@ -77,13 +84,17 @@ public class NewSongController extends BaseController{
             mStage.close();
 
 
-
-
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Could not add song");
         }
-
+        mFile = new File (fileMusicPath + "/" + mFile.getName());
+        try {
+            songModel.createNewSong(title,artist,category,filepath,duration);
+        }catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
 
     }
 
