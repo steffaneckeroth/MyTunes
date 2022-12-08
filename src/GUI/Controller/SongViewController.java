@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 
 import javafx.scene.Node;
@@ -26,7 +25,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaPlayer;
 
 
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -37,21 +35,22 @@ import src.BE.Song;
 import src.BE.Playlist;
 import src.GUI.Model.PlaylistModel;
 import src.GUI.Model.SongModel;
+import src.GUI.Model.SongOnPlaylistModel;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.Callable;
 
 public class SongViewController extends BaseController implements Initializable {
     public javafx.scene.image.ImageView imageView;
-    public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton, btnEditP, btnNewPlaylist;
+    public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton, btnEditP, btnNewPlaylist, btnSongToPlaylist;
     public TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
     public TableColumn<Playlist, String> namCol;
     public TableView <Playlist>tblPlaylist;
+    public ListView tblSongsOnPlaylist;
+
     @FXML
     private Slider songProgressBar, volumeSlider;
     @FXML
@@ -351,7 +350,12 @@ public class SongViewController extends BaseController implements Initializable 
 
 
 
-    public void handleButtonSongToPlaylist(ActionEvent event) {
+    public void handleButtonSongToPlaylist(ActionEvent event) throws Exception {
+        Playlist mPlaylist = tblPlaylist.getSelectionModel().getSelectedItem();
+        Song mSelectedSong = tblSongs.getSelectionModel().getSelectedItem();
+        tblSongsOnPlaylist.getItems().add(mSelectedSong);
+        SongOnPlaylistModel.addToPlaylist(mPlaylist, mSelectedSong);
+
 
     }
 
