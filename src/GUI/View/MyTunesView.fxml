@@ -96,7 +96,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="493.0" layoutY="570.0" mnemonicParsing="false" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="Delete" />
+      <Button fx:id="btnDeleteSongOnPlaylist" layoutX="493.0" layoutY="570.0" mnemonicParsing="false" onAction="#handleButtonDeleteSongOnPlaylist" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="Delete" />
       <Button fx:id="btnSongToPlaylist" layoutX="590.0" layoutY="122.0" minHeight="18.0" minWidth="45.0" mnemonicParsing="false" onAction="#handleButtonSongToPlaylist" opacity="0.75" prefHeight="30.0" prefWidth="60.0">
          <graphic>
             <ImageView fitHeight="39.0" fitWidth="212.0" pickOnBounds="true" preserveRatio="true">

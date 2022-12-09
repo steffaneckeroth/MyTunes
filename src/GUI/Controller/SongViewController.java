@@ -45,12 +45,11 @@ import java.util.concurrent.Callable;
 
 public class SongViewController extends BaseController implements Initializable {
     public javafx.scene.image.ImageView imageView;
-    public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton, btnEditP, btnNewPlaylist, btnSongToPlaylist;
+    public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton, btnEditP, btnNewPlaylist, btnSongToPlaylist, btnDeleteSongOnPlaylist;
     public TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
     public TableColumn<Playlist, String> namCol;
     public TableView <Playlist>tblPlaylist;
     public ListView tblSongsOnPlaylist;
-
     @FXML
     private Slider songProgressBar, volumeSlider;
     @FXML
@@ -391,6 +390,18 @@ public class SongViewController extends BaseController implements Initializable 
         stage.setTitle("Delete the Playlist");
         stage.setScene(new Scene(root));
         DeletePlaylistController controller = fxmlLoader.getController();
+        controller.setController(this);
+        stage.showAndWait();
+    }
+
+    public void handleButtonDeleteSongOnPlaylist(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/DeleteSongOnPlaylistView.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Delete the song on the playlist");
+        stage.setScene(new Scene(root));
+        DeleteSongOnPlaylistController controller = fxmlLoader.getController();
         controller.setController(this);
         stage.showAndWait();
     }
