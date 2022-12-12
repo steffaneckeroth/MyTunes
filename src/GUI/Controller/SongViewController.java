@@ -39,6 +39,7 @@ import src.GUI.Model.SongModel;
 import src.GUI.Model.SongOnPlaylistModel;
 //import src.GUI.Model.SongOnPlaylistModel;
 
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -94,6 +95,8 @@ public class SongViewController extends BaseController implements Initializable 
         songs = new ArrayList<>();
         directory = new File("lib/music");
         files = directory.listFiles();
+
+
         try {
             songOnPlaylistModel = new SongOnPlaylistModel();
         } catch (Exception e) {
@@ -113,9 +116,6 @@ public class SongViewController extends BaseController implements Initializable 
             Collections.addAll(songs, files);
         }
 
-        media = new Media(songs.get(songNumber).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        songLabel.setText(songs.get(songNumber).getName());
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue() * 0.01));
         tblSongs.setItems(songModel.getObservableSongs());
 
@@ -185,19 +185,62 @@ public class SongViewController extends BaseController implements Initializable 
     }
 
     @FXML
-    public void playMedia() {
-        beginTimer();
-        mediaPlayer.play();
-        mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
-        imageView.setVisible(false);
-        if (running) {
-            mediaPlayer.stop();
+    public void pauseAndPlayMedia()
+    {
+        if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
+        {
+            mediaPlayer.pause();
             imageView.setVisible(true);
-        } else {
+
+        }
+        else if (mediaPlayer !=null  && mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED){
             mediaPlayer.play();
-            viewTime();
             imageView.setVisible(false);
         }
+        else
+        {
+            playSelectedSong();
+            mediaPlayer.play();
+        }
+    }
+
+    public void tblSongsClicked(javafx.scene.input.MouseEvent mouseEvent) {
+        songNumber = tblSongs.getSelectionModel().getSelectedIndex();
+        playSelectedSong();
+    }
+
+
+    public void playSelectedSong() {
+        if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
+        {
+            mediaPlayer.stop();
+        }
+        Song selectedSong = tblSongs.getItems().get(songNumber);
+        songLabel.setText(selectedSong.getTitle());
+        media = new Media(new File(selectedSong.getFilepath()).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        System.out.println(selectedSong.getFilepath());
+        mediaPlayer.play();
+        beginTimer();
+        viewTime();
+        mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+        imageView.setVisible(false);
+    }
+
+    public void nextMedia() {
+        System.out.println(songs.size());
+        System.out.println(songNumber);
+        if (songNumber < songs.size() -1) {
+            songNumber ++;
+        } else {
+            songNumber = 0;
+        }
+        mediaPlayer.stop();
+        if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            cancelTimer();
+        }
+        playSelectedSong();
+        imageView.setVisible(false);
     }
 
     public void previousMedia() {
@@ -207,34 +250,14 @@ public class SongViewController extends BaseController implements Initializable 
             songNumber = songs.size() - 1;
         }
         mediaPlayer.stop();
-        if (running) {
+        if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
             cancelTimer();
         }
-        media = new Media(songs.get(songNumber).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        songLabel.setText(songs.get(songNumber).getName());
-        playMedia();
-        viewTime();
+        playSelectedSong();
         imageView.setVisible(false);
     }
 
-    public void nextMedia() {
-        if (songNumber < songs.size() - 1) {
-            songNumber++;
-        } else {
-            songNumber = 0;
-        }
-        mediaPlayer.stop();
-        if (running) {
-            cancelTimer();
-        }
-        media = new Media(songs.get(songNumber).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        songLabel.setText(songs.get(songNumber).getName());
-        playMedia();
-        viewTime();
-        imageView.setVisible(false);
-    }
+
 
     public void beginTimer() {
         timer = new Timer();

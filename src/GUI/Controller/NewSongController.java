@@ -25,7 +25,7 @@ public class NewSongController extends BaseController{
     public TextField txtfTitle, txtfFile, txtfTime, txtfArtist;
     public Button btnChoose, btnSave, btbCancle;
     public Label lblTitle, lblArtist, lblTime, lblFile, lblCategory;
-    private String fileMusicPath = "lib/music";
+    public String fileMusicPath = "lib/music";
     private Path target = Paths.get(fileMusicPath);
     private File mFile;
 
@@ -49,19 +49,16 @@ public class NewSongController extends BaseController{
 
     public void handleButtonChoose(ActionEvent actionEvent)
     {
-        if (actionEvent.getSource() == btnChoose)
+        //Opens file browser to select a file
+        Stage stage = new Stage();
+        FileChooser mFileChooser = new FileChooser();
+        mFile = mFileChooser.showOpenDialog(stage);
+        if (fileMusicPath != null)
         {
-            //Opens file browser to select a file
-            FileChooser mFileChooser = new FileChooser();
-            mFile = mFileChooser.showOpenDialog(null);
-
-            if (mFile != null)
-            {
-                txtfFile.setText(mFile.toURI().toString());
-            }
-            System.out.println("Selected file " + mFile);
-            System.out.println(getSongLength(mFile).toString());
+            txtfFile.setText((fileMusicPath +"/"+ mFile.getName()).replace("\\", "/").replaceAll(" ", "%20"));
         }
+        System.out.println("Selected file " + mFile);
+        System.out.println(getSongLength(mFile).toString());
     }
 
     public void handleButtonSave(ActionEvent actionEvent)
@@ -75,16 +72,15 @@ public class NewSongController extends BaseController{
         {
             Files.copy(mFile.toPath(), target.resolve(mFile.toPath().getFileName()));
             System.out.println("Song added: " + title + ", " + artist + ", " + category + ", " + "'"+filepath+"'" + ", " + duration);
-            Node source = (Node) actionEvent.getSource();
-            Stage mStage = (Stage) source.getScene().getWindow();
-            mStage.close();
         }
         catch (Exception e)
         {
             e.printStackTrace();
             System.out.println("Could not add song");
         }
+
         mFile = new File (fileMusicPath + "/" + mFile.getName());
+
         try
         {
             this.songModel.createNewSong(title,artist,category,filepath,duration);
@@ -93,7 +89,10 @@ public class NewSongController extends BaseController{
         {
             throw new RuntimeException(e);
         }
-            songViewController.tblSongs.setItems(songModel.getObservableSongs());
+        songViewController.tblSongs.setItems(songModel.getObservableSongs());
+        Node source = (Node) actionEvent.getSource();
+        Stage mStage = (Stage) source.getScene().getWindow();
+        mStage.close();
     }
 
     public void handleButtonCancle (ActionEvent actionEvent)
@@ -120,15 +119,15 @@ public class NewSongController extends BaseController{
         return mMedia.getDuration();
     }
 
-        public void handleCancleEdit (ActionEvent event)
-        {
+    public void handleCancleEdit (ActionEvent event)
+    {
 
-        }
+    }
 
-        public void handleSaveEdit (ActionEvent event)
-        {
+    public void handleSaveEdit (ActionEvent event)
+    {
 
-        }
+    }
 
     @Override
     public void setup() throws Exception {
@@ -140,6 +139,5 @@ public class NewSongController extends BaseController{
         this.songViewController=songViewController;
     }
 }
-
 
 

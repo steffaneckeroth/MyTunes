@@ -83,4 +83,9 @@ public class SongOnPlaylistDAO implements ISongOnPlaylistDataAccess {
         }
         return allSongOnPlaylist;
     }
+
+    @Override
+    public Playlist deleteSongOnPlaylist(Playlist playlist) throws Exception {
+        return null;
+    }
 }
