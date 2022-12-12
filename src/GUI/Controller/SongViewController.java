@@ -391,7 +391,6 @@ public class SongViewController extends BaseController implements Initializable 
         stage.showAndWait();
     }
 
-<<<<<<< HEAD
     public void handleButtonDeleteSongOnPlaylist(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/src/GUI/View/DeleteSongOnPlaylistView.fxml"));
         Parent root = fxmlLoader.load();
@@ -402,7 +401,8 @@ public class SongViewController extends BaseController implements Initializable 
         DeleteSongOnPlaylistController controller = fxmlLoader.getController();
         controller.setController(this);
         stage.showAndWait();
-=======
+    }
+
     public void handleButtonSongToPlaylist(ActionEvent actionEvent) {
         Playlist mPlaylist = tblPlaylist.getSelectionModel().getSelectedItem();
         Song mSelectedSong = tblSongs.getSelectionModel().getSelectedItem();
@@ -412,6 +412,6 @@ public class SongViewController extends BaseController implements Initializable 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
->>>>>>> STE_Add-Song-To-Playlist-09122022_0916
+
     }
 }
