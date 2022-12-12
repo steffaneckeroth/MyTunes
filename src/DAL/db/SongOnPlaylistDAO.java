@@ -2,11 +2,7 @@ package src.DAL.db;
 
 import src.BE.Playlist;
 import src.BE.Song;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,12 +43,44 @@ public class SongOnPlaylistDAO implements ISongOnPlaylistDataAccess {
     }
 
     @Override
-    public List<Playlist> getAllSongOnPlaylists() {
+    public List<Playlist> getAllSongOnPlaylists() throws Exception {
+
         return null;
     }
 
     @Override
     public ArrayList<Song> getSongsOnPlaylist(Playlist playlist) {
-        return null;
+
+        ArrayList<Song> allSongOnPlaylist = new ArrayList<>();
+
+        try (Connection con = databaseConnector.getConnection()) {
+            String sql = "SELECT * FROM Song\n" +
+                         "JOIN SongOnPlaylist ON SongOnPlaylist.SongId = Song.Id\n" +
+                         "JOIN PlayList ON PlayListId = PlayList.Id\n" +
+                         "WHERE PlayListId = ?;";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, playlist.getPlaylistId());
+            ResultSet rs = pstmt.executeQuery();
+
+            // Loop through rows from the database result set
+            while (rs.next()) {
+
+                int id = rs.getInt("Id");
+                String title = rs.getString("Title");
+                String artist = rs.getString("Artist");
+                String category = rs.getString("Category");
+                String filepath = rs.getString("FilePath");
+                Time duration = rs.getTime("Duration");
+
+                Song song = new Song(id, title, artist, category, filepath, duration);
+                allSongOnPlaylist.add(song);
+            }
+            return allSongOnPlaylist;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+        return allSongOnPlaylist;
     }
 }

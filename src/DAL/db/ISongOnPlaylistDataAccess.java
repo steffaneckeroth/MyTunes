@@ -11,7 +11,7 @@ public interface ISongOnPlaylistDataAccess {
     public Song addToPlaylist(Playlist playlist, Song song)throws Exception;
 
 
-    List<Playlist> getAllSongOnPlaylists();
+    List<Playlist> getAllSongOnPlaylists() throws Exception;
 
     ArrayList<Song> getSongsOnPlaylist(Playlist playlist);
 }
