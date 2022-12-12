@@ -14,17 +14,21 @@ public class PlaylistManager {
     public PlaylistManager() {
         playlistDAO = new PlaylistDAO_DB();
     }
-    public Playlist createNewPlaylist (String playlistname) throws Exception {
+    public Playlist createNewPlaylist (String playlistname) throws Exception
+    {
         return playlistDAO.createPlaylist(playlistname);
     }
-    public List<Playlist> getAllPlaylists() throws Exception {
+    public List<Playlist> getAllPlaylists() throws Exception
+    {
         return playlistDAO.getAllPlaylists();
     }
-    public void updatePlaylist(Playlist updatedPlaylist) throws Exception {
+    public void updatePlaylist(Playlist updatedPlaylist) throws Exception
+    {
         playlistDAO.updatePlaylist(updatedPlaylist);
     }
 
-    public void deletePlaylist(Playlist deletedPlaylist) throws Exception{
+    public void deletePlaylist(Playlist deletedPlaylist) throws Exception
+    {
         playlistDAO.deletePlaylist(deletedPlaylist);
     }
 

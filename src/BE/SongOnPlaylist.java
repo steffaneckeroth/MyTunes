@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class SongOnPlaylist {
 
-    private int songplaylistid;
+    private int songonplaylistid;
 
     public String songonplaylistname;
 
@@ -20,8 +20,12 @@ public class SongOnPlaylist {
     }
 
     public SongOnPlaylist(int id, String songonplaylistname){
-        this.songplaylistid = id;
+        this.songonplaylistid = id;
         this.songonplaylistname = songonplaylistname;
+    }
+    @Override
+    public String toString() {
+        return songonplaylistname;
     }
 
 }

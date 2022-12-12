@@ -5,6 +5,9 @@ import src.BE.Song;
 import src.DAL.db.ISongOnPlaylistDataAccess;
 import src.DAL.db.SongOnPlaylistDAO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SongOnPlaylistManager {
     private ISongOnPlaylistDataAccess songOnPlaylistDAO;
     public SongOnPlaylistManager() {
@@ -19,8 +22,15 @@ public class SongOnPlaylistManager {
     public Song addToPlaylist(Playlist playlist, Song song) throws Exception
 
     {
-        return songOnPlaylistDAO.addToPlaylist(String.valueOf(playlist), song);
+        return songOnPlaylistDAO.addToPlaylist(playlist, song);
     }
 
+    public List<Playlist> getAllSongOnPlaylists() throws Exception
+    {
+        return songOnPlaylistDAO.getAllSongOnPlaylists();
+    }
 
+    public ArrayList<Song> getSongsOnPlaylist(Playlist playlist) {
+        return songOnPlaylistDAO.getSongsOnPlaylist(playlist);
+    }
 }
