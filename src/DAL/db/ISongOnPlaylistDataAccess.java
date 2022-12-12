@@ -14,4 +14,6 @@ public interface ISongOnPlaylistDataAccess {
     List<Playlist> getAllSongOnPlaylists() throws Exception;
 
     ArrayList<Song> getSongsOnPlaylist(Playlist playlist);
+
+    public Playlist deleteSongOnPlaylist(Playlist playlist) throws Exception;
 }
