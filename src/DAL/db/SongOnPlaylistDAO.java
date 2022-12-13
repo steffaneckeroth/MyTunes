@@ -2,6 +2,8 @@ package src.DAL.db;
 
 import src.BE.Playlist;
 import src.BE.Song;
+import src.BE.SongOnPlaylist;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +45,6 @@ public class SongOnPlaylistDAO implements ISongOnPlaylistDataAccess {
     }
 
     @Override
-    public List<Playlist> getAllSongOnPlaylists() throws Exception {
-
-        return null;
-    }
-
-    @Override
     public ArrayList<Song> getSongsOnPlaylist(Playlist playlist) {
 
         ArrayList<Song> allSongOnPlaylist = new ArrayList<>();
@@ -83,4 +79,27 @@ public class SongOnPlaylistDAO implements ISongOnPlaylistDataAccess {
         }
         return allSongOnPlaylist;
     }
+
+    @Override
+    public void deleteSongOnPlaylist(Playlist mPlaylist, Song mSong) {
+        String sql = "DELETE FROM SongOnPlaylist WHERE SongId=? AND PlayListId=?";
+
+        try (Connection conn = databaseConnector.getConnection();) {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, mSong.getId());
+            pstmt.setInt(2, mPlaylist.getPlaylistId());
+
+
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Song was successfully deleted");
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }
+

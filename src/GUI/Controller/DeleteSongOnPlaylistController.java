@@ -1,11 +1,15 @@
 package src.GUI.Controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import src.BE.Playlist;
 import src.BE.Song;
+import src.BE.SongOnPlaylist;
 import src.GUI.Model.SongModel;
+import src.GUI.Model.SongOnPlaylistModel;
 
 public class DeleteSongOnPlaylistController extends BaseController{
     public Button btnOK;
@@ -17,18 +21,31 @@ public class DeleteSongOnPlaylistController extends BaseController{
     private SongModel model;
     private SongViewController songViewController;
 
+    private SongOnPlaylistModel songOnPlaylistModel;
+
     public DeleteSongOnPlaylistController() {
         try {
             model = new SongModel();
+            songOnPlaylistModel = new SongOnPlaylistModel();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void handleButtonYesDeleteSongOnPlaylist(ActionEvent event) throws Exception
     {
-        Song deletedSong = (Song) songViewController.tblSongsOnPlaylist.getSelectionModel().getSelectedItem();
-        model.deleteSong(deletedSong);
-        songViewController.tblSongsOnPlaylist.setItems(model.getObservableSongs());
+        Playlist mPlaylist = songViewController.tblPlaylist.getSelectionModel().getSelectedItem();
+        Song mSong = (Song) songViewController.tblSongsOnPlaylist.getSelectionModel().getSelectedItem();
+        songOnPlaylistModel.deleteSongOnPlaylist(mPlaylist, mSong);
+        songViewController.tblSongsOnPlaylist.setItems(songOnPlaylistModel.getObservableSongOnPlaylist());
+
+
+
+        //songViewController.tblSongsOnPlaylist.setItems(songOnPlaylistModel.getObservableSongOnPlaylist());
+        //songViewController.tblSongsOnPlaylist.setItems(songOnPlaylistModel.getObservableSongOnPlaylist());
+        //songOnPlaylistModel.getObservableSongOnPlaylist().setAll(songOnPlaylistModel.getObservableSongOnPlaylist());
+        //songViewController.tblSongsOnPlaylist.setItems(songOnPlaylistModel.getObservableSongOnPlaylist());
+
+        //TODO "refresh liste"
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
     }
@@ -50,6 +67,8 @@ public class DeleteSongOnPlaylistController extends BaseController{
     }
     @Override
     public void setup() throws Exception {
+
+        //TODO fiz pls
     }
 
 }
