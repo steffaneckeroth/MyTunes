@@ -6,15 +6,7 @@ import java.util.ArrayList;
 public class Playlist {
     private int playlistid;
     public String playlistname;
-    private ArrayList<Song> playlist = new ArrayList<>();
 
-    public ArrayList<Song> getPlaylist() {
-        return playlist;
-    }
-
-    public void setPlaylist(ArrayList<Song> playlist) {
-        this.playlist = playlist;
-    }
 
     public Playlist(int id, String playlistname) {
         this.playlistid = id;

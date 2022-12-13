@@ -10,22 +10,27 @@ import src.BLL.SongOnPlaylistManager;
 
 import java.util.ArrayList;
 
+import static java.util.Collections.addAll;
+
 public class SongOnPlaylistModel {
+    private ObservableList<SongOnPlaylist> songOnPlaylistsToBeViewed;
 
     private SongOnPlaylistManager songOnPlaylistManager;
 
     private SongOnPlaylist selectedSongOnPlaylist;
 
     public SongOnPlaylistModel() throws Exception {
+
         songOnPlaylistManager = new SongOnPlaylistManager();
         songOnPlaylistsToBeViewed = FXCollections.observableArrayList();
-        songOnPlaylistsToBeViewed.addAll((SongOnPlaylist) songOnPlaylistManager.getAllSongOnPlaylists());
+        //songOnPlaylistsToBeViewed = addAll(songOnPlaylistManager.getSongsOnPlaylist());
     }
 
 
 
-    private ObservableList<SongOnPlaylist> songOnPlaylistsToBeViewed;
-
+    public ObservableList<SongOnPlaylist> getObservableSongOnPlaylist() {
+        return songOnPlaylistsToBeViewed;
+    }
 
     public void addToPlaylist(Playlist playlist, Song song) throws Exception {
         Song mSong = songOnPlaylistManager.addToPlaylist(playlist, song);
@@ -37,6 +42,14 @@ public class SongOnPlaylistModel {
     public ArrayList<Song> getSongsOnPlaylist(Playlist playlist) {
         return songOnPlaylistManager.getSongsOnPlaylist(playlist);
     }
+
+
+    public void deleteSongOnPlaylist(Playlist playlist, Song song) throws Exception {
+        songOnPlaylistManager.deleteSongOnPlaylist(playlist, song);
+
+    }
+
+
 }
 
 
