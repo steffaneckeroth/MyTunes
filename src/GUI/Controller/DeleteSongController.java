@@ -8,6 +8,7 @@ import src.BE.Playlist;
 import src.BE.Song;
 import src.GUI.Model.PlaylistModel;
 import src.GUI.Model.SongModel;
+import src.GUI.Model.SongOnPlaylistModel;
 
 public class DeleteSongController extends BaseController {
 
@@ -16,40 +17,23 @@ public class DeleteSongController extends BaseController {
     private Node label;
     private Song selectedSong;
     private SongModel model;
-    private SongViewController songViewController;
 
-    public DeleteSongController() {
-        try {
-            model = new SongModel();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void setModelMyTunes(SongModel model, Song song)
+    {
+        this.model=model;
+        this.selectedSong=song;
     }
     public void yesDeleteSong(ActionEvent event) throws Exception
     {
-            /*Song deletedSong = songViewController.tblSongs.getSelectionModel().getSelectedItem();
-            model.deleteSong(deletedSong);
-            songViewController.tblSongs.setItems(model.getObservableSongs());
+            model.deleteSong(selectedSong);
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.close();*/
+            stage.close();
     }
     public void noDeleteSong(ActionEvent event)
     {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
     }
-    public void setSelectedSong(Song s)
-    {
-        selectedSong = s;
-    }
-
-    private void fillSongsIN() throws Exception {
-        model = getModel().getSongModel();
-    }
-    public void setController(SongViewController songViewController) {
-        this.songViewController=songViewController;
-    }
-
 }
 
 

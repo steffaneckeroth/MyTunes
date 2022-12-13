@@ -8,34 +8,26 @@ import javafx.stage.Stage;
 import src.BE.Song;
 import src.GUI.Model.SongModel;
 
-public class EditSongController extends BaseController
-{
+public class EditSongController extends BaseController {
     @FXML
     private TextField txtTitle, txtArtist;
-    private SongViewController songViewController;
-    private SongModel model;
     private Song selectedSong;
+    private SongModel model;
 
-    public EditSongController() {
-        try {
-            model = new SongModel();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void setModelMyTunes(SongModel model, Song song){
+        this.model=model;
+        this.selectedSong=song;
     }
 
     public void handleSaveEdit(ActionEvent actionEvent) throws Exception {
-       /* String updatedTitle = txtTitle.getText();
+        String updatedTitle = txtTitle.getText();
         String updatedArtist = txtArtist.getText();
         Song updatedSongs = new Song(selectedSong.getId(), updatedTitle, updatedArtist, selectedSong.getCategory(), selectedSong.getFilepath(), selectedSong.getDuration());
 
         model.updateSongs(updatedSongs);
-        songViewController.tblSongs.setItems(model.getObservableSongs());
-
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.close();*/
+        stage.close();
     }
-
     public void handleCancleEdit(ActionEvent actionEvent) throws Exception {
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
@@ -49,8 +41,4 @@ public class EditSongController extends BaseController
     {
         selectedSong = s;
     }
-    public void setController(SongViewController songViewController) {
-        this.songViewController=songViewController;
-    }
-
 }

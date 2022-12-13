@@ -19,30 +19,32 @@ public class SongOnPlaylistModel {
 
     private Playlist selectedPlaylist;
 
-    public SongOnPlaylistModel() throws Exception {
-
+    public SongOnPlaylistModel() throws Exception
+    {
         songOnPlaylistManager = new SongOnPlaylistManager();
         songOnPlaylistsToBeViewed = FXCollections.observableArrayList();
     }
 
 
-    public ObservableList<Song> getObservableSongOnPlaylist() {
+    public ObservableList<Song> getObservableSongOnPlaylist()
+    {
         return songOnPlaylistsToBeViewed;
     }
 
-    public void addToPlaylist(Playlist playlist, Song song) throws Exception {
+    public void addToPlaylist(Playlist playlist, Song song) throws Exception
+    {
         Song mSong = songOnPlaylistManager.addToPlaylist(playlist, song);
         songOnPlaylistsToBeViewed.add(mSong);
     }
 
-
-    public void deleteSongOnPlaylist(Playlist playlist, Song song) throws Exception {
+    public void deleteSongOnPlaylist(Playlist playlist, Song song) throws Exception
+    {
         songOnPlaylistManager.deleteSongOnPlaylist(playlist, song);
         songOnPlaylistsToBeViewed.remove(song);
     }
 
-
-    public void setSelectedPlaylist(Playlist playlist) {
+    public void setSelectedPlaylist(Playlist playlist)
+    {
         songOnPlaylistsToBeViewed.clear();
         songOnPlaylistsToBeViewed.addAll(songOnPlaylistManager.getSongsOnPlaylist(playlist));
         selectedPlaylist = playlist;

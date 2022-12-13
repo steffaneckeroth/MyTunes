@@ -5,34 +5,25 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import jdk.jshell.spi.ExecutionControl;
-import src.BLL.PlaylistManager;
 import src.GUI.Model.PlaylistModel;
+import src.BE.Playlist;
+
+
 
 
 public class NewPlaylistController extends BaseController {
-
-    private PlaylistModel playlistModel;
     public Button btnSavePlaylist;
     public Button btnCancelPlaylist;
     public TextField txtfName;
 
-    private PlaylistManager playlistManager;
-    private SongViewController songViewController;
 
-    public NewPlaylistController()
-    {
-        try {
-            playlistModel = new PlaylistModel();
-            songViewController = new SongViewController();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private PlaylistModel model;
+    private Playlist selectedPlaylisst;
+
+    public void setModelMyTunes(PlaylistModel model, Playlist playlist){
+        this.model=model;
+        this.selectedPlaylisst = playlist;
     }
-
-
-
-
     public void handleButtonSavePlaylist(ActionEvent actionEvent) {
 
         try {
@@ -40,16 +31,12 @@ public class NewPlaylistController extends BaseController {
             String playlistname = txtfName.getText();
 
             //Calls createNewSong method from SongModel
-            this.playlistModel.createNewPlaylist(playlistname);
+            this.model.createNewPlaylist(playlistname);
             System.out.println("PLayList added: " + playlistname);
-            //songViewController.tblPlaylist.setItems(playlistModel.getObservablePlaylists());
-
-
             //Close stage if Save button is clicked
             Node source = (Node) actionEvent.getSource();
             Stage mStage = (Stage) source.getScene().getWindow();
             mStage.close();
-            throw new ExecutionControl.NotImplementedException("");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,11 +49,5 @@ public class NewPlaylistController extends BaseController {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-    }
-
-
-    public void setController(SongViewController songViewController)
-    {
-        this.songViewController=songViewController;
     }
 }

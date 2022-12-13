@@ -13,14 +13,13 @@ import javafx.scene.media.Media;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import src.BE.Song;
 import src.GUI.Model.SongModel;
 
+
 public class NewSongController extends BaseController{
 
-    private SongModel songModel;
-    private SongViewController songViewController;
+
     public ComboBox<String> cbxDropDown;
     public TextField txtfTitle, txtfFile, txtfTime, txtfArtist;
     public Button btnChoose, btnSave, btbCancle;
@@ -28,16 +27,12 @@ public class NewSongController extends BaseController{
     public String fileMusicPath = "lib/music";
     private Path target = Paths.get(fileMusicPath);
     private File mFile;
+    private Song selectedSong;
+    private SongModel model;
 
-
-    public NewSongController()
-    {
-        try {
-            songModel = new SongModel();
-            songViewController = new SongViewController();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void setModelMyTunes(SongModel model, Song song){
+        this.model=model;
+        this.selectedSong=song;
     }
 
     public void initialize()
@@ -83,7 +78,7 @@ public class NewSongController extends BaseController{
 
         try
         {
-            this.songModel.createNewSong(title,artist,category,filepath,duration);
+            this.model.createNewSong(title,artist,category,filepath,duration);
         }
         catch (Exception e)
         {
@@ -117,23 +112,6 @@ public class NewSongController extends BaseController{
     {
         Media mMedia = new Media("file:///" + file.getPath().replace("\\", "/").replaceAll(" ", "%20"));
         return mMedia.getDuration();
-    }
-
-    public void handleCancleEdit (ActionEvent event)
-    {
-
-    }
-
-    public void handleSaveEdit (ActionEvent event)
-    {
-
-    }
-
-
-
-    public void setController(SongViewController songViewController)
-    {
-        this.songViewController=songViewController;
     }
 }
 

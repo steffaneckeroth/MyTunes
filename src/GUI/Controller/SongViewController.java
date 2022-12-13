@@ -8,38 +8,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
 import javafx.scene.media.Media;
-
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.scene.control.*;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaPlayer;
-
-
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-
 import javafx.util.Duration;
-
 import src.BE.Song;
 import src.BE.Playlist;
-import src.BE.SongOnPlaylist;
 import src.GUI.Model.PlaylistModel;
 import src.GUI.Model.SongModel;
 import src.GUI.Model.SongOnPlaylistModel;
-//import src.GUI.Model.SongOnPlaylistModel;
-
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -49,7 +36,6 @@ import java.util.concurrent.Callable;
 public class SongViewController extends BaseController implements Initializable {
     @FXML
     private javafx.scene.image.ImageView imageView;
-
     @FXML
     private Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton, btnEditP, btnNewPlaylist, btnSongToPlaylist, btnDeleteSongOnPlaylist;
     @FXML
@@ -66,21 +52,20 @@ public class SongViewController extends BaseController implements Initializable 
     private javafx.scene.control.Label songLabel;
     @FXML
     private TableView<Song> tblSongs;
+    @FXML
+    private TextField txtTitle, txtArtist, txtCategory, txtTime, txtSongSearch, txtEditPlaylist;
+    @FXML
+    private Label lblCurrent, lblEnd;
     private Media media;
     private MediaPlayer mediaPlayer;
     private File directory;
     private File[] files;
     private ArrayList<File> songs;
-
-    @FXML
-    private Label lblCurrent, lblEnd;
     private int songNumber;
     private Timer timer;
     private boolean running;
     private SongModel songModel;
     private PlaylistModel playlistModel;
-    @FXML
-    private TextField txtTitle, txtArtist, txtCategory, txtTime, txtSongSearch, txtEditPlaylist;
     private SongOnPlaylistModel songOnPlaylistModel;
 
     public SongViewController() {
@@ -91,7 +76,6 @@ public class SongViewController extends BaseController implements Initializable 
             displayError(e);
         }
     }
-
 
     private void displayError(Exception e) {
 
@@ -104,13 +88,11 @@ public class SongViewController extends BaseController implements Initializable 
         directory = new File("lib/music");
         files = directory.listFiles();
 
-
         try {
             songOnPlaylistModel = new SongOnPlaylistModel();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
 
         tblSongs.setItems(songModel.getObservableSongs());
         tblPlaylist.setItems(playlistModel.getObservablePlaylists());
@@ -125,8 +107,6 @@ public class SongViewController extends BaseController implements Initializable 
         }
 
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue() * 0.01));
-        tblSongs.setItems(songModel.getObservableSongs());
-
         txtSongSearch.textProperty().addListener((observableValue, oldValue, newValue) ->
         {
             try {
@@ -137,7 +117,6 @@ public class SongViewController extends BaseController implements Initializable 
         });
 
         tblSongsOnPlaylist.setItems(songOnPlaylistModel.getObservableSongOnPlaylist());
-
         tblPlaylist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             songOnPlaylistModel.setSelectedPlaylist(newValue);
         });
@@ -332,7 +311,7 @@ public class SongViewController extends BaseController implements Initializable 
         stage.setTitle("Delete the song");
         stage.setScene(new Scene(root));
         DeleteSongController controller = fxmlLoader.getController();
-        controller.setController(this);
+        controller.setModelMyTunes(songModel, tblSongs.getSelectionModel().getSelectedItem());
         stage.showAndWait();
     }
 
@@ -344,7 +323,7 @@ public class SongViewController extends BaseController implements Initializable 
         stage.setTitle("Add new song");
         stage.setScene(new Scene(root));
         NewPlaylistController controller = fxmlLoader.getController();
-        controller.setController(this);
+        controller.setModelMyTunes(playlistModel, tblPlaylist.getSelectionModel().getSelectedItem());
         stage.showAndWait();
     }
 
@@ -357,7 +336,7 @@ public class SongViewController extends BaseController implements Initializable 
         stage.setTitle("Add new song");
         stage.setScene(new Scene(root));
         NewSongController controller = fxmlLoader.getController();
-        controller.setController(this);
+        controller.setModelMyTunes(songModel, tblSongs.getSelectionModel().getSelectedItem());
         stage.showAndWait();
     }
 
@@ -371,7 +350,7 @@ public class SongViewController extends BaseController implements Initializable 
         //controller.setModel(super.getModel());
         controller.fillSongsIN(selectedSong);
         controller.setSelectedSong(selectedSong);
-        controller.setController(this);
+        controller.setModelMyTunes(songModel, tblSongs.getSelectionModel().getSelectedItem());
 
         // Create the dialog Stage.
         Stage dialogWindow = new Stage();
@@ -384,7 +363,6 @@ public class SongViewController extends BaseController implements Initializable 
         dialogWindow.showAndWait();
     }
 
-
     public void EditPlaylist(ActionEvent event) throws Exception {
         Playlist selectedPlaylist = tblPlaylist.getSelectionModel().getSelectedItem();
         playlistModel.setSelectedPlaylist(selectedPlaylist);
@@ -395,7 +373,7 @@ public class SongViewController extends BaseController implements Initializable 
         //controller.setModel(super.getModel());
         controller.fillPlaylistIN(selectedPlaylist);
         controller.setSelectedPlaylist(selectedPlaylist);
-
+        controller.setModelMyTunes(playlistModel, tblPlaylist.getSelectionModel().getSelectedItem());
         // Create the dialog Stage.
         Stage dialogWindow = new Stage();
         dialogWindow.setTitle("Edit Movie");
@@ -415,6 +393,7 @@ public class SongViewController extends BaseController implements Initializable 
         stage.setTitle("Delete the Playlist");
         stage.setScene(new Scene(root));
         DeletePlaylistController controller = fxmlLoader.getController();
+        controller.setModelMyTunes(playlistModel, tblPlaylist.getSelectionModel().getSelectedItem());
         stage.showAndWait();
     }
 
@@ -426,7 +405,7 @@ public class SongViewController extends BaseController implements Initializable 
         stage.setTitle("Delete the song on the playlist");
         stage.setScene(new Scene(root));
         DeleteSongOnPlaylistController controller = fxmlLoader.getController();
-        controller.setModelAndSongPlaylist(songOnPlaylistModel,
+        controller.setModelMyTunes(songOnPlaylistModel,
                 tblSongsOnPlaylist.getSelectionModel().getSelectedItem(),
                 tblPlaylist.getSelectionModel().getSelectedItem());
         stage.showAndWait();

@@ -36,8 +36,7 @@ public class PlaylistModel {
 
     public void deletePlaylist(Playlist deletedPlaylist) throws Exception {
         playlistManager.deletePlaylist(deletedPlaylist);
-        playlistsToBeViewed.clear();
-        playlistsToBeViewed.addAll(playlistManager.getAllPlaylists());
+        playlistsToBeViewed.remove(deletedPlaylist);
     }
     public Playlist getSelectedPlaylist() {
         return selectedPlaylist;
