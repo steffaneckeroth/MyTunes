@@ -27,11 +27,11 @@ public class DeleteSongController extends BaseController {
     }
     public void yesDeleteSong(ActionEvent event) throws Exception
     {
-            Song deletedSong = songViewController.tblSongs.getSelectionModel().getSelectedItem();
+            /*Song deletedSong = songViewController.tblSongs.getSelectionModel().getSelectedItem();
             model.deleteSong(deletedSong);
             songViewController.tblSongs.setItems(model.getObservableSongs());
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.close();
+            stage.close();*/
     }
     public void noDeleteSong(ActionEvent event)
     {
@@ -49,9 +49,7 @@ public class DeleteSongController extends BaseController {
     public void setController(SongViewController songViewController) {
         this.songViewController=songViewController;
     }
-    @Override
-    public void setup() throws Exception {
-    }
+
 }
 
 

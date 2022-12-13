@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import jdk.jshell.spi.ExecutionControl;
 import src.BE.Playlist;
 import src.GUI.Model.PlaylistModel;
 
@@ -18,19 +19,17 @@ public class DeletePlaylistController extends BaseController implements Initiali
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        try {
-            playlistModel=new PlaylistModel();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     public void yesDeletePlaylist(ActionEvent event) throws Exception {
-        Playlist deletedPlaylist = songViewController.tblPlaylist.getSelectionModel().getSelectedItem();
-        playlistModel.deletePlaylist(deletedPlaylist);
-        songViewController.tblPlaylist.setItems(playlistModel.getObservablePlaylists());
+
+        //Playlist deletedPlaylist = songViewController.tblPlaylist.getSelectionModel().getSelectedItem();
+        //playlistModel.deletePlaylist(deletedPlaylist);
+        //songViewController.tblPlaylist.setItems(playlistModel.getObservablePlaylists());
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
+        throw new ExecutionControl.NotImplementedException("");
     }
     public void noDeletePlaylist(ActionEvent event)
     {
@@ -38,19 +37,5 @@ public class DeletePlaylistController extends BaseController implements Initiali
         stage.close();
     }
 
-    public void setSelectedPlaylist(Playlist p)
-    {
-        selectedPlaylist = p;
-    }
 
-    private void fillSongsIN() throws Exception {
-        playlistModel = getModel().getPlaylistModel();
-    }
-    public void setController(SongViewController songViewController) {
-        this.songViewController=songViewController;
-    }
-    @Override
-    public void setup() throws Exception {
-
-    }
 }

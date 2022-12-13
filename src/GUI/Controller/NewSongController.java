@@ -89,7 +89,7 @@ public class NewSongController extends BaseController{
         {
             throw new RuntimeException(e);
         }
-        songViewController.tblSongs.setItems(songModel.getObservableSongs());
+        //songViewController.tblSongs.setItems(songModel.getObservableSongs());
         Node source = (Node) actionEvent.getSource();
         Stage mStage = (Stage) source.getScene().getWindow();
         mStage.close();
@@ -129,10 +129,7 @@ public class NewSongController extends BaseController{
 
     }
 
-    @Override
-    public void setup() throws Exception {
 
-    }
 
     public void setController(SongViewController songViewController)
     {

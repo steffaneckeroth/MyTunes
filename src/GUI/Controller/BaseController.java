@@ -13,6 +13,4 @@ public abstract class BaseController {
     public MyTunesModel getModel() throws Exception {
         return new MyTunesModel();
     }
-
-    public abstract void setup() throws Exception;
 }

@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import jdk.jshell.spi.ExecutionControl;
 import src.BE.Playlist;
 import src.GUI.Model.PlaylistModel;
 
@@ -33,10 +34,11 @@ public class EditPlaylistController extends BaseController implements Initializa
         Playlist updatedPlaylist = new Playlist(selectedPlaylist.getPlaylistId(), updatedName);
 
         this.model.updatePlaylist(updatedPlaylist);
-        songViewController.tblPlaylist.setItems(this.model.getObservablePlaylists());
+        //songViewController.tblPlaylist.setItems(this.model.getObservablePlaylists());
 
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
+        throw new ExecutionControl.NotImplementedException("");
     }
     public void fillPlaylistIN(Playlist playlist) throws Exception
     {
@@ -54,8 +56,5 @@ public class EditPlaylistController extends BaseController implements Initializa
     public void setController(SongViewController songViewController) {
         this.songViewController=songViewController;
     }
-    @Override
-    public void setup() throws Exception {
 
-    }
 }

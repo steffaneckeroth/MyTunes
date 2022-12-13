@@ -13,43 +13,40 @@ import java.util.ArrayList;
 import static java.util.Collections.addAll;
 
 public class SongOnPlaylistModel {
-    private ObservableList<SongOnPlaylist> songOnPlaylistsToBeViewed;
+    private final ObservableList<Song> songOnPlaylistsToBeViewed;
 
     private SongOnPlaylistManager songOnPlaylistManager;
 
-    private SongOnPlaylist selectedSongOnPlaylist;
+    private Playlist selectedPlaylist;
 
     public SongOnPlaylistModel() throws Exception {
 
         songOnPlaylistManager = new SongOnPlaylistManager();
         songOnPlaylistsToBeViewed = FXCollections.observableArrayList();
-        //songOnPlaylistsToBeViewed = addAll(songOnPlaylistManager.getSongsOnPlaylist());
     }
 
 
-
-    public ObservableList<SongOnPlaylist> getObservableSongOnPlaylist() {
+    public ObservableList<Song> getObservableSongOnPlaylist() {
         return songOnPlaylistsToBeViewed;
     }
 
     public void addToPlaylist(Playlist playlist, Song song) throws Exception {
         Song mSong = songOnPlaylistManager.addToPlaylist(playlist, song);
-
-        PlaylistManager.addToPlaylist(playlist, mSong);
-    }
-
-
-    public ArrayList<Song> getSongsOnPlaylist(Playlist playlist) {
-        return songOnPlaylistManager.getSongsOnPlaylist(playlist);
+        songOnPlaylistsToBeViewed.add(mSong);
     }
 
 
     public void deleteSongOnPlaylist(Playlist playlist, Song song) throws Exception {
         songOnPlaylistManager.deleteSongOnPlaylist(playlist, song);
-
+        songOnPlaylistsToBeViewed.remove(song);
     }
 
 
+    public void setSelectedPlaylist(Playlist playlist) {
+        songOnPlaylistsToBeViewed.clear();
+        songOnPlaylistsToBeViewed.addAll(songOnPlaylistManager.getSongsOnPlaylist(playlist));
+        selectedPlaylist = playlist;
+    }
 }
 
 

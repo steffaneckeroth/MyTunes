@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import jdk.jshell.spi.ExecutionControl;
 import src.BLL.PlaylistManager;
 import src.GUI.Model.PlaylistModel;
 
@@ -41,12 +42,14 @@ public class NewPlaylistController extends BaseController {
             //Calls createNewSong method from SongModel
             this.playlistModel.createNewPlaylist(playlistname);
             System.out.println("PLayList added: " + playlistname);
-            songViewController.tblPlaylist.setItems(playlistModel.getObservablePlaylists());
+            //songViewController.tblPlaylist.setItems(playlistModel.getObservablePlaylists());
+
 
             //Close stage if Save button is clicked
             Node source = (Node) actionEvent.getSource();
             Stage mStage = (Stage) source.getScene().getWindow();
             mStage.close();
+            throw new ExecutionControl.NotImplementedException("");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,9 +64,7 @@ public class NewPlaylistController extends BaseController {
         stage.close();
     }
 
-    @Override
-    public void setup() throws Exception {
-    }
+
     public void setController(SongViewController songViewController)
     {
         this.songViewController=songViewController;

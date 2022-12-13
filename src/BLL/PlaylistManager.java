@@ -32,8 +32,5 @@ public class PlaylistManager {
         playlistDAO.deletePlaylist(deletedPlaylist);
     }
 
-    public static void addToPlaylist(Playlist playlist, Song song) throws Exception{
 
-
-    }
 }

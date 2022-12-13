@@ -47,21 +47,29 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 public class SongViewController extends BaseController implements Initializable {
-    public javafx.scene.image.ImageView imageView;
-    public Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton, btnEditP, btnNewPlaylist, btnSongToPlaylist, btnDeleteSongOnPlaylist;
-    public TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
-    public TableColumn<Playlist, String> namCol;
-    public TableView<Playlist> tblPlaylist;
-    public ListView tblSongsOnPlaylist;
+    @FXML
+    private javafx.scene.image.ImageView imageView;
+
+    @FXML
+    private Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton, btnEditP, btnNewPlaylist, btnSongToPlaylist, btnDeleteSongOnPlaylist;
+    @FXML
+    private TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
+    @FXML
+    private TableColumn<Playlist, String> namCol;
+    @FXML
+    private TableView<Playlist> tblPlaylist;
+    @FXML
+    private ListView<Song> tblSongsOnPlaylist;
     @FXML
     private Slider songProgressBar, volumeSlider;
     @FXML
     private javafx.scene.control.Label songLabel;
-    public TableView<Song> tblSongs;
+    @FXML
+    private TableView<Song> tblSongs;
     private Media media;
     private MediaPlayer mediaPlayer;
-    public File directory;
-    public File[] files;
+    private File directory;
+    private File[] files;
     private ArrayList<File> songs;
 
     @FXML
@@ -128,10 +136,10 @@ public class SongViewController extends BaseController implements Initializable 
             }
         });
 
+        tblSongsOnPlaylist.setItems(songOnPlaylistModel.getObservableSongOnPlaylist());
+
         tblPlaylist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            tblSongsOnPlaylist.getItems().clear();
-            ArrayList<Song> songs1 = songOnPlaylistModel.getSongsOnPlaylist(newValue);
-            tblSongsOnPlaylist.getItems().addAll(songs1);
+            songOnPlaylistModel.setSelectedPlaylist(newValue);
         });
 
         songProgressBar.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
@@ -363,7 +371,6 @@ public class SongViewController extends BaseController implements Initializable 
         //controller.setModel(super.getModel());
         controller.fillSongsIN(selectedSong);
         controller.setSelectedSong(selectedSong);
-        controller.setup();
         controller.setController(this);
 
         // Create the dialog Stage.
@@ -388,8 +395,6 @@ public class SongViewController extends BaseController implements Initializable 
         //controller.setModel(super.getModel());
         controller.fillPlaylistIN(selectedPlaylist);
         controller.setSelectedPlaylist(selectedPlaylist);
-        controller.setup();
-        controller.setController(this);
 
         // Create the dialog Stage.
         Stage dialogWindow = new Stage();
@@ -410,7 +415,6 @@ public class SongViewController extends BaseController implements Initializable 
         stage.setTitle("Delete the Playlist");
         stage.setScene(new Scene(root));
         DeletePlaylistController controller = fxmlLoader.getController();
-        controller.setController(this);
         stage.showAndWait();
     }
 
@@ -422,7 +426,9 @@ public class SongViewController extends BaseController implements Initializable 
         stage.setTitle("Delete the song on the playlist");
         stage.setScene(new Scene(root));
         DeleteSongOnPlaylistController controller = fxmlLoader.getController();
-        controller.setController(this);
+        controller.setModelAndSongPlaylist(songOnPlaylistModel,
+                tblSongsOnPlaylist.getSelectionModel().getSelectedItem(),
+                tblPlaylist.getSelectionModel().getSelectedItem());
         stage.showAndWait();
     }
 

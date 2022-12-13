@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class SongOnPlaylist {
 
-    private int songonplaylistid;
-    public String songonplaylistname;
+    private int songonplaylistid; // id på sang
+    public String songonplaylistname; // navn på sang
 
 
     private ArrayList<Song> songonplaylist = new ArrayList<>();

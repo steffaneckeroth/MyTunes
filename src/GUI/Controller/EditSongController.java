@@ -25,7 +25,7 @@ public class EditSongController extends BaseController
     }
 
     public void handleSaveEdit(ActionEvent actionEvent) throws Exception {
-        String updatedTitle = txtTitle.getText();
+       /* String updatedTitle = txtTitle.getText();
         String updatedArtist = txtArtist.getText();
         Song updatedSongs = new Song(selectedSong.getId(), updatedTitle, updatedArtist, selectedSong.getCategory(), selectedSong.getFilepath(), selectedSong.getDuration());
 
@@ -33,7 +33,7 @@ public class EditSongController extends BaseController
         songViewController.tblSongs.setItems(model.getObservableSongs());
 
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.close();
+        stage.close();*/
     }
 
     public void handleCancleEdit(ActionEvent actionEvent) throws Exception {
@@ -52,8 +52,5 @@ public class EditSongController extends BaseController
     public void setController(SongViewController songViewController) {
         this.songViewController=songViewController;
     }
-    @Override
-    public void setup() throws Exception {
 
-    }
 }
