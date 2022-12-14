@@ -291,6 +291,7 @@ public class SongViewController extends BaseController implements Initializable 
             playSelectedPlaylist();
             imageView.setVisible(false);
         }
+        
     }
 
     public void previousMedia() {
