@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -27,7 +29,10 @@ import src.BE.Playlist;
 import src.GUI.Model.PlaylistModel;
 import src.GUI.Model.SongModel;
 import src.GUI.Model.SongOnPlaylistModel;
+
+import javax.net.ssl.ManagerFactoryParameters;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -62,6 +67,9 @@ public class SongViewController extends BaseController implements Initializable 
     private File[] files;
     private ArrayList<File> songs;
     private int songNumber;
+    private int songOnPlaylistNumber;
+
+    private int playlistNumber = -1;
     private Timer timer;
     private boolean running;
     private SongModel songModel;
@@ -187,21 +195,39 @@ public class SongViewController extends BaseController implements Initializable 
         else
         {
             playSelectedSong();
+            playSelectedPlaylist();
             mediaPlayer.play();
         }
     }
 
-    public void tblSongsClicked(javafx.scene.input.MouseEvent mouseEvent) {
-        songNumber = tblSongs.getSelectionModel().getSelectedIndex();
-        playSelectedSong();
+    public void tblSongsClicked(javafx.scene.input.MouseEvent mouseEvent)
+    {
+        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+            //checks if there has been 2 clicks
+            if(mouseEvent.getClickCount() == 2){
+                songNumber = tblSongs.getSelectionModel().getSelectedIndex();
+                playSelectedSong();
+            }
+        }
     }
-
+    public void tblPlaylistClicked(MouseEvent mouseEvent)
+    {
+        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+            //checks if there has been 2 clicks
+            if(mouseEvent.getClickCount() == 2){
+                playlistNumber = tblPlaylist.getSelectionModel().getSelectedIndex();
+                songOnPlaylistNumber = 0;
+                playSelectedPlaylist();
+            }
+        }
+    }
 
     public void playSelectedSong() {
         if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
         {
             mediaPlayer.stop();
         }
+        playlistNumber = -1;
         Song selectedSong = tblSongs.getItems().get(songNumber);
         songLabel.setText(selectedSong.getTitle());
         media = new Media(new File(selectedSong.getFilepath()).toURI().toString());
@@ -212,39 +238,89 @@ public class SongViewController extends BaseController implements Initializable 
         viewTime();
         mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
         imageView.setVisible(false);
+
+    }
+    public void playSelectedPlaylist() {
+        if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
+        {
+            mediaPlayer.stop();
+        }
+        Playlist selectedPlaylist = tblPlaylist.getItems().get(playlistNumber);
+        Song songOnPlayList = tblSongsOnPlaylist.getItems().get(songOnPlaylistNumber);
+        songLabel.setText(selectedPlaylist.getPlaylistName()+" - "+ songOnPlayList.getTitle());
+        media = new Media(new File(songOnPlayList.getFilepath()).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        System.out.println(songOnPlayList.getFilepath());
+        mediaPlayer.play();
+        beginTimer();
+        viewTime();
+        mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+        imageView.setVisible(false);
     }
 
     public void nextMedia() {
         System.out.println(songs.size());
         System.out.println(songNumber);
-        if (songNumber < songs.size() -1) {
-            songNumber ++;
-        } else {
-            songNumber = 0;
+
+        if(playlistNumber == -1){
+            if (songNumber < songs.size() -1) {
+                songNumber ++;
+            } else {
+                songNumber = 0;
+            }
+            mediaPlayer.stop();
+            if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                cancelTimer();
+            }
+            playSelectedSong();
+            imageView.setVisible(false);
         }
-        mediaPlayer.stop();
-        if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-            cancelTimer();
+        else
+        {
+            if (songOnPlaylistNumber < songOnPlaylistModel.getObservableSongOnPlaylist().size() -1) {
+                songOnPlaylistNumber ++;
+            } else {
+                songOnPlaylistNumber = 0;
+            }
+            mediaPlayer.stop();
+            if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                cancelTimer();
+            }
+            playSelectedPlaylist();
+            imageView.setVisible(false);
         }
-        playSelectedSong();
-        imageView.setVisible(false);
     }
 
     public void previousMedia() {
-        if (songNumber > 0) {
-            songNumber--;
-        } else {
-            songNumber = songs.size() - 1;
+        if(playlistNumber == -1)
+    {
+            if (songNumber > 0) {
+                songNumber --;
+            } else {
+                songNumber = songs.size() -1;
+            }
+            mediaPlayer.stop();
+            if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                cancelTimer();
+            }
+            playSelectedSong();
+            imageView.setVisible(false);
         }
-        mediaPlayer.stop();
-        if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-            cancelTimer();
+        else
+        {
+            if (songOnPlaylistNumber >0) {
+                songOnPlaylistNumber --;
+            } else {
+                songOnPlaylistNumber = songOnPlaylistModel.getObservableSongOnPlaylist().size() -1;
+            }
+            mediaPlayer.stop();
+            if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                cancelTimer();
+            }
+            playSelectedPlaylist();
+            imageView.setVisible(false);
         }
-        playSelectedSong();
-        imageView.setVisible(false);
     }
-
-
 
     public void beginTimer() {
         timer = new Timer();
@@ -422,4 +498,6 @@ public class SongViewController extends BaseController implements Initializable 
         }
 
     }
+
+
 }

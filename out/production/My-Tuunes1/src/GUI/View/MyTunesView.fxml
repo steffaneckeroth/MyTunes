@@ -129,7 +129,7 @@
             <TableColumn fx:id="drtCol" prefWidth="60.0" text="Time" />
         </columns>
       </TableView>
-      <TableView fx:id="tblPlaylist" layoutX="28.0" layoutY="122.0" prefHeight="434.0" prefWidth="260.0">
+      <TableView fx:id="tblPlaylist" layoutX="28.0" layoutY="122.0" onMouseClicked="#tblPlaylistClicked" prefHeight="434.0" prefWidth="260.0">
         <columns>
           <TableColumn fx:id="namCol" prefWidth="92.0" text="Name" />
           <TableColumn fx:id="sngCol" prefWidth="89.60000610351562" text="Songs" />
