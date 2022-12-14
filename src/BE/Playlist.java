@@ -7,7 +7,6 @@ public class Playlist {
     private int playlistid;
     public String playlistname;
 
-
     public Playlist(int id, String playlistname) {
         this.playlistid = id;
         this.playlistname = playlistname;

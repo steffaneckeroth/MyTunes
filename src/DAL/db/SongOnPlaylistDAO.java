@@ -75,7 +75,6 @@ public class SongOnPlaylistDAO implements ISongOnPlaylistDataAccess {
             return allSongOnPlaylist;
         } catch (SQLException ex) {
             ex.printStackTrace();
-
         }
         return allSongOnPlaylist;
     }
