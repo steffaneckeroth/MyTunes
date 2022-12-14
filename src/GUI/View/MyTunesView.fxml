@@ -78,7 +78,7 @@
       <Button fx:id="btnEditP" layoutX="100.0" layoutY="570.0" minWidth="51.0" mnemonicParsing="false" onAction="#EditPlaylist" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="Edit..." />
       <Button fx:id="btnDeleteP" layoutX="170.0" layoutY="570.0" minWidth="53.0" mnemonicParsing="false" onAction="#deletePlaylist" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="Delete" />
       <Button fx:id="btnEditS" layoutX="730.0" layoutY="569.0" minWidth="53.0" mnemonicParsing="false" onAction="#EditSong" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="Edit..." />
-      <Button layoutX="347.0" layoutY="570.0" mnemonicParsing="false" opacity="0.75" prefHeight="30.0" prefWidth="53.0">
+      <Button fx:id="btnSongOnPlaylistUp" layoutX="347.0" layoutY="570.0" mnemonicParsing="false" onAction="#handleButtonUpSongOnPlaylist" opacity="0.75" prefHeight="30.0" prefWidth="53.0">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -87,7 +87,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="418.0" layoutY="570.0" minWidth="42.0" mnemonicParsing="false" opacity="0.75" prefHeight="30.0" prefWidth="54.0">
+      <Button fx:id="btnSongOnPlaylistDown" layoutX="418.0" layoutY="570.0" minWidth="42.0" mnemonicParsing="false" onAction="#handleButtonDownSongOnPlaylist" opacity="0.75" prefHeight="30.0" prefWidth="54.0">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                <image>

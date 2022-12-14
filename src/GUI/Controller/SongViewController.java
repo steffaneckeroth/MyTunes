@@ -37,7 +37,9 @@ public class SongViewController extends BaseController implements Initializable 
     @FXML
     private javafx.scene.image.ImageView imageView;
     @FXML
-    private Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton, btnEditP, btnNewPlaylist, btnSongToPlaylist, btnDeleteSongOnPlaylist;
+    private Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton,
+            btnEditP, btnNewPlaylist, btnSongToPlaylist, btnDeleteSongOnPlaylist,
+            btnSongOnPlaylistUp, btnSongOnPlaylistDown;
     @FXML
     private TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
     @FXML
@@ -420,6 +422,33 @@ public class SongViewController extends BaseController implements Initializable 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    public void handleButtonUpSongOnPlaylist(ActionEvent event) {
+// set the action for the move up button
+        btnSongOnPlaylistUp.setOnAction(event1 -> {
+            int selectedIndex = tblSongsOnPlaylist.getSelectionModel().getSelectedIndex();
+            if (selectedIndex > 0) {
+                // swap the items at the selected index and the one above it
+                Collections.swap(tblSongsOnPlaylist.getItems(), selectedIndex, selectedIndex - 1);
+                // update the selection
+                tblSongsOnPlaylist.getSelectionModel().clearAndSelect(selectedIndex - 1);
+            }
+        });
+    }
+
+    public void handleButtonDownSongOnPlaylist(ActionEvent event) {
+// set the action for the move down button
+        btnSongOnPlaylistDown.setOnAction(event1 -> {
+            int selectedIndex = tblSongsOnPlaylist.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0 && selectedIndex < tblSongsOnPlaylist.getItems().size() - 1) {
+                // swap the items at the selected index and the one below it
+                Collections.swap(tblSongsOnPlaylist.getItems(), selectedIndex, selectedIndex + 1);
+                // update the selection
+                tblSongsOnPlaylist.getSelectionModel().clearAndSelect(selectedIndex + 1);
+            }
+        });
 
     }
 }
