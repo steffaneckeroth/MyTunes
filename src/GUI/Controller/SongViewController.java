@@ -39,8 +39,6 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 public class SongViewController extends BaseController implements Initializable {
-    private int totalDuration = 0;
-    public TableColumn colTime;
     @FXML
     private javafx.scene.image.ImageView imageView;
     @FXML
@@ -50,7 +48,7 @@ public class SongViewController extends BaseController implements Initializable 
     @FXML
     private TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
     @FXML
-    private TableColumn<Playlist, String> namCol;
+    private TableColumn<Playlist, String> namCol, colTime;
     @FXML
     private TableView<Playlist> tblPlaylist;
     @FXML
@@ -113,6 +111,7 @@ public class SongViewController extends BaseController implements Initializable 
         catCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getCategory()));
         drtCol.setCellValueFactory(new PropertyValueFactory<>("Duration"));
         namCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getPlaylistName()));
+
 
 
 
@@ -380,7 +379,6 @@ public class SongViewController extends BaseController implements Initializable 
         imageView.setVisible(false);
         }
     }
-
 
     public void beginTimer() {
         timer = new Timer();
