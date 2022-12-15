@@ -15,12 +15,18 @@ public class SongDAO_DB implements ISongDataAccess {
         databaseConnector = new DatabaseConnector();
     }
 
+    /**
+     * This method is getting all the songs from the database.
+     * @return allSong
+     * @throws Exception
+     */
     public List<Song> getAllSong() throws Exception {
 
         ArrayList<Song> allSong = new ArrayList<>();
-
+        // try-with-resources block to establish a connection to the database using a databaseConnector object.
         try (Connection conn = databaseConnector.getConnection())
         {
+            // selecting everything from song.
             String sql = "SELECT * FROM Song;";
 
             Statement stmt = conn.createStatement();
@@ -49,8 +55,19 @@ public class SongDAO_DB implements ISongDataAccess {
         }
     }
 
+    /**
+     * This method is creating a new song in the database.
+     * @param title
+     * @param artist
+     * @param category
+     * @param filepath
+     * @param duration
+     * @return song
+     * @throws Exception
+     */
     public Song createSong(String title, String artist, String category, String filepath, Time duration) throws Exception
     {
+        // making a new song where it has to have all the values
         String sql = "INSERT INTO Song (Title, Artist, Category, FilePath, Duration) VALUES (?,?,?,?,?);";
 
         try (Connection coon = databaseConnector.getConnection())
@@ -86,10 +103,15 @@ public class SongDAO_DB implements ISongDataAccess {
         }
     }
 
+    /**
+     * This method is updating a song in the database.
+     * @param song
+     * @throws Exception
+     */
     public void updateSongs(Song song) throws Exception
     {
         try (Connection conn = databaseConnector.getConnection()) {
-
+            // it updates the title and artist of a song record in the database.
             String sql = "UPDATE Song SET Title = ?, Artist = ? WHERE Id = ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -107,13 +129,22 @@ public class SongDAO_DB implements ISongDataAccess {
         }
     }
 
+    /**
+     * This method is deleting a song form the database.
+     * @param song
+     * @return song
+     * @throws Exception
+     */
     public Song deleteSongs(Song song) throws Exception {
+        //Delete a song from the song table with the selected id.
         String sql = "DELETE FROM Song WHERE Id=?";
 
         try(Connection conn = databaseConnector.getConnection();){
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, song.getId());
+
                 int rowsDeleted = statement.executeUpdate();
+                // It checks if there was a row that have been deletet, that means if it is less than 0.
                 if (rowsDeleted > 0)
                 {
                     System.out.println("Song was successfully deleted");
