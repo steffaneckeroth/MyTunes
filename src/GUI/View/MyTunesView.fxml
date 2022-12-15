@@ -133,7 +133,7 @@
         <columns>
           <TableColumn fx:id="namCol" prefWidth="92.0" text="Name" />
           <TableColumn fx:id="sngCol" prefWidth="89.60000610351562" text="Songs" />
-            <TableColumn fx:id="timCol" prefWidth="77.60000610351562" text="Time" />
+            <TableColumn fx:id="colTime" prefWidth="77.60000610351562" text="Time" />
         </columns>
       </TableView>
       <Button fx:id="btnDeleteSong" layoutX="795.0" layoutY="570.0" minWidth="53.0" mnemonicParsing="false" onAction="#handleButtonDeleteSong" opacity="0.75" prefHeight="30.0" prefWidth="54.0" text="Delete" />
