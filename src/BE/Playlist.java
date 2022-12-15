@@ -1,35 +1,60 @@
 
 package src.BE;
 
-import java.util.ArrayList;
 
 public class Playlist {
     private int playlistid;
     public String playlistname;
 
+    /**
+     * This code creates a constructor for the Playlist class
+     * @param id
+     * @param playlistname
+     */
     public Playlist(int id, String playlistname) {
         this.playlistid = id;
         this.playlistname = playlistname;
     }
 
+    /**
+     * this sets the playlistid
+     * @param playlistid
+     */
         public void setPlaylistId ( int playlistid){
             this.playlistid = playlistid;
         }
-        public void setPlaylistName (String playlistname){
+
+    /**
+     * this sets the playlistname
+     * @param playlistname
+     */
+    public void setPlaylistName (String playlistname){
             this.playlistname = playlistname;
         }
-        public int getPlaylistId () {
+
+    /**
+     *
+     * @return playlistid
+     */
+    public int getPlaylistId () {
             return playlistid;
         }
-        public String getPlaylistName () {
+
+    /**
+     *
+     * @return playlistname
+     */
+    public String getPlaylistName () {
             return playlistname;
         }
 
+    /**
+     *
+     * @return playlistname
+     */
     @Override
     public String toString() {
         return playlistname;
     }
-
-
 }
 
