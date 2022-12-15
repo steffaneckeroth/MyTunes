@@ -47,8 +47,6 @@ public class DatabaseConnector {
         try (Connection connection = databaseConnector.getConnection()) {
             // Print whether the connection is open or closed
             System.out.println("Is it open? " + !connection.isClosed());
-
         }
     }
-
 }
