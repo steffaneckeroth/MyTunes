@@ -20,10 +20,20 @@ public class NewPlaylistController extends BaseController {
     private PlaylistModel model;
     private Playlist selectedPlaylisst;
 
+    /**
+     * This method sets the model and selected playlist for the MyTunes application.
+     * @param model
+     * @param playlist
+     */
     public void setModelMyTunes(PlaylistModel model, Playlist playlist){
         this.model=model;
         this.selectedPlaylisst = playlist;
     }
+
+    /**
+     * This method handles if you want to save the playlist.
+     * @param actionEvent
+     */
     public void handleButtonSavePlaylist(ActionEvent actionEvent) {
 
         try {
@@ -33,7 +43,8 @@ public class NewPlaylistController extends BaseController {
             //Calls createNewSong method from SongModel
             this.model.createNewPlaylist(playlistname);
             System.out.println("PLayList added: " + playlistname);
-            //Close stage if Save button is clicked
+            // This code closes the current window by getting a reference to the stage
+            // and calling the close() method.
             Node source = (Node) actionEvent.getSource();
             Stage mStage = (Stage) source.getScene().getWindow();
             mStage.close();
@@ -44,8 +55,13 @@ public class NewPlaylistController extends BaseController {
         }
     }
 
+    /**
+     * This method closes the window.
+     * @param actionEvent
+     */
     public void handleButtonCanclePlaylist(ActionEvent actionEvent) {
-        //Closes stage if Cancle button is clicked
+        // This code closes the current window by getting a reference to the stage
+        // and calling the close() method.
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
