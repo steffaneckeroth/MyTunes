@@ -25,6 +25,10 @@ public class SongOnPlaylistModel {
         songOnPlaylistsToBeViewed = FXCollections.observableArrayList();
     }
 
+    public void getASongFromAPlaylist()
+    {
+
+    }
 
     public ObservableList<Song> getObservableSongOnPlaylist()
     {

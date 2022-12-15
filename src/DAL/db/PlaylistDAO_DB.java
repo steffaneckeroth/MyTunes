@@ -11,10 +11,11 @@ import java.util.List;
 
 public class PlaylistDAO_DB implements IPlaylistDataAccess {
     private DatabaseConnector databaseConnector;
-
+    private SongOnPlaylistDAO songOnPlaylistDAO;
 
     public PlaylistDAO_DB(){
         databaseConnector = new DatabaseConnector();
+        songOnPlaylistDAO = new SongOnPlaylistDAO();
     }
 
 
@@ -32,9 +33,12 @@ public class PlaylistDAO_DB implements IPlaylistDataAccess {
             while (rs.next()) {
                 int id = rs.getInt("Id");
                 String playlistname = rs.getString("Name");
+
                 Playlist playlist = new Playlist(id, playlistname);
+                playlist.setSongs(songOnPlaylistDAO.getSongsOnPlaylist(playlist));
                 allPlaylist.add(playlist);
             }
+
             return allPlaylist;
         }
         catch (SQLException ex)
