@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -70,8 +71,8 @@ public class SongViewController extends BaseController implements Initializable 
     private ArrayList<File> songs;
     private int songNumber;
     private int songOnPlaylistNumber;
-
     private int playlistNumber = -1;
+    private int playSongOnPlaylistNumber;
     private Timer timer;
     private boolean running;
     private SongModel songModel;
@@ -112,6 +113,8 @@ public class SongViewController extends BaseController implements Initializable 
         drtCol.setCellValueFactory(new PropertyValueFactory<>("Duration"));
         namCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getPlaylistName()));
 
+
+
         if (files != null) {
             Collections.addAll(songs, files);
         }
@@ -125,6 +128,9 @@ public class SongViewController extends BaseController implements Initializable 
                 displayError(e);
             }
         });
+
+
+// Update the total duration label whenever the playlist is modified
 
         tblSongsOnPlaylist.setItems(songOnPlaylistModel.getObservableSongOnPlaylist());
         tblPlaylist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -198,6 +204,7 @@ public class SongViewController extends BaseController implements Initializable 
         {
             playSelectedSong();
             playSelectedPlaylist();
+            playSelectedSongOnPlaylist();
             mediaPlayer.play();
         }
     }
@@ -223,6 +230,34 @@ public class SongViewController extends BaseController implements Initializable 
             }
         }
     }
+    public void tblSongsOnPlaylistClicked(MouseEvent mouseEvent)
+    {
+        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+            //checks if there has been 2 clicks
+            if(mouseEvent.getClickCount() == 2){
+                playlistNumber = tblPlaylist.getSelectionModel().getSelectedIndex();
+                playSongOnPlaylistNumber = 0;
+                playSelectedSongOnPlaylist();
+            }
+        }
+    }
+    public void playSelectedSongOnPlaylist() {
+        if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
+        {
+            mediaPlayer.stop();
+        }
+        Playlist selectedPlaylist = tblPlaylist.getItems().get(playlistNumber);
+        Song songOnPlayList = tblSongsOnPlaylist.getItems().get(playSongOnPlaylistNumber);
+        songLabel.setText(selectedPlaylist.getPlaylistName()+" - "+ songOnPlayList.getTitle());
+        media = new Media(new File(songOnPlayList.getFilepath()).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        System.out.println(songOnPlayList.getFilepath());
+        mediaPlayer.play();
+        beginTimer();
+        viewTime();
+        mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+        imageView.setVisible(false);
+    }
 
     public void playSelectedSong() {
         if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
@@ -240,7 +275,6 @@ public class SongViewController extends BaseController implements Initializable 
         viewTime();
         mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
         imageView.setVisible(false);
-
     }
     public void playSelectedPlaylist() {
         if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
@@ -259,7 +293,6 @@ public class SongViewController extends BaseController implements Initializable 
         mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
         imageView.setVisible(false);
     }
-
     public void nextMedia() {
         System.out.println(songs.size());
         System.out.println(songNumber);
@@ -277,23 +310,36 @@ public class SongViewController extends BaseController implements Initializable 
             playSelectedSong();
             imageView.setVisible(false);
         }
-        else
-        {
-            if (songOnPlaylistNumber < songOnPlaylistModel.getObservableSongOnPlaylist().size() -1) {
-                songOnPlaylistNumber ++;
+        else if (playlistNumber >= 0)
+         {
+            if (songOnPlaylistNumber < songOnPlaylistModel.getObservableSongOnPlaylist().size() - 1) {
+                songOnPlaylistNumber++;
             } else {
                 songOnPlaylistNumber = 0;
             }
             mediaPlayer.stop();
-            if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
                 cancelTimer();
             }
             playSelectedPlaylist();
             imageView.setVisible(false);
         }
-        
-    }
 
+        else
+        {
+            if (playSongOnPlaylistNumber < songOnPlaylistModel.getObservableSongOnPlaylist().size() -1) {
+                playSongOnPlaylistNumber ++;
+            } else {
+                playSongOnPlaylistNumber = 0;
+            }
+            mediaPlayer.stop();
+            if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                cancelTimer();
+            }
+            playSelectedSongOnPlaylist();
+            imageView.setVisible(false);
+        }
+    }
     public void previousMedia() {
         if(playlistNumber == -1)
     {
@@ -309,7 +355,7 @@ public class SongViewController extends BaseController implements Initializable 
             playSelectedSong();
             imageView.setVisible(false);
         }
-        else
+        else if (playlistNumber >= 0)
         {
             if (songOnPlaylistNumber >0) {
                 songOnPlaylistNumber --;
@@ -322,6 +368,19 @@ public class SongViewController extends BaseController implements Initializable 
             }
             playSelectedPlaylist();
             imageView.setVisible(false);
+        }
+        else {
+        if (playSongOnPlaylistNumber >0) {
+            playSongOnPlaylistNumber --;
+        } else {
+            playSongOnPlaylistNumber = songOnPlaylistModel.getObservableSongOnPlaylist().size() -1;
+        }
+        mediaPlayer.stop();
+        if (mediaPlayer !=null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            cancelTimer();
+        }
+        playSelectedSongOnPlaylist();
+        imageView.setVisible(false);
         }
     }
 
@@ -529,4 +588,6 @@ public class SongViewController extends BaseController implements Initializable 
         });
 
     }
+
+
 }
