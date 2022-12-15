@@ -304,7 +304,7 @@ public class SongViewController extends BaseController implements Initializable 
             playSelectedSong();
             imageView.setVisible(false);
 
-        } 
+        }
         else if (playlistNumber >= 0)
          {
             if (songOnPlaylistNumber < songOnPlaylistModel.getObservableSongOnPlaylist().size() - 1) {
@@ -350,10 +350,6 @@ public class SongViewController extends BaseController implements Initializable 
             playSelectedSong();
             imageView.setVisible(false);
 
-        } else {
-            if (songOnPlaylistNumber > 0) {
-                songOnPlaylistNumber--;
-
         }
         else if (playlistNumber >= 0)
         {
@@ -384,7 +380,7 @@ public class SongViewController extends BaseController implements Initializable 
         imageView.setVisible(false);
         }
     }
-}
+
 
     public void beginTimer() {
         timer = new Timer();
