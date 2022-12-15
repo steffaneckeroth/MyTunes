@@ -100,9 +100,7 @@ public class SongViewController extends BaseController implements Initializable 
         songs = new ArrayList<>();
         directory = new File("lib/music");
         files = directory.listFiles();
-
-
-
+        
         tblSongs.setItems(songModel.getObservableSongs());
         tblPlaylist.setItems(playlistModel.getObservablePlaylists());
         tltCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
@@ -112,6 +110,7 @@ public class SongViewController extends BaseController implements Initializable 
         namCol.setCellValueFactory(c -> new SimpleObjectProperty<String>(c.getValue().getPlaylistName()));
         sngCol.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getSongs().size())));
         colTime.setCellValueFactory(c ->new SimpleStringProperty(String.valueOf(c.getValue().getTotalDuration())));
+
         //colTime.setText("00:00:00");
 
         if (files != null) {

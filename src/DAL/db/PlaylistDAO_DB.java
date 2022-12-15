@@ -85,7 +85,6 @@ public class PlaylistDAO_DB implements IPlaylistDataAccess {
             throw new Exception("Could not get Playlist from database", ex);
         }
     }
-
     /**
      *
      * @param playlist

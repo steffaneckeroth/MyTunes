@@ -86,7 +86,10 @@ public class Song {
      * This code is defining a method of duration.
      * @return duration
      */
-    public Time getDuration() {return duration;}
+    public Time getDuration()
+    {
+        return duration;
+    }
 
     /**
      * This code is a setter method
