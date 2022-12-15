@@ -34,6 +34,7 @@ public class SongOnPlaylistModel {
     public void addToPlaylist(Playlist playlist, Song song) throws Exception
     {
         Song mSong = songOnPlaylistManager.addToPlaylist(playlist, song);
+        System.out.println(mSong);
         songOnPlaylistsToBeViewed.add(mSong);
     }
 

@@ -22,21 +22,9 @@ public class SongOnPlaylistDAO implements ISongOnPlaylistDataAccess {
         try (Connection con = databaseConnector.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(sql);
-            
             stmt.setInt(1, song.getId());
             stmt.setInt(2, playlist.getPlaylistId());
-
-
             stmt.executeUpdate();
-
-            ResultSet rs = stmt.getGeneratedKeys();
-            int id = 0;
-
-            if (rs.next())
-            {
-                id = rs.getInt(1);
-            }
-
             return song;
         } catch (SQLException ex)
         {

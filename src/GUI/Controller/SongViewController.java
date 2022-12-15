@@ -493,7 +493,8 @@ public class SongViewController extends BaseController implements Initializable 
     public void handleButtonSongToPlaylist(ActionEvent actionEvent) {
         Playlist mPlaylist = tblPlaylist.getSelectionModel().getSelectedItem();
         Song mSelectedSong = tblSongs.getSelectionModel().getSelectedItem();
-        tblSongsOnPlaylist.getItems().add(mSelectedSong);
+        //tblSongsOnPlaylist.getItems().add(mSelectedSong);
+        System.out.println(mSelectedSong);
         try {
             songOnPlaylistModel.addToPlaylist(mPlaylist, mSelectedSong);
         } catch (Exception e) {
