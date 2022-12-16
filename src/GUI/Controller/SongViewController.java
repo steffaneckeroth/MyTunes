@@ -80,6 +80,7 @@ public class SongViewController extends BaseController implements Initializable 
     private PlaylistModel playlistModel;
     private SongOnPlaylistModel songOnPlaylistModel;
 
+
     public SongViewController() {
         try {
             songModel = new SongModel();
@@ -201,6 +202,7 @@ public class SongViewController extends BaseController implements Initializable 
             playSelectedPlaylist();
             playSelectedSongOnPlaylist();
             mediaPlayer.play();
+
         }
     }
 
@@ -213,6 +215,7 @@ public class SongViewController extends BaseController implements Initializable 
             }
         }
     }
+
 
     public void tblPlaylistClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
@@ -591,7 +594,5 @@ public class SongViewController extends BaseController implements Initializable 
                 tblSongsOnPlaylist.getSelectionModel().clearAndSelect(selectedIndex + 1);
             }
         });
-
     }
-
 }
