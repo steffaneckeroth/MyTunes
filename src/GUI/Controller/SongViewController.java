@@ -1,16 +1,11 @@
 package src.GUI.Controller;
 
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-
-import javafx.collections.ObservableList;
-
-import javafx.collections.ListChangeListener;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -41,12 +37,11 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 public class SongViewController extends BaseController implements Initializable {
+    public ImageView gif;
     @FXML
     private javafx.scene.image.ImageView imageView;
     @FXML
-    private Button playButton, btnEditS, btnDeleteSong, previousButton, uploadButton,
-            btnEditP, btnNewPlaylist, btnSongToPlaylist, btnDeleteSongOnPlaylist,
-            btnSongOnPlaylistUp, btnSongOnPlaylistDown;
+    private Button btnEditS, btnEditP, btnSongOnPlaylistUp, btnSongOnPlaylistDown;
     @FXML
     private TableColumn<Song, String> drtCol, catCol, artCol, tltCol;
     @FXML
@@ -187,6 +182,7 @@ public class SongViewController extends BaseController implements Initializable 
 
 
     public void setup() {
+
         btnEditP.setDisable(true);
         tblPlaylist.setItems(playlistModel.getObservablePlaylists());
         tblPlaylist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Playlist>() {
@@ -238,7 +234,6 @@ public class SongViewController extends BaseController implements Initializable 
             playSelectedPlaylist();
             playSelectedSongOnPlaylist();
             mediaPlayer.play();
-
         }
     }
 
