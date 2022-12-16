@@ -1,6 +1,5 @@
 package src.GUI.Controller;
 
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -29,7 +28,6 @@ import src.BE.Song;
 import src.GUI.Model.PlaylistModel;
 import src.GUI.Model.SongModel;
 import src.GUI.Model.SongOnPlaylistModel;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -120,6 +118,7 @@ public class SongViewController extends BaseController implements Initializable 
         sngCol.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getSongs().size())));
         colTime.setCellValueFactory(c ->new SimpleStringProperty(String.valueOf(c.getValue().getTotalDuration())));
 
+
         //colTime.setText("00:00:00");
 
         // if the files variable is not null, then it will add all the files array to the songs collection
@@ -127,7 +126,21 @@ public class SongViewController extends BaseController implements Initializable 
             Collections.addAll(songs, files);
         }
         // this controls the volume on the tableview to go up and down
-        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> mediaPlayer.setVolume(volumeSlider.getValue() * 0.01));
+
+
+            volumeSlider.valueProperty().addListener((observable, oldValue, newValue) ->
+            {
+                if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
+                {
+                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+                }
+                else {
+                    volumeSlider.setDisable(true);
+                }
+                volumeSlider.setDisable(false);
+            });
+
+
         txtSongSearch.textProperty().addListener((observableValue, oldValue, newValue) ->
         {
             try {
@@ -159,6 +172,10 @@ public class SongViewController extends BaseController implements Initializable 
 
                     mediaPlayer.seek(Duration.seconds(songProgressBar.getValue()));
                 }
+                else {
+                    songProgressBar.setDisable(true);
+                }
+                songProgressBar.setDisable(false);
             }
         });
         songProgressBar.valueProperty().addListener(new ChangeListener<Number>() {
@@ -170,10 +187,15 @@ public class SongViewController extends BaseController implements Initializable 
              */
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                // This retrive the currrent time of the song.
+                if (mediaPlayer != null){
                 double currentTime = mediaPlayer.getCurrentTime().toSeconds();
                 if (Math.abs(currentTime - newValue.doubleValue()) > 0.5) {
                     mediaPlayer.seek(Duration.seconds(newValue.doubleValue()));
+                }
+                else {
+                    songProgressBar.setDisable(true);
+                }
+                    songProgressBar.setDisable(false);
                 }
             }
         });
@@ -181,8 +203,8 @@ public class SongViewController extends BaseController implements Initializable 
 
 
 
-    public void setup() {
-
+    public void setup()
+    {
         btnEditP.setDisable(true);
         tblPlaylist.setItems(playlistModel.getObservablePlaylists());
         tblPlaylist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Playlist>() {
@@ -471,19 +493,21 @@ public class SongViewController extends BaseController implements Initializable 
     /**
      * This method begins the song progressbar.
      */
-    public void beginTimer() {
-        timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                songProgressBar.setMax(mediaPlayer.getTotalDuration().toSeconds());
-                // converts it into seconds.
-                double current = mediaPlayer.getCurrentTime().toSeconds();
-                songProgressBar.setValue(current);
-            }
-        };
-        timer.scheduleAtFixedRate(task, 10, 10);
+    public void beginTimer()
+    {
+            timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    songProgressBar.setMax(mediaPlayer.getTotalDuration().toSeconds());
+                    // converts it into seconds.
+                    double current = mediaPlayer.getCurrentTime().toSeconds();
+                    songProgressBar.setValue(current);
+                }
+            };
+            timer.scheduleAtFixedRate(task, 10, 10);
     }
+
 
     /**
      * // This method cancels the timer by setting the "running" flag to
@@ -492,6 +516,7 @@ public class SongViewController extends BaseController implements Initializable 
     public void cancelTimer() {
         running = false;
         timer.cancel();
+
     }
 
     /**
