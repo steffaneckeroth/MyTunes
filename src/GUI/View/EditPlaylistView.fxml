@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="162.0" prefWidth="397.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.GUI.Controller.EditPlaylistController">
+<AnchorPane prefHeight="162.0" prefWidth="397.0" stylesheets="@../CSS/scratch.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.GUI.Controller.EditPlaylistController">
    <children>
       <Label layoutX="24.0" layoutY="68.0" prefHeight="26.0" prefWidth="159.0" text="Edit Playlist Name:">
          <font>

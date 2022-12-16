@@ -23,13 +23,13 @@
          <image>
             <Image url="@../../Images/106.png" />
          </image></ImageView>
-      <ImageView fx:id="gif" fitHeight="1066.0" fitWidth="1061.0" layoutX="26.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="gif" fitHeight="1066.0" fitWidth="1061.0" layoutX="26.0" layoutY="4.0" opacity="0.65" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Images/snow02.gif" />
          </image>
       </ImageView>
       <Button disable="true" layoutX="-1.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="1103.0" />
-      <Button fx:id="playButton" blendMode="HARD_LIGHT" layoutX="103.0" layoutY="-1.0" minWidth="49.0" mnemonicParsing="false" onAction="#pauseAndPlayMedia" prefHeight="35.0" prefWidth="49.0" style="-fx-background-color: gray;">
+      <Button fx:id="playButton" blendMode="HARD_LIGHT" layoutX="526.0" layoutY="-1.0" minWidth="49.0" mnemonicParsing="false" onAction="#pauseAndPlayMedia" prefHeight="35.0" prefWidth="49.0" style="-fx-background-color: gray;">
          <graphic>
             <ImageView fitHeight="45.0" fitWidth="47.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -37,7 +37,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="previousButton" blendMode="HARD_LIGHT" layoutX="33.0" layoutY="2.0" minWidth="42.0" mnemonicParsing="false" onAction="#previousMedia" prefHeight="35.0" prefWidth="42.0" style="-fx-background-color: gray;">
+      <Button fx:id="previousButton" blendMode="HARD_LIGHT" layoutX="466.0" layoutY="2.0" minWidth="42.0" mnemonicParsing="false" onAction="#previousMedia" prefHeight="35.0" prefWidth="42.0" style="-fx-background-color: gray;">
          <graphic>
             <ImageView fitHeight="44.0" fitWidth="39.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -45,7 +45,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="nextButton" blendMode="HARD_LIGHT" layoutX="178.0" layoutY="2.0" minWidth="44.0" mnemonicParsing="false" onAction="#nextMedia" prefHeight="35.0" prefWidth="44.0" style="-fx-background-color: gray;">
+      <Button fx:id="nextButton" blendMode="HARD_LIGHT" layoutX="593.0" layoutY="2.0" minWidth="44.0" mnemonicParsing="false" onAction="#nextMedia" prefHeight="35.0" prefWidth="44.0" style="-fx-background-color: gray;">
          <graphic>
             <ImageView fitHeight="39.0" fitWidth="40.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -53,8 +53,8 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Slider fx:id="volumeSlider" blendMode="HARD_LIGHT" layoutX="58.0" layoutY="69.0" max="100.0" value="50.0" />
-      <Label fx:id="songLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="418.0" layoutY="4.0" text="Playing: " textFill="WHITE">
+      <Slider fx:id="volumeSlider" blendMode="HARD_LIGHT" layoutX="871.0" layoutY="18.0" max="100.0" prefHeight="14.0" prefWidth="205.0" value="50.0" />
+      <Label fx:id="songLabel" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="29.0" layoutY="4.0" text="Playing: " textFill="WHITE">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
@@ -112,7 +112,7 @@
          </graphic>
       </Button>
       <TextField fx:id="txtSongSearch" layoutX="923.0" layoutY="64.0" opacity="0.75" promptText="Search" style="-fx-background-color: white;" />
-      <ImageView fitHeight="18.0" fitWidth="21.0" layoutX="41.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="18.0" fitWidth="21.0" layoutX="853.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Images/Audio-PNG.png" />
          </image>

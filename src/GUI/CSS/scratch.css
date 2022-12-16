@@ -1,3 +1,13 @@
+.root{
+    -fx-background-color: linear-gradient(to bottom, #071625, #1D3954);
+    -fx-text-background-color: #FFFFFF;
+}
+
+.combo-box .list-cell
+{
+    -fx-background: #0C2643;
+    -fx-text-background-color: #FFFFFF;
+}
 .button {
   -fx-background-color: #0C2643;
   -fx-border: none;
@@ -7,16 +17,37 @@
   -fx-text-decoration: none;
   -fx-display: inline-block;
 }
+
 .slider {
-  -fx-webkit-appearance: none;  /* Override default CSS styles */
+  -fx-webkit-appearance: none;
   -fx-appearance: none;
-  -fx-width: 100%; /* Full-width */
-  -fx-height: 50px; /* Specified height */
-  -fx-background: #4CC3FF; /* Grey background */
-  -fx-outline: none; /* Remove outline */
-  -fx-opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  -fx-webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  -fx-width: 100%;
+  -fx-height: 50px;
+  -fx-background: #4CC3FF;
+  -fx-outline: none;
+  -fx-opacity: 0.7;
+  -fx-webkit-transition: .2s;
   -fx-transition: opacity .2s;
+}
+
+.list-view
+{
+-fx-background-color: #0C2643;
+}
+
+.list-view .list-cell
+{
+    -fx-background-color: #0C2643;
+}
+
+.table-view
+{
+     -fx-text-background-color: #FFFFFF;
+}
+
+.table-view .column-header
+{
+    -fx-background-color: transparent;
 }
 
 .table-view .column-header-background{
@@ -24,23 +55,6 @@
     -fx-background-radius: 3px 3px 0px 0px;
     -fx-background-insets: 0 0px 0 0;
     -fx-padding: 0 0 0px 0;
-}
-
-.table-view .column-header
- {
-    -fx-background-color: transparent;
-}
-
-
-.list-view
-{
--fx-color: white;
--fx-background-color: #0C2643;
-}
-.table-view
-{
-     -fx-text-background-color: #FFFFFF;
-
 }
 
 .table-view .table-cell{
@@ -60,5 +74,10 @@
     -fx-background-color: #0C2643;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+}
+
+.table-row-cell:selected{
+   -fx-background-color: steelblue;
+   -fx-text-fill: red !important;
 }
 

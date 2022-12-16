@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="173.0" prefWidth="458.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.GUI.Controller.EditSongController">
+<AnchorPane prefHeight="173.0" prefWidth="458.0" stylesheets="@../CSS/scratch.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.GUI.Controller.EditSongController">
    <children>
       <TextField fx:id="txtTitle" layoutX="35.0" layoutY="75.0" prefHeight="34.0" prefWidth="179.0" promptText="Title" />
       <Button fx:id="btnSaveEdit" layoutX="302.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleSaveEdit" prefHeight="34.0" prefWidth="79.0" text="Save" />

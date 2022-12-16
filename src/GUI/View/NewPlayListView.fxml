@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="160.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.GUI.Controller.NewPlaylistController">
+<AnchorPane prefHeight="160.0" prefWidth="372.0" stylesheets="@../CSS/scratch.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.GUI.Controller.NewPlaylistController">
    <children>
       <Button fx:id="btnSavePlaylist" layoutX="209.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleButtonSavePlaylist" prefHeight="26.0" prefWidth="51.0" text="Save" />
       <Button fx:id="btnCancelPlaylist" layoutX="111.0" layoutY="101.0" mnemonicParsing="false" onAction="#handleButtonCanclePlaylist" text="Cancle" />
