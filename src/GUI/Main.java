@@ -12,10 +12,17 @@ import javafx.stage.WindowEvent;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         Parent root = FXMLLoader.load(getClass().getResource("View/MyTunesView.fxml"));
+
+        //Scene scene = new Scene(root);
+        //String css = this.getClass().getResource("/GUI/CSS/scratch.css").toExternalForm();
+        //scene.getStylesheets().add(css);
+
         primaryStage.setTitle("MyTunes");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

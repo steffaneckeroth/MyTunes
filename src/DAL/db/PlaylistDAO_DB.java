@@ -42,7 +42,6 @@ public class PlaylistDAO_DB implements IPlaylistDataAccess {
                 playlist.setSongs(songOnPlaylistDAO.getSongsOnPlaylist(playlist));
                 allPlaylist.add(playlist);
             }
-
             return allPlaylist;
         }
         catch (SQLException ex)
