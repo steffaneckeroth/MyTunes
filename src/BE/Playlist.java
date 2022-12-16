@@ -72,22 +72,16 @@ public class Playlist {
         return songs;
     }
 
-
-
     public Time getTotalDuration()
     {
-        // Calculate the total duration in seconds
         int totalCount = 0;
-        for (Song x: songs) {
-            totalCount += x.getDuration().getTime();
-        }
-        // Calculate the number of hours, minutes, and seconds
-        int hours = (totalCount / 60 / 60);
-        int minutes = ((totalCount - (hours * 60 * 60)) / 60);
-        int seconds = (totalCount % 60);
 
-        // Create a new Time object using the calculated values
-        Time totalDuration = new Time(hours, minutes, seconds);
+        for (Song x: songs)
+        {
+            totalCount += Math.abs(x.getDuration().getTime());
+        }
+
+        Time totalDuration = new Time(totalCount);
         return totalDuration;
     }
 }
