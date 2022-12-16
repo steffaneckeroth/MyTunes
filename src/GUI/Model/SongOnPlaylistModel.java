@@ -19,6 +19,10 @@ public class SongOnPlaylistModel {
 
     private Playlist selectedPlaylist;
 
+    /**
+     * This is the constructor for the SongOnPlaylistModel class.
+     * @throws Exception
+     */
     public SongOnPlaylistModel() throws Exception
     {
         songOnPlaylistManager = new SongOnPlaylistManager();
@@ -35,6 +39,12 @@ public class SongOnPlaylistModel {
         return songOnPlaylistsToBeViewed;
     }
 
+    /**
+     * This method adds a song to a playlist. If the song cannot be added, an exception is thrown.
+     * @param playlist
+     * @param song
+     * @throws Exception
+     */
     public void addToPlaylist(Playlist playlist, Song song) throws Exception
     {
         Song mSong = songOnPlaylistManager.addToPlaylist(playlist, song);
@@ -42,12 +52,22 @@ public class SongOnPlaylistModel {
         songOnPlaylistsToBeViewed.add(mSong);
     }
 
+    /**
+     * This method deletes a song from a playlist.
+     * @param playlist
+     * @param song
+     * @throws Exception
+     */
     public void deleteSongOnPlaylist(Playlist playlist, Song song) throws Exception
     {
         songOnPlaylistManager.deleteSongOnPlaylist(playlist, song);
         songOnPlaylistsToBeViewed.remove(song);
     }
 
+    /**
+     * This method sets the selected playlist for the user to view.
+     * @param playlist
+     */
     public void setSelectedPlaylist(Playlist playlist)
     {
         songOnPlaylistsToBeViewed.clear();
