@@ -35,7 +35,12 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 public class SongViewController extends BaseController implements Initializable {
-    public ImageView gif;
+
+    @FXML
+    private ImageView gif;
+
+    @FXML
+    private ComboBox <String> speedBox;
     @FXML
     private javafx.scene.image.ImageView imageView;
     @FXML
@@ -72,6 +77,7 @@ public class SongViewController extends BaseController implements Initializable 
     private SongModel songModel;
     private PlaylistModel playlistModel;
     private SongOnPlaylistModel songOnPlaylistModel;
+    public int[] speeds = {25, 50, 75, 100, 125, 150 ,175, 200};
 
 
     /**
@@ -125,6 +131,10 @@ public class SongViewController extends BaseController implements Initializable 
         if (files != null) {
             Collections.addAll(songs, files);
         }
+        for (int speed : speeds) {
+            speedBox.getItems().add(speed + "%");
+        }
+        speedBox.setOnAction(this::changeSpeed);
         // this controls the volume on the tableview to go up and down
 
 
@@ -165,7 +175,7 @@ public class SongViewController extends BaseController implements Initializable 
              */
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue) {
+                if (mediaPlayer != null){
                     // setting the maximum value of a progress bar to the total duration of the song.
                     // This is used to track the time that the song is being play.
                     songProgressBar.setMax(mediaPlayer.getTotalDuration().toSeconds());
@@ -179,14 +189,9 @@ public class SongViewController extends BaseController implements Initializable 
             }
         });
         songProgressBar.valueProperty().addListener(new ChangeListener<Number>() {
-            /**
-             * This method is handling change in an Observablevalue object.
-             * @param observable
-             * @param oldValue
-             * @param newValue
-             */
             @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
+            {
                 if (mediaPlayer != null){
                 double currentTime = mediaPlayer.getCurrentTime().toSeconds();
                 if (Math.abs(currentTime - newValue.doubleValue()) > 0.5) {
@@ -256,6 +261,7 @@ public class SongViewController extends BaseController implements Initializable 
             playSelectedPlaylist();
             playSelectedSongOnPlaylist();
             mediaPlayer.play();
+            changeSpeed(null);
         }
     }
 
@@ -330,6 +336,7 @@ public class SongViewController extends BaseController implements Initializable 
         System.out.println(songOnPlayList.getFilepath());
         // plays the new generated object and shows the progressbar begin from the start again.
         mediaPlayer.play();
+        changeSpeed(null);
         beginTimer();
         viewTime();
         mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
@@ -353,6 +360,7 @@ public class SongViewController extends BaseController implements Initializable 
         System.out.println(selectedSong.getFilepath());
         // plays the new generated object and shows the progressbar begin from the start again.
         mediaPlayer.play();
+        changeSpeed(null);
         beginTimer();
         viewTime();
         mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
@@ -378,6 +386,7 @@ public class SongViewController extends BaseController implements Initializable 
         System.out.println(songOnPlayList.getFilepath());
         // plays the new generated object and shows the progressbar begin from the start again.
         mediaPlayer.play();
+        changeSpeed(null);
         beginTimer();
         viewTime();
         mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
@@ -489,7 +498,24 @@ public class SongViewController extends BaseController implements Initializable 
             imageView.setVisible(false);
         }
     }
-
+    public void resetMedia()
+    {
+        songProgressBar.setValue(0);
+        mediaPlayer.seek(Duration.seconds(0));
+        viewTime();
+        imageView.setVisible(false);
+    }
+    public void changeSpeed(ActionEvent event)
+    {
+        if (speedBox.getValue() == null)
+        {
+            mediaPlayer.setRate(1);
+        }
+        else
+        {
+            mediaPlayer.setRate(Integer.parseInt(speedBox.getValue().substring(0, speedBox.getValue().length()-1))* 0.01);
+        }
+    }
     /**
      * This method begins the song progressbar.
      */
